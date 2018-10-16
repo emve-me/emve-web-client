@@ -7,9 +7,6 @@ module.exports = withTypescript({
     // Will be available on both server and client
     staticFolder: '/static',
     isProd: process.env.NODE_ENV === 'production',
-    graphQLEndpoint:
-      process.env.NODE_ENV === 'production'
-        ? 'https://cribble.co/graphql'
-        : 'http://localhost:3000/graphql'
+    graphQLEndpoint: process.env.GQL_ENDPOINT
   }
 })

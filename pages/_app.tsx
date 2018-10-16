@@ -3,7 +3,7 @@ import App, { Container } from 'next/app'
 
 import Head from 'next/head'
 import { ApolloProvider } from 'react-apollo'
-import withApollo from '../components/withApollo'
+import withApollo from '../lib/components/withApollo'
 import { ApolloClient } from 'apollo-client'
 
 type PROPS = {
@@ -21,7 +21,7 @@ class MyApp extends App<PROPS> {
     return (
       <Container>
         <Head>
-          <title>The URL Shortner that alerts you!</title>
+          <title>Collab Admin</title>
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"
