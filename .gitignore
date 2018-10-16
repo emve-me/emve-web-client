@@ -1,0 +1,12 @@
+/node_modules/
+/.next/
+/.idea/
+/.vscode/
+/postgresdockerdata/
+/.gcloudrc
+/PROD.README.MD
+/cloud_sql_proxy
+/server-ca.pem
+/dist/
+/app.yaml
+/.env
