@@ -9,35 +9,67 @@ type props = {}
 
 type state = {}
 
-
-const QQQQ = gql`
-    mutation authenticateGoogle($idToken:String!){
+const MUTATION_AUTHENTICATE_USER = gql`
+    mutation authenticateGoogle($idToken: ID){
         authentication{
-            google(idToken: $idToken){
+            exchangeSessionToken(googleIdToken: $idToken){
+                user{
+                    name
+                    id
+                    email
+                }
+                token
+            }
+        }
+    }`
+
+
+const QUERY_LOGGED_IN_USER = gql`
+    query getLoggedInUser {
+        auth {
+            loggedInUser{
                 name
                 id
                 email
             }
         }
-    }
-
-`
-
-
+    }`
 
 export default class Index extends React.Component<props, state> {
   render() {
 
-    return <div>
-      <Mutation mutation={QQQQ}>
+    return <>
+      <Query query={QUERY_LOGGED_IN_USER}>{({ error, data, loading }) => {
+
+        if (loading) {
+          return <div>Loading</div>
+        }
+
+        if (error) {
+          return <div>Not logged inLogged in!</div>
+        }
+        else {
+          return <div>OHOHOHOHOOHOH</div>
+        }
+      }}</Query>
+
+
+      <Mutation mutation={MUTATION_AUTHENTICATE_USER}>
         {(login, { data, loading, called, error }) => (
           <GoogleLogin
             onSuccess={async response => {
-              console.log('response', response)
+
+
+
               const { profileObj, tokenId } = response as any
-              console.log('token id', tokenId)
-              const xxxxx = await login({ variables: { idToken: tokenId } })
-              console.log('XY', xxxxx)
+              const loginResp = await login({ variables: { idToken: tokenId } })
+
+              const {user, token} = loginResp.data.authentication.exchangeSessionToken
+
+              setCookie('COLLAB_SESSION', token, 365)
+
+              console.log(token)
+
             }}
             onFailure={(err) => {
               console.error((err))
@@ -45,7 +77,7 @@ export default class Index extends React.Component<props, state> {
             clientId="1066657144492-gjcrv2nk0eghepj8mma7la5tbt0n6k22.apps.googleusercontent.com"
           />)}
       </Mutation>
-    </div>
+    </>
   }
 }
 

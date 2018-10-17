@@ -9,8 +9,22 @@ import getConfig from 'next/config'
 
 
 export default withApollo(
-  ({ headers }) => {
+  ({ headers, initialState, ctx }) => {
+
+    console.log({ initialState })
+
+
     const gqlEndpoint = getConfig().publicRuntimeConfig.graphQLEndpoint
-    return new ApolloClient({ uri: gqlEndpoint, credentials: 'include' })
+
+
+    if (headers) {
+
+      // read the cookie out and attach it to the autherization header
+
+      return new ApolloClient({ uri: gqlEndpoint, headers: { cookie: headers.cookie } })
+    }
+    else {
+      return new ApolloClient({ uri: gqlEndpoint, credentials: 'include' })
+    }
   }
 )
