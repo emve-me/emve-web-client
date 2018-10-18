@@ -31,10 +31,6 @@ class LoggedInUserConsumer extends React.Component<props, state> {
     return <Query query={QUERY_LOGGED_IN_USER}>
       {({ error, data, loading, client }) => {
 
-        console.log('data', data, 'loading', loading)
-
-        console.log('client', client)
-
         if (loading) {
           return this.props.children({ loading })
         }
@@ -42,9 +38,8 @@ class LoggedInUserConsumer extends React.Component<props, state> {
           const user = data ? data.loggedIn.user : null
           return this.props.children({ loading, user, isLoggedIn: !!user })
         }
-      }}</Query>
-
-
+      }}
+    </Query>
   }
 }
 

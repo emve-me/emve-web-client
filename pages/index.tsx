@@ -6,6 +6,7 @@ import gql from 'graphql-tag'
 import { setCookie } from '../lib/util/cookie'
 import LoggedInUserConsumer from '../lib/components/LoggedInUserConsumer'
 import Login from '../lib/components/Login'
+import Tags from '../lib/components/pages/Tags'
 
 type props = {}
 
@@ -23,12 +24,9 @@ export default class Index extends React.Component<props, state> {
       }
 
       if (isLoggedIn) {
-
-        return <div>{JSON.stringify(user)}</div>
-
+        return <Tags/>
       }
       else {
-
         return <Login/>
       }
     }}
