@@ -33,7 +33,6 @@ export default withApollo(({ headers, initialState, ctx }) => {
         return { headers: headersForRequest }
       }
 
-
       if (process.browser) {
         return getGQLHeaders(window.document.cookie)
       }
