@@ -7,5 +7,10 @@ function setCookie(cname: string, cvalue: string, exdays: number) {
   document.cookie = cookie
 }
 
+function getCookie(cname: string, cookieHeader: string) {
+  const m = {}
+  cookieHeader.split(';').map(item => item.trim().split('=')).forEach(item => m[item[0]] = item[1])
+  return m[cname]
+}
 
-export { setCookie }
+export { setCookie, getCookie }

@@ -60,11 +60,10 @@ export default class Index extends React.Component<props, state> {
             onSuccess={async response => {
 
 
-
               const { profileObj, tokenId } = response as any
-              const loginResp = await login({ variables: { idToken: tokenId } })
+              const loginResp = await login({ variables: { idToken: tokenId, appId: 'admin' } })
 
-              const {user, token} = loginResp.data.authentication.exchangeSessionToken
+              const { user, token } = loginResp.data.authentication.exchangeSessionToken
 
               setCookie('COLLAB_SESSION', token, 365)
 
