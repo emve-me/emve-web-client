@@ -17,13 +17,10 @@ export default class Index extends React.Component<props, state> {
   render() {
 
     return <LoggedInUserConsumer>{({ loading, isLoggedIn, user }) => {
-
-
       if (loading) {
         return <div>Loading</div>
       }
-
-      if (isLoggedIn) {
+      else if (isLoggedIn) {
         return <Tags/>
       }
       else {

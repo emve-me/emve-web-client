@@ -1,0 +1,14 @@
+apiVersion: skaffold/v1alpha4
+kind: Config
+build:
+  artifacts:
+    - image: gcr.io/kube-staging-219918/skaffold-example
+deploy:
+  kubectl:
+    manifests:
+      - ./kubernetes/*
+profiles:
+  - name: gcb
+    build:
+      googleCloudBuild:
+        projectId: kube-staging-219918
