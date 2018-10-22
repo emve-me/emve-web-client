@@ -1,2 +1,14 @@
-node_modules
-postgresdockerdata
+/node_modules/
+/.gcloudignore
+/.git
+/kubernetes/
+/.next
+/dist/
+
+/.idea/
+/.vscode/
+
+/schema.sh
+/README.md
+/.nvmrc
+/.prettierrc

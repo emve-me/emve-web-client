@@ -3,6 +3,8 @@ kind: Config
 build:
   artifacts:
     - image: gcr.io/kube-staging-219918/skaffold-example
+      docker:
+        dockerfile: Dockerfile-prod
 deploy:
   kubectl:
     manifests:
