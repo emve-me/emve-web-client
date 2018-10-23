@@ -16,19 +16,21 @@ type state = {}
 export default class Index extends React.Component<props, state> {
   render() {
 
-    return <LoggedInUserConsumer>{({ loading, isLoggedIn, user }) => {
-      if (loading) {
-        return <div>Loading</div>
-      }
-      else if (isLoggedIn) {
-        return <Tags/>
-      }
-      else {
-        return <Login/>
-      }
-    }}
-    </LoggedInUserConsumer>
-
+    return <>
+      <div>AAaaaR</div>
+      <LoggedInUserConsumer>{({ loading, isLoggedIn, user }) => {
+        if (loading) {
+          return <div>Loading</div>
+        }
+        else if (isLoggedIn) {
+          return <Tags/>
+        }
+        else {
+          return <Login/>
+        }
+      }}
+      </LoggedInUserConsumer>
+    </>
   }
 }
 
