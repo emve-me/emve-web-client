@@ -20,7 +20,7 @@ export type TContext = {
   dev: boolean
 }
 
-console.log('HEYYYYY')
+console.log('HEYYYYYAAAzyyyyy', process.env)
 
 const port = process.env.PORT || 3035
 const app = next({ dev })

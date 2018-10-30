@@ -2,7 +2,7 @@ apiVersion: skaffold/v1alpha4
 kind: Config
 build:
   artifacts:
-    - image: gcr.io/kube-staging-219918/skaffold-example
+    - image: gcr.io/collab-kube-staging/admin-app
       docker:
         dockerfile: Dockerfile-prod
 deploy:
@@ -13,4 +13,4 @@ profiles:
   - name: gcb
     build:
       googleCloudBuild:
-        projectId: kube-staging-219918
+        projectId: collab-kube-staging

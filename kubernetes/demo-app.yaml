@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: collab-admin
+  name: collab-admin
+spec:
+  selector:
+    matchLabels:
+      run: collab-admin
+  template:
+    metadata:
+      labels:
+        run: collab-admin
+    spec:
+      containers:
+      - image: gcr.io/collab-kube-staging/admin-app
+        name: hostname
+        env:
+          - name: GQL_ENDPOINT
+            value: https://api.oomloop.com/graphql
