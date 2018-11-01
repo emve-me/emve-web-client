@@ -20,8 +20,6 @@ export type TContext = {
   dev: boolean
 }
 
-console.log('HEYYYYYAAAzyyyyy', process.env)
-
 const port = process.env.PORT || 3035
 const app = next({ dev })
 const handle = app.getRequestHandler()

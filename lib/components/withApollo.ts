@@ -9,41 +9,43 @@ import { setContext } from 'apollo-link-context'
 import getConfig from 'next/config'
 import { getCookie } from '../util/cookie'
 
-
 export default withApollo(({ headers, initialState, ctx }) => {
+  const gqlEndpoint = process.browser
+    ? getConfig().publicRuntimeConfig.graphQLEndpoint
+    : getConfig().serverRuntimeConfig.graphQLEndpoint
 
-    const gqlEndpoint = getConfig().publicRuntimeConfig.graphQLEndpoint
+  console.log('connecting to', gqlEndpoint)
 
-    const httpLink = createHttpLink({
-      uri: gqlEndpoint
-    })
+  const httpLink = createHttpLink({
+    uri: gqlEndpoint
+  })
 
-    const authLink = setContext((_, ___) => {
+  const authLink = setContext((_, ___) => {
+    const getGQLHeaders = (cookieString: string) => {
+      const sessionToken = getCookie('COLLAB_SESSION', cookieString)
 
-      const getGQLHeaders = (cookieString: string) => {
+      const headersForRequest: any = {}
 
-        const sessionToken = getCookie('COLLAB_SESSION', cookieString)
-
-        const headersForRequest: any = {}
-
-        if (sessionToken) {
-          headersForRequest.authorization = `Bearer ${sessionToken}`
-        }
-
-        return { headers: headersForRequest }
+      if (sessionToken) {
+        headersForRequest.authorization = `Bearer ${sessionToken}`
       }
 
-      if (process.browser) {
-        return getGQLHeaders(window.document.cookie)
-      }
-      else {
-        return headers ? (typeof headers.cookie === 'string' ? getGQLHeaders(headers.cookie) : {}) : {}
-      }
-    })
+      return { headers: headersForRequest }
+    }
 
-    return new ApolloClient({
-      link: authLink.concat(httpLink),
-      cache: new InMemoryCache()
-    })
-  }
-)
+    if (process.browser) {
+      return getGQLHeaders(window.document.cookie)
+    } else {
+      return headers
+        ? typeof headers.cookie === 'string'
+          ? getGQLHeaders(headers.cookie)
+          : {}
+        : {}
+    }
+  })
+
+  return new ApolloClient({
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache()
+  })
+})
