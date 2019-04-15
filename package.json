@@ -49,9 +49,6 @@
     "ts-node": "^8.0.3",
     "typescript": "^3.4.3"
   },
-  "browser": {
-    "jsonwebtoken": false
-  },
   "engines": {
     "node": "10.13.0",
     "npm": "6.4.1"

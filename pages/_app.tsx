@@ -34,7 +34,6 @@ class MyApp extends App<PROPS> {
           body {
             color: ${textColor};
             font-weight: 400;
-            background-color: red;
             word-wrap: break-word;
             margin: 0;
             padding: 0;

@@ -96,11 +96,22 @@ export default withApollo(({ headers, initialState, ctx }) => {
 
   const getCache = () => {
 
+    const cache = new InMemoryCache({
+      dataIdFromObject: object => {
+        switch (object.__typename) {
+          case 'SearchResult':
+            return (object as any).id.videoId
+        }
+
+        return object.id
+      }
+    })
+
+
     if (headers && typeof headers.cookie === 'string') {
       const jwt = getJWTFromCookieString(headers.cookie)
 
       if (jwt) {
-
 
         const decoded = jwtIO.decode(jwt) as TJWT
 
@@ -109,21 +120,17 @@ export default withApollo(({ headers, initialState, ctx }) => {
           id: 'LoggedInUser',
           __typename: 'User'
         }
-        const cache = new InMemoryCache()
-
 
         cache.writeQuery({
           query: QQ,
-          data: { loggedInUser}
+          data: { loggedInUser }
         })
 
-
         return cache
-
       }
     }
 
-    return new InMemoryCache()
+    return cache
   }
 
   return new ApolloClient({
