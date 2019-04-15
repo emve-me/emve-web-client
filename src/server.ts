@@ -1,7 +1,7 @@
-import * as express from 'express'
-import * as next from 'next'
-import * as favicon from 'serve-favicon'
-import * as path from 'path'
+import express from 'express'
+import next from 'next'
+import favicon from 'serve-favicon'
+import path from 'path'
 
 const dev = process.env.NODE_ENV !== 'production'
 

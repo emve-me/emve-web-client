@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import App, { Container } from 'next/app'
 
 import Head from 'next/head'
@@ -11,6 +11,8 @@ type PROPS = {
 }
 
 class MyApp extends App<PROPS> {
+
+
   componentDidMount() {}
 
   render() {
@@ -32,6 +34,7 @@ class MyApp extends App<PROPS> {
           body {
             color: ${textColor};
             font-weight: 400;
+            background-color: red;
             word-wrap: break-word;
             margin: 0;
             padding: 0;

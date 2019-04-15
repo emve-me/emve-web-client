@@ -1,37 +1,44 @@
 import withApollo from 'next-with-apollo'
 import { createHttpLink } from 'apollo-link-http'
-import { ApolloLink, concat } from 'apollo-link'
-import { withClientState } from 'apollo-link-state'
 import { ApolloClient } from 'apollo-client'
-// import ApolloClient from 'apollo-boost'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context'
 import getConfig from 'next/config'
 import { getCookie } from '../util/cookie'
+import jwtIO from 'jsonwebtoken'
 
 export default withApollo(({ headers, initialState, ctx }) => {
+
+
   const gqlEndpoint = process.browser
     ? getConfig().publicRuntimeConfig.graphQLEndpoint
     : getConfig().serverRuntimeConfig.graphQLEndpoint
 
-  console.log('connecting to', gqlEndpoint)
 
   const httpLink = createHttpLink({
     uri: gqlEndpoint
   })
 
-  const authLink = setContext((_, ___) => {
-    const getGQLHeaders = (cookieString: string) => {
-      const sessionToken = getCookie('COLLAB_SESSION', cookieString)
 
-      const headersForRequest: any = {}
+  const getJWTFromCookieString = (cookieString: string) => getCookie('GTOKENID', cookieString)
 
-      if (sessionToken) {
-        headersForRequest.authorization = `Bearer ${sessionToken}`
-      }
+  const getGQLHeaders = (cookieString: string) => {
 
-      return { headers: headersForRequest }
+    const sessionToken = getJWTFromCookieString(cookieString)
+    console.log('SESSION OTKEN', sessionToken)
+
+    const headersForRequest: any = {}
+
+    if (sessionToken) {
+      headersForRequest.authorization = `Bearer ${sessionToken}`
     }
+
+    return { headers: headersForRequest }
+  }
+
+
+  const authLink = setContext((_, ___) => {
+    console.log('in Auth Link')
 
     if (process.browser) {
       return getGQLHeaders(window.document.cookie)
@@ -44,8 +51,26 @@ export default withApollo(({ headers, initialState, ctx }) => {
     }
   })
 
+
+  const getCache = () => {
+
+    if (headers && typeof headers.cookie === 'string') {
+      const jwt = getJWTFromCookieString(headers.cookie)
+
+      if (jwt) {
+
+        const decoded = jwtIO.decode(jwt)
+
+        return new InMemoryCache().restore(({ data: { user: decoded } }))
+
+      }
+    }
+
+    return new InMemoryCache()
+  }
+
   return new ApolloClient({
     link: authLink.concat(httpLink),
-    cache: new InMemoryCache()
+    cache: getCache()
   })
-})
+}, { getDataFromTree: 'ssr' })
