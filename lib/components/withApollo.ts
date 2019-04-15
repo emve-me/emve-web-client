@@ -6,6 +6,48 @@ import { setContext } from 'apollo-link-context'
 import getConfig from 'next/config'
 import { getCookie } from '../util/cookie'
 import jwtIO from 'jsonwebtoken'
+import { gql } from 'apollo-boost'
+
+
+type TJWT = {
+  iss
+  azp
+  aud
+  sub
+  email
+  email_verified
+  at_hash
+  name
+  picture
+  given_name
+  family_name
+  locale
+  iat
+  exp
+  jti
+}
+
+export const QQ = gql`query ReadUser {
+  loggedInUser {
+    iss
+    azp
+    aud
+    sub
+    email
+    email_verified
+    at_hash
+    name
+    picture
+    given_name
+    family_name
+    locale
+    iat
+    exp
+    jti
+    id
+    __typename
+  }
+}`
 
 export default withApollo(({ headers, initialState, ctx }) => {
 
@@ -59,9 +101,24 @@ export default withApollo(({ headers, initialState, ctx }) => {
 
       if (jwt) {
 
-        const decoded = jwtIO.decode(jwt)
 
-        return new InMemoryCache().restore(({ data: { user: decoded } }))
+        const decoded = jwtIO.decode(jwt) as TJWT
+
+        const loggedInUser = {
+          ...decoded,
+          id: 'LoggedInUser',
+          __typename: 'User'
+        }
+        const cache = new InMemoryCache()
+
+
+        cache.writeQuery({
+          query: QQ,
+          data: { loggedInUser}
+        })
+
+
+        return cache
 
       }
     }
