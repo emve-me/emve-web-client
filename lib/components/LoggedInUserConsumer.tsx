@@ -1,33 +1,16 @@
 import React, { Component } from 'react'
-import { gql } from 'apollo-boost'
 import { Query } from 'react-apollo'
-import { QQ } from './withApollo'
+import { LOGGED_IN_USER } from '../gql'
+
 
 type TProps = {
   children: ({ user, loggedIn }: { user?, loggedIn: boolean }) => React.ReactNode
 }
 
-const LOGGED_IN_USER_FRAG = gql`fragment LoggedInUser on User {
-  azp
-  aud
-  sub
-  email
-  email_verified
-  at_hash
-  name
-  picture
-  given_name
-  family_name
-  locale
-  iat
-  exp
-  jti
-}
-`
 
 export default class LoggedInUserConsumer extends Component <TProps> {
   render() {
-    return <Query query={QQ} variables={{ id: 'LoggedInUser' }}
+    return <Query query={LOGGED_IN_USER} variables={{ id: 'LoggedInUser' }}
                   fetchPolicy='cache-only'>{({ error, loading, data, client }) => {
 
 

@@ -7,13 +7,17 @@ import getConfig from 'next/config'
 import { getCookie } from '../util/cookie'
 import jwtIO from 'jsonwebtoken'
 import { LOGGED_IN_USER } from '../gql'
+import { WebSocketLink } from 'apollo-link-ws'
+import { split } from 'apollo-link'
+import { getMainDefinition } from 'apollo-utilities'
+
 
 export default withApollo(({ headers, initialState, ctx }) => {
 
   const gqlEndpoint = process.browser
     ? getConfig().publicRuntimeConfig.graphQLEndpoint
     : getConfig().serverRuntimeConfig.graphQLEndpoint
-  
+
   const httpLink = createHttpLink({
     uri: gqlEndpoint
   })
@@ -34,9 +38,7 @@ export default withApollo(({ headers, initialState, ctx }) => {
     return { headers: headersForRequest }
   }
 
-
   const authLink = setContext((_, ___) => {
-
     if (process.browser) {
       return getGQLHeaders(window.document.cookie)
     } else {
@@ -50,7 +52,6 @@ export default withApollo(({ headers, initialState, ctx }) => {
 
 
   const getCache = () => {
-
     const cache = new InMemoryCache({
       dataIdFromObject: object => {
         switch (object.__typename) {
@@ -86,8 +87,28 @@ export default withApollo(({ headers, initialState, ctx }) => {
     return cache
   }
 
+  const authHttpLink = authLink.concat(httpLink)
+
+  const getLink = () => process.browser ? split(
+    // split based on operation type
+    ({ query }) => {
+      const mainDef = getMainDefinition(query)
+      const { kind, operation } = mainDef as any
+      return kind === 'OperationDefinition' && operation === 'subscription'
+    },
+    new WebSocketLink({
+      uri: `ws://localhost:4000/graphql`,
+      options: {
+        reconnect: true
+      }
+    }),
+    authHttpLink
+  ) : authHttpLink
+
+
   return new ApolloClient({
-    link: authLink.concat(httpLink),
-    cache: getCache()
+    link: getLink(),
+    cache:
+      getCache()
   })
 }, { getDataFromTree: 'ssr' })

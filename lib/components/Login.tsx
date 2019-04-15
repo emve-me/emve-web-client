@@ -1,75 +1,43 @@
 import React, { Component } from 'react'
-import { ApolloConsumer, Query } from 'react-apollo'
-import { gql } from 'apollo-boost'
+import { ApolloConsumer } from 'react-apollo'
 import GoogleLogin from 'react-google-login'
 import { setCookie } from '../util/cookie'
-import { QQ } from './withApollo'
 import jwtIO from 'jsonwebtoken'
+import { LOGGED_IN_USER } from '../gql'
 
 
-const SEARCH_QUERY = gql`
-  query Search($q: String) {
-    YoutubeApi(key: "AIzaSyDtlCouvXU0kcAKF-UZWVNe3sQpoxHBsa0") {
-      search {
-        list(q: $q, part: "snippet") {
-          items {
-            id {
-              videoId
-            }
-            snippet {
-              title
-              thumbnails {
-                high {
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`
 type data = {}
 
 type params = {}
-
-class YouTubeSearch extends Query<data, params> {
-}
 
 
 export default class Login extends Component<{}, {}> {
   render() {
 
 
-    return <>
+    return <ApolloConsumer>{client => {
+      return <GoogleLogin
+        onSuccess={async response => {
+          const { profileObj, tokenId } = response as any
 
+          const loggedInUser = { ...(jwtIO.decode(tokenId) as any), id: 'LoggedInUser', __typename: 'User' }
 
-      <ApolloConsumer>{client => {
-        return <GoogleLogin
-          onSuccess={async response => {
-            const { profileObj, tokenId } = response as any
+          setCookie('GTOKENID', tokenId, 365)
 
-            const loggedInUser = { ...(jwtIO.decode(tokenId) as any), id: 'LoggedInUser', __typename: 'User' }
+          client.writeQuery({
+            query: LOGGED_IN_USER,
+            data: { loggedInUser }
+          })
+        }}
 
-            setCookie('GTOKENID', tokenId, 365)
+        onFailure={err => {
+          console.error(err)
+        }}
 
-            client.writeQuery({
-              query: QQ,
-              data: { loggedInUser }
-            })
-          }}
+        clientId="1066657144492-gjcrv2nk0eghepj8mma7la5tbt0n6k22.apps.googleusercontent.com"
+      />
 
-          onFailure={err => {
-            console.error(err)
-          }}
-
-          clientId="1066657144492-gjcrv2nk0eghepj8mma7la5tbt0n6k22.apps.googleusercontent.com"
-        />
-
-      }}</ApolloConsumer>
-
-    </>
+    }}</ApolloConsumer>
   }
 }
 
