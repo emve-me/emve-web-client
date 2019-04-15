@@ -6,57 +6,14 @@ import { setContext } from 'apollo-link-context'
 import getConfig from 'next/config'
 import { getCookie } from '../util/cookie'
 import jwtIO from 'jsonwebtoken'
-import { gql } from 'apollo-boost'
-
-
-type TJWT = {
-  iss
-  azp
-  aud
-  sub
-  email
-  email_verified
-  at_hash
-  name
-  picture
-  given_name
-  family_name
-  locale
-  iat
-  exp
-  jti
-}
-
-export const QQ = gql`query ReadUser {
-  loggedInUser {
-    iss
-    azp
-    aud
-    sub
-    email
-    email_verified
-    at_hash
-    name
-    picture
-    given_name
-    family_name
-    locale
-    iat
-    exp
-    jti
-    id
-    __typename
-  }
-}`
+import { LOGGED_IN_USER } from '../gql'
 
 export default withApollo(({ headers, initialState, ctx }) => {
-
 
   const gqlEndpoint = process.browser
     ? getConfig().publicRuntimeConfig.graphQLEndpoint
     : getConfig().serverRuntimeConfig.graphQLEndpoint
-
-
+  
   const httpLink = createHttpLink({
     uri: gqlEndpoint
   })
@@ -67,7 +24,6 @@ export default withApollo(({ headers, initialState, ctx }) => {
   const getGQLHeaders = (cookieString: string) => {
 
     const sessionToken = getJWTFromCookieString(cookieString)
-    console.log('SESSION OTKEN', sessionToken)
 
     const headersForRequest: any = {}
 
@@ -80,7 +36,6 @@ export default withApollo(({ headers, initialState, ctx }) => {
 
 
   const authLink = setContext((_, ___) => {
-    console.log('in Auth Link')
 
     if (process.browser) {
       return getGQLHeaders(window.document.cookie)
@@ -112,7 +67,6 @@ export default withApollo(({ headers, initialState, ctx }) => {
       const jwt = getJWTFromCookieString(headers.cookie)
 
       if (jwt) {
-
         const decoded = jwtIO.decode(jwt) as TJWT
 
         const loggedInUser = {
@@ -122,14 +76,13 @@ export default withApollo(({ headers, initialState, ctx }) => {
         }
 
         cache.writeQuery({
-          query: QQ,
+          query: LOGGED_IN_USER,
           data: { loggedInUser }
         })
 
         return cache
       }
     }
-
     return cache
   }
 
