@@ -39,6 +39,10 @@ class MyApp extends App<PROPS> {
             padding: 0;
             overflow-y: auto;
           }
+          
+          html {
+            height: 100%;
+          }
 
           img,
           svg {

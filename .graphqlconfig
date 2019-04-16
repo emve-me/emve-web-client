@@ -8,12 +8,6 @@
         "headers": {
           "user-agent": "JS GraphQL"
         }
-      },
-      "Local": {
-        "url": "http://localhost:4000",
-        "headers": {
-          "user-agent": "JS GraphQL"
-        }
       }
     }
   }

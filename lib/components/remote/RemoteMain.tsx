@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { SearchResult } from './SearchResult'
-import { SubscriptionTest } from './SubscriptionTest'
+import { Search, SearchVariables } from './__generated__/Search'
 
 
 const SEARCH_QUERY = gql`
@@ -29,6 +29,11 @@ const SEARCH_QUERY = gql`
     }
   }
 `
+
+class SearchQuery extends Query<Search, SearchVariables> {
+
+}
+
 type data = {}
 
 type params = {}
@@ -39,6 +44,9 @@ class YouTubeSearch extends Query<data, params> {
 type STATE = { search: string }
 
 type PROPS = {}
+
+
+
 
 class RemoteMain extends Component<PROPS, STATE> {
   constructor(props) {
@@ -71,7 +79,7 @@ class RemoteMain extends Component<PROPS, STATE> {
         <div style={{ paddingTop: '6rem', maxWidth: 550, margin: '0 auto' }}>
 
           {/*<SubscriptionTest/>*/}
-          <Query query={SEARCH_QUERY} variables={{ q: this.state.search }}>
+          <SearchQuery query={SEARCH_QUERY} variables={{ q: this.state.search }}>
             {({ loading, error, data }) => {
 
               if (loading) {
@@ -87,7 +95,7 @@ class RemoteMain extends Component<PROPS, STATE> {
                 <SearchResult item={element} key={element.id.videoId}/>
               ))
             }}
-          </Query>
+          </SearchQuery>
         </div>
       </div>
     )
