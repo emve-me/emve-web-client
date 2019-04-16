@@ -1,6 +1,6 @@
 import gql  from 'graphql-tag'
 
-export const LOGGED_IN_USER = gql`query LoggedInUser {
+export const LOGGED_IN_USER = gql`query LoggedInUser @client {
   loggedInUser {
     iss
     azp
