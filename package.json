@@ -43,7 +43,8 @@
     "react-dom": "^16.8.6",
     "react-google-login": "^5.0.4",
     "serve-favicon": "^2.5.0",
-    "subscriptions-transport-ws": "^0.9.16"
+    "subscriptions-transport-ws": "^0.9.16",
+    "vanilla-cookies": "^0.0.7"
   },
   "devDependencies": {
     "nodemon": "^1.18.11",

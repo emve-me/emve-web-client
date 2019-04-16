@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { ApolloConsumer } from 'react-apollo'
 import GoogleLogin from 'react-google-login'
-import { setCookie } from '../util/cookie'
 import jwtIO from 'jsonwebtoken'
 import { LOGGED_IN_USER } from '../gql'
+import { setCookie } from 'vanilla-cookies'
 
 
 type data = {}

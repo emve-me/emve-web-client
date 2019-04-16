@@ -4,12 +4,12 @@ import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context'
 import getConfig from 'next/config'
-import { getCookie } from '../util/cookie'
 import jwtIO from 'jsonwebtoken'
 import { LOGGED_IN_USER } from '../gql'
 import { WebSocketLink } from 'apollo-link-ws'
 import { split } from 'apollo-link'
 import { getMainDefinition } from 'apollo-utilities'
+import {getCookie} from 'vanilla-cookies'
 
 
 export default withApollo(({ headers, initialState, ctx }) => {

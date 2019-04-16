@@ -1,6 +1,6 @@
 import LoggedInUserConsumer from './LoggedInUserConsumer'
 import React from 'react'
-import { deleteCookie } from '../util/cookie'
+import { deleteCookie } from 'vanilla-cookies'
 
 export default () => <div style={{ position: 'fixed', right: 20, top: 10, zIndex: 100 }}>
   <LoggedInUserConsumer>
