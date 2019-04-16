@@ -5,7 +5,7 @@ import { Query } from 'react-apollo'
 import { SearchResult } from './SearchResult'
 import { Search, SearchVariables } from './__generated__/Search'
 import AccountThumb from '../AccountThumb'
-
+import Hamberger from '../icons/Hamberger'
 
 const SEARCH_QUERY = gql`
   query Search($q: String) {
@@ -32,7 +32,6 @@ const SEARCH_QUERY = gql`
 `
 
 class SearchQuery extends Query<Search, SearchVariables> {
-
 }
 
 type data = {}
@@ -46,7 +45,6 @@ type STATE = { search: string }
 
 type PROPS = {}
 
-
 class RemoteMain extends Component<PROPS, STATE> {
   constructor(props) {
     super(props)
@@ -56,8 +54,10 @@ class RemoteMain extends Component<PROPS, STATE> {
   render() {
     return (
       <div>
+
         <AccountThumb/>
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
+          <Hamberger/>
           <input
             style={{
               textAlign: 'center',
@@ -75,13 +75,12 @@ class RemoteMain extends Component<PROPS, STATE> {
           />
         </div>
 
-
         <div style={{ paddingTop: '6rem', maxWidth: 550, margin: '0 auto' }}>
-
           {/*<SubscriptionTest/>*/}
-          <SearchQuery query={SEARCH_QUERY} variables={{ q: this.state.search }}>
+          <SearchQuery
+            query={SEARCH_QUERY}
+            variables={{ q: this.state.search }}>
             {({ loading, error, data }) => {
-
               if (loading) {
                 return <div>Loading</div>
               }

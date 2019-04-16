@@ -35,7 +35,6 @@
     "gapi-to-graphql": "^2.0.5",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
-    "greenlock-express": "^2.7.6",
     "jsonwebtoken": "^8.5.1",
     "next": "^8.0.4",
     "next-with-apollo": "^3.4.0",
