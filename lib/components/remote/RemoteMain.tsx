@@ -3,6 +3,7 @@ import React ,{Component} from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { SearchResult } from './SearchResult'
+import { SubscriptionTest } from './SubscriptionTest'
 
 
 const SEARCH_QUERY = gql`
@@ -68,6 +69,8 @@ class RemoteMain extends Component<PROPS, STATE> {
 
 
         <div style={{ paddingTop: '6rem', maxWidth: 550, margin: '0 auto' }}>
+
+          <SubscriptionTest/>
           <Query query={SEARCH_QUERY} variables={{ q: this.state.search }}>
             {({ loading, error, data }) => {
               if (loading) {

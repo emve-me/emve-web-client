@@ -23,7 +23,7 @@ class MyApp extends App<PROPS> {
     return (
       <Container>
         <Head>
-          <title>Collab Admin</title>
+          <title>emve.me</title>
           <meta
             name="viewport"
             content="initial-scale=1.0, width=device-width"
