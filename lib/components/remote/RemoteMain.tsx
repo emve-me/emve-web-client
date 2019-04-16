@@ -70,7 +70,7 @@ class RemoteMain extends Component<PROPS, STATE> {
 
         <div style={{ paddingTop: '6rem', maxWidth: 550, margin: '0 auto' }}>
 
-          <SubscriptionTest/>
+          {/*<SubscriptionTest/>*/}
           <Query query={SEARCH_QUERY} variables={{ q: this.state.search }}>
             {({ loading, error, data }) => {
 

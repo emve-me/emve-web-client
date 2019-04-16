@@ -1,6 +1,4 @@
-import * as React from 'react'
-import { Component } from 'react'
-
+import React , { Component } from 'react'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 
