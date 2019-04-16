@@ -4,7 +4,7 @@ import { LOGGED_IN_USER } from '../gql'
 
 
 type TProps = {
-  children: ({ user, loggedIn }: { user?, loggedIn: boolean }) => React.ReactNode
+  children: ({ user, loggedIn }: { user?: TJWT, loggedIn: boolean }) => React.ReactNode
 }
 
 

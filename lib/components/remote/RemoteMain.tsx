@@ -4,6 +4,7 @@ import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { SearchResult } from './SearchResult'
 import { Search, SearchVariables } from './__generated__/Search'
+import AccountThumb from '../AccountThumb'
 
 
 const SEARCH_QUERY = gql`
@@ -46,8 +47,6 @@ type STATE = { search: string }
 type PROPS = {}
 
 
-
-
 class RemoteMain extends Component<PROPS, STATE> {
   constructor(props) {
     super(props)
@@ -57,6 +56,7 @@ class RemoteMain extends Component<PROPS, STATE> {
   render() {
     return (
       <div>
+        <AccountThumb/>
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
           <input
             style={{

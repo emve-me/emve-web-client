@@ -7,9 +7,30 @@ function setCookie(cname: string, cvalue: string, exdays: number) {
 }
 
 function getCookie(cname: string, cookieHeader: string) {
-  const m = {}
+  const m: Record<string, string> = {}
   cookieHeader.split(';').map(item => item.trim().split('=')).forEach(item => m[item[0]] = item[1])
-  return m[cname]
+  const value = m[cname]
+  console.log(cname, value, typeof value, value.trim().length === 0, 'should return null', value && value.trim().length === 0)
+
+  if (!value) {
+return null
+  }
+
+    if (value.trim().length === 0) {
+
+      return null
+    }
+  
+
+  return value
 }
 
-export { setCookie, getCookie }
+function deleteCookie(cname: string) {
+  const d = new Date()
+  d.setTime(0)
+  const expires = d.toUTCString()
+  const cookie = `${cname}=; expires=${expires}; path=/;`
+  document.cookie = cookie
+}
+
+export { setCookie, getCookie, deleteCookie }
