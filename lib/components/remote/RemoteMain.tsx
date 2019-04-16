@@ -1,4 +1,4 @@
-import React ,{Component} from 'react'
+import React, { Component } from 'react'
 
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
@@ -73,13 +73,16 @@ class RemoteMain extends Component<PROPS, STATE> {
           <SubscriptionTest/>
           <Query query={SEARCH_QUERY} variables={{ q: this.state.search }}>
             {({ loading, error, data }) => {
+
               if (loading) {
                 return <div>Loading</div>
               }
 
-              data.YoutubeApi.search.list.items.map(element =>
-                console.log(element.id.videoId)
-              )
+              if (error) {
+                console.error(error)
+                return <div>Error</div>
+              }
+
               return data.YoutubeApi.search.list.items.map(element => (
                 <SearchResult item={element} key={element.id.videoId}/>
               ))
