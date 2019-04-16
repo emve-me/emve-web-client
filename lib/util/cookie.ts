@@ -10,17 +10,14 @@ function getCookie(cname: string, cookieHeader: string) {
   const m: Record<string, string> = {}
   cookieHeader.split(';').map(item => item.trim().split('=')).forEach(item => m[item[0]] = item[1])
   const value = m[cname]
-  console.log(cname, value, typeof value, value.trim().length === 0, 'should return null', value && value.trim().length === 0)
 
   if (!value) {
-return null
+    return null
   }
 
-    if (value.trim().length === 0) {
-
-      return null
-    }
-  
+  if (value.trim().length === 0) {
+    return null
+  }
 
   return value
 }

@@ -10,6 +10,8 @@ type TProps = {
 
 export default class LoggedInUserConsumer extends Component <TProps> {
   render() {
+
+
     return <Query query={LOGGED_IN_USER} variables={{ id: 'LoggedInUser' }}
                   fetchPolicy='cache-only'>{({ error, loading, data, client }) => {
 

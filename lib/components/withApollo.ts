@@ -67,8 +67,6 @@ export default withApollo(({ headers, initialState, ctx }) => {
     if (headers && typeof headers.cookie === 'string') {
       const jwt = getJWTFromCookieString(headers.cookie)
 
-      console.log('jwt', typeof jwt, jwt.length)
-
       if (jwt) {
         const decoded = jwtIO.decode(jwt) as TJWT
 

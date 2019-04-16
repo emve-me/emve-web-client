@@ -12,7 +12,7 @@ export default class Index extends Component<props, state> {
     return <LoggedInUserConsumer>{({ user, loggedIn }) => {
 
       if (!loggedIn) {
-        <Login/>
+        return <Login/>
       } else {
         return <RemoteMain/>
       }
