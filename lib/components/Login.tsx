@@ -4,12 +4,16 @@ import GoogleLogin from 'react-google-login'
 import jwtIO from 'jsonwebtoken'
 import { LOGGED_IN_USER } from '../gql'
 import { setCookie } from 'vanilla-cookies'
+import gql from 'graphql-tag'
 
 
 type data = {}
 
 type params = {}
 
+const GQL_AUTHENTICATE = gql`mutation Authenticate {
+  authenticate
+}`
 
 export default class Login extends Component<{}, {}> {
   render() {
@@ -23,6 +27,8 @@ export default class Login extends Component<{}, {}> {
           const loggedInUser = { ...(jwtIO.decode(tokenId) as any), id: 'LoggedInUser', __typename: 'User' }
 
           setCookie('GTOKENID', tokenId, 365)
+
+          client.mutate({ mutation: GQL_AUTHENTICATE })
 
           client.writeQuery({
             query: LOGGED_IN_USER,

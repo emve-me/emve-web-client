@@ -2494,8 +2494,9 @@ type MonitorStreamInfo {
 }
 
 type Mutation {
-    channelCreate(input: ChannelCreateInput): Int
-    videoPush(input: VideoPushInput): ID
+    authenticate: ID
+    channelCreate(input: ChannelCreateInput!): Int
+    videoPush(input: VideoPushInput!): ID
 }
 
 "Nonprofit information."
@@ -4718,112 +4719,113 @@ enum VideoDurationSearchEnumParam {
 }
 
 enum VideoEmbeddableSearchEnumParam {
-#Only retrieve embeddable videos.
-#Return all videos, embeddable or not.
-any
+    #Only retrieve embeddable videos.
+    #Return all videos, embeddable or not.
+    any
 }
 
 enum VideoLicenseSearchEnumParam {
-#Return all videos, regardless of which license they have, that match the query parameters.
-any
-#
-#Only return videos that have a Creative Commons license. Users can reuse
-#videos with this license in other videos that they create. Learn more.
-creativeCommon
-#Only return videos that have the standard YouTube license.
-youtube
+    #Return all videos, regardless of which license they have, that match the query parameters.
+    any
+    #
+    #Only return videos that have a Creative Commons license. Users can reuse
+    #videos with this license in other videos that they create. Learn more.
+    creativeCommon
+    #Only return videos that have the standard YouTube license.
+    youtube
 }
 
 enum VideoSyndicatedSearchEnumParam {
-#Only retrieve syndicated videos.
-#Return all videos, syndicated or not.
-any
+    #Only retrieve syndicated videos.
+
+    #Return all videos, syndicated or not.
+    any
 }
 
 enum VideoTypeSearchEnumParam {
-#Return all videos.
-any
-#Only retrieve episodes of shows.
-episode
-#Only retrieve movies.
-movie
+    #Return all videos.
+    any
+    #Only retrieve episodes of shows.
+    episode
+    #Only retrieve movies.
+    movie
 }
 
 enum djctqRatingReasons {
-djctqCriminalActs
-djctqDrugs
-djctqExplicitSex
-djctqExtremeViolence
-djctqIllegalDrugs
-djctqImpactingContent
-djctqInappropriateLanguage
-djctqLegalDrugs
-djctqNudity
-djctqSex
-djctqSexualContent
-djctqViolence
+    djctqCriminalActs
+    djctqDrugs
+    djctqExplicitSex
+    djctqExtremeViolence
+    djctqIllegalDrugs
+    djctqImpactingContent
+    djctqInappropriateLanguage
+    djctqLegalDrugs
+    djctqNudity
+    djctqSex
+    djctqSexualContent
+    djctqViolence
 }
 
 enum editorSuggestions {
-audioQuietAudioSwap
-videoAutoLevels
-videoCrop
-videoStabilize
+    audioQuietAudioSwap
+    videoAutoLevels
+    videoCrop
+    videoStabilize
 }
 
 enum fpbRatingReasons {
-fpbBlasphemy
-fpbCriminalTechniques
-fpbDrugs
-fpbHorror
-fpbImitativeActsTechniques
-fpbLanguage
-fpbNudity
-fpbPrejudice
-fpbSex
-fpbSexualViolence
-fpbViolence
+    fpbBlasphemy
+    fpbCriminalTechniques
+    fpbDrugs
+    fpbHorror
+    fpbImitativeActsTechniques
+    fpbLanguage
+    fpbNudity
+    fpbPrejudice
+    fpbSex
+    fpbSexualViolence
+    fpbViolence
 }
 
 enum processingErrors {
-archiveFile
-audioFile
-docFile
-imageFile
-notAVideoFile
-projectFile
-unsupportedSpatialAudioLayout
+    archiveFile
+    audioFile
+    docFile
+    imageFile
+    notAVideoFile
+    projectFile
+    unsupportedSpatialAudioLayout
 }
 
 enum processingHints {
-hdrVideo
-nonStreamableMov
-sendBestQualityVideo
-spatialAudio
-sphericalVideo
-vrVideo
+    hdrVideo
+    nonStreamableMov
+    sendBestQualityVideo
+    spatialAudio
+    sphericalVideo
+    vrVideo
 }
 
 enum processingWarnings {
-hasEditlist
-inconsistentResolution
-problematicAudioCodec
-problematicHdrLookupTable
-problematicVideoCodec
-unknownAudioCodec
-unknownContainer
-unknownVideoCodec
-unsupportedHdrColorMetadata
-unsupportedHdrPixelFormat
-unsupportedSphericalProjectionType
-unsupportedVrStereoMode
+    hasEditlist
+    inconsistentResolution
+    problematicAudioCodec
+    problematicHdrLookupTable
+    problematicVideoCodec
+    unknownAudioCodec
+    unknownContainer
+    unknownVideoCodec
+    unsupportedHdrColorMetadata
+    unsupportedHdrPixelFormat
+    unsupportedSphericalProjectionType
+    unsupportedVrStereoMode
 }
 
 input ChannelCreateInput {
-channelName: String
+    channelName: String
 }
 
 input VideoPushInput {
-channel: ID
-videoId: ID
+    channel: ID!
+    videoId: ID!
 }
