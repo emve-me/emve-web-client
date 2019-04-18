@@ -1,10 +1,10 @@
-import React , { Component } from 'react'
+import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 
 const ADD_VIDEO = gql`
-  mutation addVideo($videoId: ID) {
-    videoPush(input: { videoId: $videoId })
+  mutation addVideo($videoId: ID!) {
+    videoPush(input: { videoId: $videoId, channel: "dog" })
   }
 `
 

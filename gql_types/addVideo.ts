@@ -11,5 +11,5 @@ export interface addVideo {
 }
 
 export interface addVideoVariables {
-  videoId?: string | null;
+  videoId: string;
 }

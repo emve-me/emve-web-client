@@ -7,7 +7,7 @@
 // ====================================================
 
 export interface CreateChannel {
-  channelCreate: number | null;
+  channelCreate: string | null;
 }
 
 export interface CreateChannelVariables {

@@ -9,7 +9,7 @@ import { LOGGED_IN_USER } from '../gql'
 import { WebSocketLink } from 'apollo-link-ws'
 import { split } from 'apollo-link'
 import { getMainDefinition } from 'apollo-utilities'
-import {getCookie} from 'vanilla-cookies'
+import { getCookie } from 'vanilla-cookies'
 
 
 export default withApollo(({ headers, initialState, ctx }) => {
@@ -105,6 +105,14 @@ export default withApollo(({ headers, initialState, ctx }) => {
     authHttpLink
   ) : authHttpLink
 
+  if (process.browser && process.env.NODE_ENV !== 'production') {
+    const jwt = getJWTFromCookieString(window.document.cookie)
+
+    if (jwt) {
+      console.log(`"authorization": "Bearer ${jwt}"`)
+    }
+
+  }
 
   return new ApolloClient({
     link: getLink(),

@@ -10,7 +10,7 @@
     "start": "NODE_ENV=production node dist/server.js",
     "start-spoof": "NODE_ENV=production node dist/server.js",
     "build-server": "tsc --build src/tsconfig.json",
-    "gql-types": "apollo client:codegen --target typescript --includes=lib/**/*.tsx,lib/**/.ts"
+    "gql-types": "apollo client:codegen --customScalarsPrefix csprefix --namespace dontseethenamespace --outputFlat --target typescript --includes=lib/**/*.tsx,lib/**/.ts gql_types"
   },
   "keywords": [],
   "author": "",
