@@ -4,7 +4,7 @@ import LoggedInUserConsumer from '../lib/components/LoggedInUserConsumer'
 import RemoteMain from '../lib/components/remote/RemoteMain'
 import ChannelCreate from '../lib/components/remote/ChannelCreate'
 import AccountThumb from '../lib/components/AccountThumb'
-
+import Router from 'next/router'
 type props = {}
 
 type state = {}

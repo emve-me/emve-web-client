@@ -2,6 +2,8 @@ import express from 'express'
 import next from 'next'
 import favicon from 'serve-favicon'
 import path from 'path'
+import { getCookie } from 'vanilla-cookies'
+import url from 'url'
 
 const dev = process.env.NODE_ENV !== 'production'
 
@@ -27,7 +29,24 @@ app.prepare().then(() => {
   server.use(favicon(path.join(__dirname, '..', 'static', 'share.png')))
 
   server.get('*', async (req, res) => {
-      return handle(req, res)
+
+    const {path,query} = url.parse(req.url, true)
+
+    console.log({path,query})
+
+
+    const googleToken = getCookie('GTOKENID', req.headers.cookie)
+
+
+    if(!googleToken){
+      app.render(req, res, '/login', query)
+    }
+
+    console.log('gotkenId', googleToken)
+
+    return handle(req, res)
+
+
   })
 
   server.listen(port, (err: Error) => {
