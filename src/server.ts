@@ -39,7 +39,7 @@ app.prepare().then(() => {
 
 
     if(!googleToken){
-      app.render(req, res, '/login', query)
+      // app.render(req, res, '/login', query)
     }
 
     console.log('gotkenId', googleToken)

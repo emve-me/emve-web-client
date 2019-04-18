@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, TextField } from '@material-ui/core'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import { CreateChannel, CreateChannelVariables } from './__generated__/CreateChannel'
+import { CreateChannel, CreateChannelVariables } from '../remote/__generated__/CreateChannel'
 
 const CREATE_CHANNEL = gql`
   mutation CreateChannel($channelName: String) {
