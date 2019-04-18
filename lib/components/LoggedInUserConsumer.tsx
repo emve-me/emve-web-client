@@ -15,7 +15,6 @@ export default class LoggedInUserConsumer extends Component <TProps> {
     return <Query query={LOGGED_IN_USER} variables={{ id: 'LoggedInUser' }}
                   fetchPolicy='cache-only'>{({ error, loading, data, client }) => {
 
-
       if (error) {
         console.log(error)
         return <div>Error</div>
@@ -29,9 +28,9 @@ export default class LoggedInUserConsumer extends Component <TProps> {
         return this.props.children({ loggedIn: false })
       }
 
+      console.log('data.loggedInUser', data.loggedInUser)
       return this.props.children({ user: data.loggedInUser, loggedIn: true })
-    }
-    }
+    }}
     </Query>
 
   }

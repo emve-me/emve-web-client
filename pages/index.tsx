@@ -3,6 +3,7 @@ import Login from '../lib/components/Login'
 import LoggedInUserConsumer from '../lib/components/LoggedInUserConsumer'
 import RemoteMain from '../lib/components/remote/RemoteMain'
 import ChannelCreate from '../lib/components/remote/ChannelCreate'
+import AccountThumb from '../lib/components/AccountThumb'
 
 type props = {}
 
@@ -15,7 +16,11 @@ export default class Index extends Component<props, state> {
       if (!loggedIn) {
         return <Login/>
       } else {
-        return <ChannelCreate/>
+
+        return <div>
+          <AccountThumb/>
+          <ChannelCreate/>
+        </div>
       }
     }}
     </LoggedInUserConsumer>
