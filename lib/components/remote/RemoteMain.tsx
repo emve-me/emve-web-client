@@ -15,9 +15,9 @@ const SEARCH_QUERY = gql`
             id {
               videoId
             }
-            
+
             snippet {
-              
+
               title
               thumbnails {
                 high {
@@ -70,6 +70,7 @@ class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TSt
           />
         </div>
 
+
         <div style={{ paddingTop: '6rem', maxWidth: 550, margin: '0 auto' }}>
           {/*<SubscriptionTest/>*/}
           <YouTubeSearchQuery query={SEARCH_QUERY} variables={{ q: this.state.search }}>
@@ -93,6 +94,5 @@ class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TSt
     )
   }
 }
-
 
 export default withRouter(RemoteMain)

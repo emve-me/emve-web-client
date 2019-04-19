@@ -512,6 +512,7 @@ type Channel {
     id: ID
     name: String
     owner: User
+    tracks(after: ID, first: Int, played: Boolean): Tracks
 }
 
 "The auditDetails object encapsulates channel data that is relevant for YouTube Partners during the audit process."
@@ -2946,7 +2947,7 @@ type Query {
         #Deprecated. Please use quotaUser instead.
         userIp: String
     ): YoutubeResources
-    videos: [ID]
+    channel(id: ID!): Channel
 }
 
 "A resource id is a generic reference that points to another YouTube resource."
@@ -3656,13 +3657,39 @@ type TokenPagination {
     thisTypeHasNoFieldsAndGraphQLDontLikeThat: Boolean
 }
 
+type Track {
+    addedOn: String
+    channel: Channel
+    id: ID
+    owner: User
+    played: Boolean
+    title: String
+    videoId: ID
+}
+
+type TrackPageInfo {
+    endCursor: ID
+    hasNextPage: Boolean
+}
+
+type Tracks {
+    edges: [TracksEdge]
+    pageInfo: TrackPageInfo
+    totalCount: Int
+}
+
+type TracksEdge {
+    cursor: ID
+    node: Track
+}
+
 type User {
     created_on: String
     email: String
-    email_verified: Boolean
+    emailVerified: Boolean
     firstName: String
     fullName: String
-    google_id: ID
+    googleId: ID
     id: ID
     lastName: String
     locale: String
