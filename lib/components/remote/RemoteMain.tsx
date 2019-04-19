@@ -5,7 +5,7 @@ import { SearchResult } from './SearchResult'
 import { withRouter, WithRouterProps } from 'next/router'
 import { YouTubeSearch, YouTubeSearchVariables } from '../../../gql_types/YouTubeSearch'
 
-
+// TODO remove key from here
 const SEARCH_QUERY = gql`
   query YouTubeSearch($q: String) {
     YoutubeApi(key: "AIzaSyDtlCouvXU0kcAKF-UZWVNe3sQpoxHBsa0") {
@@ -15,9 +15,10 @@ const SEARCH_QUERY = gql`
             id {
               videoId
             }
+            
             snippet {
+              
               title
-
               thumbnails {
                 high {
                   url

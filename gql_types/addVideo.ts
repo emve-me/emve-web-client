@@ -13,4 +13,6 @@ export interface addVideo {
 export interface addVideoVariables {
   videoId: string;
   channel: string;
+  title?: string | null;
+  time?: number | null;
 }

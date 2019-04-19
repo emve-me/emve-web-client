@@ -5,8 +5,8 @@ import { addVideo, addVideoVariables } from '../../../gql_types/addVideo'
 import { YouTubeSearch_YoutubeApi_search_list_items } from '../../../gql_types/YouTubeSearch'
 
 const ADD_VIDEO = gql`
-  mutation addVideo($videoId: ID!, $channel: ID!) {
-    videoPush(input: { videoId: $videoId, channel: $channel})
+  mutation addVideo($videoId: ID!, $channel: ID!, $title : String) {
+    videoPush(input: { videoId: $videoId, channel: $channel, title: $title})
   }
 `
 
@@ -30,7 +30,13 @@ export class SearchResult extends Component<PROPS, STATE> {
         {(addVideo, { data }) => (
           <div
             onClick={async () => {
-              const addVideoResp = await addVideo({ variables: { videoId: item.id.videoId , channel} })
+              const addVideoResp = await addVideo({
+                variables: {
+                  videoId: item.id.videoId,
+                  channel,
+                  title: item.snippet.title
+                }
+              })
               console.log('resp', addVideoResp)
             }}
             style={{ cursor: 'pointer', padding: '1rem' }}>

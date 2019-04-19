@@ -30,13 +30,13 @@ type Activities_ {
         channelId: String,
         """
 
-        Set this parameter's value to  to retrieve the activity feed that
+        Set this parameter's value to true to retrieve the activity feed that
         displays on the YouTube home page for the currently authenticated user.
         """
         home: Boolean,
         #The maxResults parameter specifies the maximum number of items that should be returned in the result set.
         maxResults: Int,
-        #Set this parameter's value to  to retrieve a feed of the authenticated user's activities.
+        #Set this parameter's value to true to retrieve a feed of the authenticated user's activities.
         mine: Boolean,
         """
 
@@ -363,9 +363,9 @@ type CaptionSnippet {
     failureReason: String
     """
     Indicates whether YouTube synchronized the caption track to the audio track in
-    the video. The value will be  if a sync was explicitly requested when the
+    the video. The value will be true if a sync was explicitly requested when the
     caption track was uploaded. For example, when calling the captions.insert or
-    captions.update methods, you can set the sync parameter to  to instruct
+    captions.update methods, you can set the sync parameter to true to instruct
     YouTube to sync the uploaded track to the video. If the value is false,
     YouTube uses the time codes in the uploaded caption track to determine when to
     display captions.
@@ -374,7 +374,7 @@ type CaptionSnippet {
     "Indicates whether the track contains closed captions for the deaf and hard of hearing. The default value is false."
     isCC: Boolean
     """
-    Indicates whether the caption track is a draft. If the value is , then the
+    Indicates whether the caption track is a draft. If the value is true, then the
     track is not publicly visible. The default value is false.
     """
     isDraft: Boolean
@@ -722,7 +722,7 @@ type ChannelSections_ {
         channelSection ID.
         """
         id: String,
-        #Set this parameter's value to  to retrieve a feed of the authenticated user's channelSections.
+        #Set this parameter's value to true to retrieve a feed of the authenticated user's channelSections.
         mine: Boolean,
         """
 
@@ -827,7 +827,7 @@ type ChannelStatistics {
 "JSON template for the status part of a channel."
 type ChannelStatus {
     """
-    If , then the user is linked to either a YouTube username or G+ account.
+    If true, then the user is linked to either a YouTube username or G+ account.
     Otherwise, the user doesn't have a public YouTube identity.
     """
     isLinked: Boolean
@@ -876,7 +876,7 @@ type Channels_ {
 
         Note: This parameter is intended exclusively for YouTube content partners.
 
-        Set this parameter's value to  to instruct the API to only return
+        Set this parameter's value to true to instruct the API to only return
         channels managed by the content owner that the onBehalfOfContentOwner
         parameter specifies. The user must be authenticated as a CMS account linked
         to the specified content owner and onBehalfOfContentOwner must be provided.
@@ -884,7 +884,7 @@ type Channels_ {
         managedByMe: Boolean,
         #The maxResults parameter specifies the maximum number of items that should be returned in the result set.
         maxResults: Int,
-        #Set this parameter's value to  to instruct the API to only return channels owned by the authenticated user.
+        #Set this parameter's value to true to instruct the API to only return channels owned by the authenticated user.
         mine: Boolean,
         """
 
@@ -1728,12 +1728,12 @@ type LiveBroadcastContentDetails {
     This setting determines whether viewers can access DVR controls while watching
     the video. DVR controls enable the viewer to control the video playback
     experience by pausing, rewinding, or fast forwarding content. The default
-    value for this property is .
+    value for this property is true.
 
 
 
-    Important: You must set the value to  and also set the enableArchive
-    property's value to  if you want to make playback available immediately
+    Important: You must set the value to true and also set the enableArchive
+    property's value to true if you want to make playback available immediately
     after the broadcast ends.
     """
     enableDvr: Boolean
@@ -1748,7 +1748,7 @@ type LiveBroadcastContentDetails {
     """
     If both this and enable_low_latency are set, they must match. LATENCY_NORMAL
     should match enable_low_latency=false LATENCY_LOW should match
-    enable_low_latency= LATENCY_ULTRA_LOW should have enable_low_latency omitted.
+    enable_low_latency=true LATENCY_ULTRA_LOW should have enable_low_latency omitted.
     """
     latencyPreference: String
     mesh: String
@@ -1761,14 +1761,14 @@ type LiveBroadcastContentDetails {
     "The projection format of this broadcast. This defaults to rectangular."
     projection: String
     """
-    Automatically start recording after the event goes live. The default value for this property is .
+    Automatically start recording after the event goes live. The default value for this property is true.
 
 
 
-    Important: You must also set the enableDvr property's value to  if you
+    Important: You must also set the enableDvr property's value to true if you
     want the playback to be available immediately after the broadcast ends. If you
-    set this property's value to  but do not also set the enableDvr property
-    to , there may be a delay of around one day before the archived video will
+    set this property's value to true but do not also set the enableDvr property
+    to true, there may be a delay of around one day before the archived video will
     be available for playback.
     """
     recordFromStart: Boolean
@@ -1919,7 +1919,7 @@ type LiveBroadcasts_ {
         """
 
         The mine parameter can be used to instruct the API to only return broadcasts
-        owned by the authenticated user. Set the parameter value to  to only
+        owned by the authenticated user. Set the parameter value to true to only
         retrieve your own broadcasts.
         """
         mine: Boolean,
@@ -2309,7 +2309,7 @@ type LiveStreamContentDetails {
     - A non-reusable stream can only be bound to one broadcast.
     - A non-reusable stream might be deleted by an automated process after the broadcast ends.
     - The  liveStreams.list method does not list non-reusable streams if you call
-    the method and set the mine parameter to . The only way to use that method
+    the method and set the mine parameter to true. The only way to use that method
     to retrieve the resource for a non-reusable stream is to use the id parameter
     to identify the stream.
     """
@@ -2378,7 +2378,7 @@ type LiveStreams_ {
         """
 
         The mine parameter can be used to instruct the API to only return streams
-        owned by the authenticated user. Set the parameter value to  to only
+        owned by the authenticated user. Set the parameter value to true to only
         retrieve your own streams.
         """
         mine: Boolean,
@@ -2450,7 +2450,7 @@ type LocalizedString {
 "Settings and Info of the monitor stream"
 type MonitorStreamInfo {
     """
-    If you have set the enableMonitorStream property to , then this property
+    If you have set the enableMonitorStream property to true, then this property
     determines the length of the live broadcast delay.
     """
     broadcastStreamDelayMs: Int
@@ -2463,7 +2463,7 @@ type MonitorStreamInfo {
     The broadcaster can use the stream to review the event content and also to
     identify the optimal times to insert cuepoints.
 
-    You need to set this value to  if you intend to have a broadcast delay for your event.
+    You need to set this value to true if you intend to have a broadcast delay for your event.
 
     Note: This property cannot be updated once the broadcast is in the testing or live state.
     """
@@ -2817,7 +2817,7 @@ type Playlists_ {
         id: String,
         #The maxResults parameter specifies the maximum number of items that should be returned in the result set.
         maxResults: Int,
-        #Set this parameter's value to  to instruct the API to only return playlists owned by the authenticated user.
+        #Set this parameter's value to true to instruct the API to only return playlists owned by the authenticated user.
         mine: Boolean,
         """
 
@@ -2884,7 +2884,7 @@ type PromotedItem {
     "Identifies the promoted item."
     id: PromotedItemId
     """
-    If , the content owner's name will be used when displaying the promotion.
+    If true, the content owner's name will be used when displaying the promotion.
     This field can only be set when the update is made on behalf of the content owner.
     """
     promotedByContentOwner: Boolean
@@ -3089,7 +3089,7 @@ type Search_ {
         """
 
         The forMine parameter restricts the search to only retrieve videos owned by
-        the authenticated user. If you set this parameter to , then the type
+        the authenticated user. If you set this parameter to true, then the type
         parameter's value must also be set to video.
         """
         forMine: Boolean,
@@ -3461,17 +3461,17 @@ type Subscriptions_ {
         id: String,
         #The maxResults parameter specifies the maximum number of items that should be returned in the result set.
         maxResults: Int,
-        #Set this parameter's value to  to retrieve a feed of the authenticated user's subscriptions.
+        #Set this parameter's value to true to retrieve a feed of the authenticated user's subscriptions.
         mine: Boolean,
         """
 
-        Set this parameter's value to  to retrieve a feed of the subscribers of
+        Set this parameter's value to true to retrieve a feed of the subscribers of
         the authenticated user in reverse chronological order (newest first).
         """
         myRecentSubscribers: Boolean,
         """
 
-        Set this parameter's value to  to retrieve a feed of the subscribers of
+        Set this parameter's value to true to retrieve a feed of the subscribers of
         the authenticated user in no particular order.
         """
         mySubscribers: Boolean,
@@ -3580,7 +3580,7 @@ type SuperChatEventSnippet {
     \"$1.00\"). The string is rendered for the given language.
     """
     displayString: String
-    " if this event is a Super Chat for Good purchase."
+    "True if this event is a Super Chat for Good purchase."
     isSuperChatForGood: Boolean
     "The tier for the paid message, which is based on the amount of money spent to purchase the message."
     messageType: Int
@@ -3739,7 +3739,7 @@ type VideoAgeGating {
     alcoholContent: Boolean
     """
     Age-restricted trailers. For redband trailers and adult-rated video-games.
-    Only users aged 18+ can view the content. The the field is  the content is
+    Only users aged 18+ can view the content. The the field is true the content is
     restricted to viewers aged 18+. Otherwise The field won't be present.
     """
     restricted: Boolean
@@ -4762,6 +4762,8 @@ channelId: ID!
 
 input VideoPushInput {
 channel: ID!
+time: Int
+title: String
 videoId: ID!
 }
 
