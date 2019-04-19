@@ -1,35 +1,36 @@
 import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
+import { addVideo, addVideoVariables } from '../../../gql_types/addVideo'
+import { YouTubeSearch_YoutubeApi_search_list_items } from '../../../gql_types/YouTubeSearch'
 
 const ADD_VIDEO = gql`
-  mutation addVideo($videoId: ID!) {
-    videoPush(input: { videoId: $videoId, channel: "dog" })
+  mutation addVideo($videoId: ID!, $channel: ID!) {
+    videoPush(input: { videoId: $videoId, channel: $channel})
   }
 `
 
+class AddVideoMutation extends Mutation<addVideo, addVideoVariables> {
+
+}
+
 type PROPS = {
-  item: {
-    id: { videoId }
-    snippet: {
-      title
-      thumbnails: { high: { url } }
-    }
-  }
+  item: YouTubeSearch_YoutubeApi_search_list_items
+  channel: string
 }
 
 type STATE = {}
 
 export class SearchResult extends Component<PROPS, STATE> {
   render() {
-    const { item } = this.props
+    const { item, channel } = this.props
 
     return (
-      <Mutation mutation={ADD_VIDEO}>
+      <AddVideoMutation mutation={ADD_VIDEO}>
         {(addVideo, { data }) => (
           <div
             onClick={async () => {
-              const addVideoResp = await addVideo({ variables: { videoId: item.id.videoId } })
+              const addVideoResp = await addVideo({ variables: { videoId: item.id.videoId , channel} })
               console.log('resp', addVideoResp)
             }}
             style={{ cursor: 'pointer', padding: '1rem' }}>
@@ -45,7 +46,7 @@ export class SearchResult extends Component<PROPS, STATE> {
             <img style={{ width: '100%', borderRadius: 5 }} src={item.snippet.thumbnails.high.url}/>
           </div>
         )}
-      </Mutation>
+      </AddVideoMutation>
     )
   }
 }

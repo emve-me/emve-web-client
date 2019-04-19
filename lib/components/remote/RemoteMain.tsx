@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { SearchResult } from './SearchResult'
-import { SubscriptionTest } from './SubscriptionTest'
+import { withRouter, WithRouterProps } from 'next/router'
+import { YouTubeSearch, YouTubeSearchVariables } from '../../../gql_types/YouTubeSearch'
+
 
 const SEARCH_QUERY = gql`
-  query Search($q: String) {
+  query YouTubeSearch($q: String) {
     YoutubeApi(key: "AIzaSyDtlCouvXU0kcAKF-UZWVNe3sQpoxHBsa0") {
       search {
         list(q: $q, part: "snippet") {
@@ -29,23 +30,25 @@ const SEARCH_QUERY = gql`
     }
   }
 `
-type data = {}
 
-type params = {}
+class YouTubeSearchQuery extends Query<YouTubeSearch, YouTubeSearchVariables> {
+}
 
-class YouTubeSearch extends Query<data, params> {}
+type TState = { search: string }
 
-type STATE = { search: string }
+type TProps = {}
 
-type PROPS = {}
+class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TState> {
 
-class RemoteMain extends Component<PROPS, STATE> {
   constructor(props) {
     super(props)
     this.state = { search: '' }
   }
 
   render() {
+
+    const channel = this.props.router.query.p
+
     return (
       <div>
         <div style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
@@ -68,7 +71,7 @@ class RemoteMain extends Component<PROPS, STATE> {
 
         <div style={{ paddingTop: '6rem', maxWidth: 550, margin: '0 auto' }}>
           {/*<SubscriptionTest/>*/}
-          <Query query={SEARCH_QUERY} variables={{ q: this.state.search }}>
+          <YouTubeSearchQuery query={SEARCH_QUERY} variables={{ q: this.state.search }}>
             {({ loading, error, data }) => {
               if (loading) {
                 return <div>Loading</div>
@@ -80,14 +83,15 @@ class RemoteMain extends Component<PROPS, STATE> {
               }
 
               return data.YoutubeApi.search.list.items.map(element => (
-                <SearchResult item={element} key={element.id.videoId} />
+                <SearchResult channel={channel} item={element} key={element.id.videoId}/>
               ))
             }}
-          </Query>
+          </YouTubeSearchQuery>
         </div>
       </div>
     )
   }
 }
 
-export default RemoteMain
+
+export default withRouter(RemoteMain)

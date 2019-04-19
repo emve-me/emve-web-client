@@ -30,13 +30,13 @@ type Activities_ {
         channelId: String,
         """
 
-        Set this parameter's value to true to retrieve the activity feed that
+        Set this parameter's value to  to retrieve the activity feed that
         displays on the YouTube home page for the currently authenticated user.
         """
         home: Boolean,
         #The maxResults parameter specifies the maximum number of items that should be returned in the result set.
         maxResults: Int,
-        #Set this parameter's value to true to retrieve a feed of the authenticated user's activities.
+        #Set this parameter's value to  to retrieve a feed of the authenticated user's activities.
         mine: Boolean,
         """
 
@@ -363,9 +363,9 @@ type CaptionSnippet {
     failureReason: String
     """
     Indicates whether YouTube synchronized the caption track to the audio track in
-    the video. The value will be true if a sync was explicitly requested when the
+    the video. The value will be  if a sync was explicitly requested when the
     caption track was uploaded. For example, when calling the captions.insert or
-    captions.update methods, you can set the sync parameter to true to instruct
+    captions.update methods, you can set the sync parameter to  to instruct
     YouTube to sync the uploaded track to the video. If the value is false,
     YouTube uses the time codes in the uploaded caption track to determine when to
     display captions.
@@ -374,7 +374,7 @@ type CaptionSnippet {
     "Indicates whether the track contains closed captions for the deaf and hard of hearing. The default value is false."
     isCC: Boolean
     """
-    Indicates whether the caption track is a draft. If the value is true, then the
+    Indicates whether the caption track is a draft. If the value is , then the
     track is not publicly visible. The default value is false.
     """
     isDraft: Boolean
@@ -507,34 +507,11 @@ type CdnSettings {
     resolution: String
 }
 
-"A channel resource contains information about a YouTube channel."
 type Channel {
-    "The auditionDetails object encapsulates channel data that is relevant for YouTube Partners during the audition process."
-    auditDetails: ChannelAuditDetails
-    "The brandingSettings object encapsulates information about the branding of the channel."
-    brandingSettings: ChannelBrandingSettings
-    "The contentDetails object encapsulates information about the channel's content."
-    contentDetails: ChannelContentDetails
-    "The contentOwnerDetails object encapsulates channel data that is relevant for YouTube Partners linked with the channel."
-    contentOwnerDetails: ChannelContentOwnerDetails
-    "The conversionPings object encapsulates information about conversion pings that need to be respected by the channel."
-    conversionPings: ChannelConversionPings
-    "Etag of this resource."
-    etag: String
-    "The ID that YouTube uses to uniquely identify the channel."
-    id: String
-    "The invideoPromotion object encapsulates information about promotion campaign associated with the channel."
-    invideoPromotion: InvideoPromotion
-    "Identifies what kind of resource this is. Value: the fixed string \"youtube#channel\"."
-    kind: String
-    "The snippet object contains basic details about the channel, such as its title, description, and thumbnail images."
-    snippet: ChannelSnippet
-    "The statistics object encapsulates statistics for the channel."
-    statistics: ChannelStatistics
-    "The status object encapsulates information about the privacy status of the channel."
-    status: ChannelStatus
-    "The topicDetails object encapsulates information about Freebase topics associated with the channel."
-    topicDetails: ChannelTopicDetails
+    createdOn: String
+    id: ID
+    name: String
+    owner: User
 }
 
 "The auditDetails object encapsulates channel data that is relevant for YouTube Partners during the audit process."
@@ -745,7 +722,7 @@ type ChannelSections_ {
         channelSection ID.
         """
         id: String,
-        #Set this parameter's value to true to retrieve a feed of the authenticated user's channelSections.
+        #Set this parameter's value to  to retrieve a feed of the authenticated user's channelSections.
         mine: Boolean,
         """
 
@@ -850,7 +827,7 @@ type ChannelStatistics {
 "JSON template for the status part of a channel."
 type ChannelStatus {
     """
-    If true, then the user is linked to either a YouTube username or G+ account.
+    If , then the user is linked to either a YouTube username or G+ account.
     Otherwise, the user doesn't have a public YouTube identity.
     """
     isLinked: Boolean
@@ -899,7 +876,7 @@ type Channels_ {
 
         Note: This parameter is intended exclusively for YouTube content partners.
 
-        Set this parameter's value to true to instruct the API to only return
+        Set this parameter's value to  to instruct the API to only return
         channels managed by the content owner that the onBehalfOfContentOwner
         parameter specifies. The user must be authenticated as a CMS account linked
         to the specified content owner and onBehalfOfContentOwner must be provided.
@@ -907,7 +884,7 @@ type Channels_ {
         managedByMe: Boolean,
         #The maxResults parameter specifies the maximum number of items that should be returned in the result set.
         maxResults: Int,
-        #Set this parameter's value to true to instruct the API to only return channels owned by the authenticated user.
+        #Set this parameter's value to  to instruct the API to only return channels owned by the authenticated user.
         mine: Boolean,
         """
 
@@ -1751,12 +1728,12 @@ type LiveBroadcastContentDetails {
     This setting determines whether viewers can access DVR controls while watching
     the video. DVR controls enable the viewer to control the video playback
     experience by pausing, rewinding, or fast forwarding content. The default
-    value for this property is true.
+    value for this property is .
 
 
 
-    Important: You must set the value to true and also set the enableArchive
-    property's value to true if you want to make playback available immediately
+    Important: You must set the value to  and also set the enableArchive
+    property's value to  if you want to make playback available immediately
     after the broadcast ends.
     """
     enableDvr: Boolean
@@ -1771,7 +1748,7 @@ type LiveBroadcastContentDetails {
     """
     If both this and enable_low_latency are set, they must match. LATENCY_NORMAL
     should match enable_low_latency=false LATENCY_LOW should match
-    enable_low_latency=true LATENCY_ULTRA_LOW should have enable_low_latency omitted.
+    enable_low_latency= LATENCY_ULTRA_LOW should have enable_low_latency omitted.
     """
     latencyPreference: String
     mesh: String
@@ -1784,14 +1761,14 @@ type LiveBroadcastContentDetails {
     "The projection format of this broadcast. This defaults to rectangular."
     projection: String
     """
-    Automatically start recording after the event goes live. The default value for this property is true.
+    Automatically start recording after the event goes live. The default value for this property is .
 
 
 
-    Important: You must also set the enableDvr property's value to true if you
+    Important: You must also set the enableDvr property's value to  if you
     want the playback to be available immediately after the broadcast ends. If you
-    set this property's value to true but do not also set the enableDvr property
-    to true, there may be a delay of around one day before the archived video will
+    set this property's value to  but do not also set the enableDvr property
+    to , there may be a delay of around one day before the archived video will
     be available for playback.
     """
     recordFromStart: Boolean
@@ -1942,7 +1919,7 @@ type LiveBroadcasts_ {
         """
 
         The mine parameter can be used to instruct the API to only return broadcasts
-        owned by the authenticated user. Set the parameter value to true to only
+        owned by the authenticated user. Set the parameter value to  to only
         retrieve your own broadcasts.
         """
         mine: Boolean,
@@ -2332,7 +2309,7 @@ type LiveStreamContentDetails {
     - A non-reusable stream can only be bound to one broadcast.
     - A non-reusable stream might be deleted by an automated process after the broadcast ends.
     - The  liveStreams.list method does not list non-reusable streams if you call
-    the method and set the mine parameter to true. The only way to use that method
+    the method and set the mine parameter to . The only way to use that method
     to retrieve the resource for a non-reusable stream is to use the id parameter
     to identify the stream.
     """
@@ -2401,7 +2378,7 @@ type LiveStreams_ {
         """
 
         The mine parameter can be used to instruct the API to only return streams
-        owned by the authenticated user. Set the parameter value to true to only
+        owned by the authenticated user. Set the parameter value to  to only
         retrieve your own streams.
         """
         mine: Boolean,
@@ -2473,7 +2450,7 @@ type LocalizedString {
 "Settings and Info of the monitor stream"
 type MonitorStreamInfo {
     """
-    If you have set the enableMonitorStream property to true, then this property
+    If you have set the enableMonitorStream property to , then this property
     determines the length of the live broadcast delay.
     """
     broadcastStreamDelayMs: Int
@@ -2486,7 +2463,7 @@ type MonitorStreamInfo {
     The broadcaster can use the stream to review the event content and also to
     identify the optimal times to insert cuepoints.
 
-    You need to set this value to true if you intend to have a broadcast delay for your event.
+    You need to set this value to  if you intend to have a broadcast delay for your event.
 
     Note: This property cannot be updated once the broadcast is in the testing or live state.
     """
@@ -2496,7 +2473,7 @@ type MonitorStreamInfo {
 type Mutation {
     authenticate: ID
     channelCreate(input: ChannelCreateInput!): ID
-    channelJoin(input: ChannelJoinInput!): ID
+    channelJoin(input: ChannelJoinInput!): Channel
     videoPush(input: VideoPushInput!): ID
 }
 
@@ -2840,7 +2817,7 @@ type Playlists_ {
         id: String,
         #The maxResults parameter specifies the maximum number of items that should be returned in the result set.
         maxResults: Int,
-        #Set this parameter's value to true to instruct the API to only return playlists owned by the authenticated user.
+        #Set this parameter's value to  to instruct the API to only return playlists owned by the authenticated user.
         mine: Boolean,
         """
 
@@ -2907,7 +2884,7 @@ type PromotedItem {
     "Identifies the promoted item."
     id: PromotedItemId
     """
-    If true, the content owner's name will be used when displaying the promotion.
+    If , the content owner's name will be used when displaying the promotion.
     This field can only be set when the update is made on behalf of the content owner.
     """
     promotedByContentOwner: Boolean
@@ -3112,7 +3089,7 @@ type Search_ {
         """
 
         The forMine parameter restricts the search to only retrieve videos owned by
-        the authenticated user. If you set this parameter to true, then the type
+        the authenticated user. If you set this parameter to , then the type
         parameter's value must also be set to video.
         """
         forMine: Boolean,
@@ -3398,7 +3375,7 @@ type Subscription {
     snippet: SubscriptionSnippet
     "The subscriberSnippet object contains basic details about the sbuscriber."
     subscriberSnippet: SubscriptionSubscriberSnippet
-    videoPushed: Video
+    videoPushed(input: VideoPushedInput!): Video
 }
 
 "Details about the content to witch a subscription refers."
@@ -3484,17 +3461,17 @@ type Subscriptions_ {
         id: String,
         #The maxResults parameter specifies the maximum number of items that should be returned in the result set.
         maxResults: Int,
-        #Set this parameter's value to true to retrieve a feed of the authenticated user's subscriptions.
+        #Set this parameter's value to  to retrieve a feed of the authenticated user's subscriptions.
         mine: Boolean,
         """
 
-        Set this parameter's value to true to retrieve a feed of the subscribers of
+        Set this parameter's value to  to retrieve a feed of the subscribers of
         the authenticated user in reverse chronological order (newest first).
         """
         myRecentSubscribers: Boolean,
         """
 
-        Set this parameter's value to true to retrieve a feed of the subscribers of
+        Set this parameter's value to  to retrieve a feed of the subscribers of
         the authenticated user in no particular order.
         """
         mySubscribers: Boolean,
@@ -3603,7 +3580,7 @@ type SuperChatEventSnippet {
     \"$1.00\"). The string is rendered for the given language.
     """
     displayString: String
-    "True if this event is a Super Chat for Good purchase."
+    " if this event is a Super Chat for Good purchase."
     isSuperChatForGood: Boolean
     "The tier for the paid message, which is based on the amount of money spent to purchase the message."
     messageType: Int
@@ -3679,69 +3656,21 @@ type TokenPagination {
     thisTypeHasNoFieldsAndGraphQLDontLikeThat: Boolean
 }
 
-"A video resource represents a YouTube video."
-type Video {
-    "Age restriction details related to a video. This data can only be retrieved by the video owner."
-    ageGating: VideoAgeGating
-    """
-    The contentDetails object contains information about the video content,
-    including the length of the video and its aspect ratio.
-    """
-    contentDetails: VideoContentDetails
-    "Etag of this resource."
-    etag: String
-    """
-    The fileDetails object encapsulates information about the video file that was
-    uploaded to YouTube, including the file's resolution, duration, audio and
-    video codecs, stream bitrates, and more. This data can only be retrieved by
-    the video owner.
-    """
-    fileDetails: VideoFileDetails
-    "The ID that YouTube uses to uniquely identify the video."
-    id: String
-    "Identifies what kind of resource this is. Value: the fixed string \"youtube#video\"."
-    kind: String
-    """
-    The liveStreamingDetails object contains metadata about a live video
-    broadcast. The object will only be present in a video resource if the video is
-    an upcoming, live, or completed live broadcast.
-    """
-    liveStreamingDetails: VideoLiveStreamingDetails
-    "The monetizationDetails object encapsulates information about the monetization status of the video."
-    monetizationDetails: VideoMonetizationDetails
-    "The player object contains information that you would use to play the video in an embedded player."
-    player: VideoPlayer
-    """
-    The processingDetails object encapsulates information about YouTube's progress
-    in processing the uploaded video file. The properties in the object identify
-    the current processing status and an estimate of the time remaining until
-    YouTube finishes processing the video. This part also indicates whether
-    different types of data or content, such as file details or thumbnail images,
-    are available for the video.
+type User {
+    created_on: String
+    email: String
+    email_verified: Boolean
+    firstName: String
+    fullName: String
+    google_id: ID
+    id: ID
+    lastName: String
+    locale: String
+    picture: String
+}
 
-    The processingProgress object is designed to be polled so that the video
-    uploaded can track the progress that YouTube has made in processing the
-    uploaded video file. This data can only be retrieved by the video owner.
-    """
-    processingDetails: VideoProcessingDetails
-    "The projectDetails object contains information about the project specific video metadata."
-    projectDetails: VideoProjectDetails
-    "The recordingDetails object encapsulates information about the location, date and address where the video was recorded."
-    recordingDetails: VideoRecordingDetails
-    "The snippet object contains basic details about the video, such as its title, description, and category."
-    snippet: VideoSnippet
-    "The statistics object contains statistics about the video."
-    statistics: VideoStatistics
-    "The status object contains information about the video's uploading, processing, and privacy statuses."
-    status: VideoStatus
-    """
-    The suggestions object encapsulates suggestions that identify opportunities to
-    improve the video quality or the metadata for the uploaded video. This data
-    can only be retrieved by the video owner.
-    """
-    suggestions: VideoSuggestions
-    "The topicDetails object encapsulates information about Freebase topics associated with the video."
-    topicDetails: VideoTopicDetails
+type Video {
+    id: ID
 }
 
 """
@@ -3810,7 +3739,7 @@ type VideoAgeGating {
     alcoholContent: Boolean
     """
     Age-restricted trailers. For redband trailers and adult-rated video-games.
-    Only users aged 18+ can view the content. The the field is true the content is
+    Only users aged 18+ can view the content. The the field is  the content is
     restricted to viewers aged 18+. Otherwise The field won't be present.
     """
     restricted: Boolean
@@ -4834,4 +4763,8 @@ channelId: ID!
 input VideoPushInput {
 channel: ID!
 videoId: ID!
+}
+
+input VideoPushedInput {
+channel: ID
 }

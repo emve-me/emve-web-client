@@ -1,23 +1,15 @@
 import React, { Component } from 'react'
 import Login from '../lib/components/Login'
 import LoggedInUserConsumer from '../lib/components/LoggedInUserConsumer'
-import { PlayerMain } from '../lib/components/player/PlayerMain'
+import PlayerMain  from '../lib/components/player/PlayerMain'
+import Shell from '../lib/components/Shell'
 
-type props = {}
 
-type state = {}
-
-export default class Index extends Component<props, state> {
+export default class Index extends Component{
   render() {
-    return <LoggedInUserConsumer>{({ user, loggedIn }) => {
 
-      if (!loggedIn) {
-        <Login/>
-      } else {
-        return <PlayerMain/>
-      }
-    }}
-    </LoggedInUserConsumer>
+    return <Shell><PlayerMain/></Shell>
+
 
   }
 }

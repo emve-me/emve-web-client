@@ -2,6 +2,7 @@ ssr benefits for authentication
 
 Server side rendering 
 Storing Google JWT in Cookie
+Redirecting based on authentication
 
 Complexities around WeSockets on server and client
 

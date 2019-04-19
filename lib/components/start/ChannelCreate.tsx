@@ -2,11 +2,14 @@ import React, { Component } from 'react'
 import { Button, TextField } from '@material-ui/core'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import { CreateChannel, CreateChannelVariables } from '../remote/__generated__/CreateChannel'
+import { CreateChannel, CreateChannelVariables } from '../../../gql_types/CreateChannel'
+import Link from 'next/link'
 
 const CREATE_CHANNEL = gql`
   mutation CreateChannel($channelName: String) {
     channelCreate(input: { channelName: $channelName })
+
+
   }
 `
 
@@ -14,8 +17,7 @@ type TState = { channelName: string }
 
 type TProps = {}
 
-class CreateChannelMutation extends Mutation<CreateChannel,
-  CreateChannelVariables> {
+class CreateChannelMutation extends Mutation<CreateChannel, CreateChannelVariables> {
 }
 
 export default class ChannelCreate extends Component<TProps, TState> {
@@ -31,21 +33,31 @@ export default class ChannelCreate extends Component<TProps, TState> {
             }
 
             if (called) {
-              return <div>channel id {data.channelCreate + ""}</div>
+              return <div>Invite your friends to visit emev.com/dofoof/{data.channelCreate}
+
+
+                <div>connnect your speakers</div>
+                <Link href={`/player?p=${data.channelCreate}`}>
+                  <div>Start this party</div>
+                </Link>
+
+              </div>
             }
 
             return (
               <div>
                 <TextField
-                  defaultValue={this.state.channelName}
+                  value={this.state.channelName}
                   onChange={e => this.setState({ channelName: e.target.value })}
                 />
                 <Button
-                  onClick={() =>
-                    createChannel({
+                  onClick={async () => {
+
+                    await createChannel({
                       variables: { channelName: this.state.channelName }
                     })
-                  }>
+
+                  }}>
                   YTO
                 </Button>
               </div>

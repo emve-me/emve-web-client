@@ -6,6 +6,7 @@ import ChannelCreate from '../lib/components/start/ChannelCreate'
 import AccountThumb from '../lib/components/AccountThumb'
 import Router from 'next/router'
 import Link from 'next/link'
+import Shell from '../lib/components/Shell'
 
 type props = {}
 
@@ -19,7 +20,7 @@ export default class Index extends Component<props, state> {
         return <Login/>
       } else {
 
-        return <div>
+        return <Shell>
 
           <Link href='/join'>
             <div>Join Party</div>
@@ -27,7 +28,7 @@ export default class Index extends Component<props, state> {
           <Link href='/start'>
             <div>Start a Party</div>
           </Link>
-        </div>
+        </Shell>
       }
     }}
     </LoggedInUserConsumer>

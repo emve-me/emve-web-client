@@ -23,30 +23,28 @@ const port = process.env.PORT || 3035
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
+const protectedRoutes = ['player', 'start', 'join', 'remote']
+
 app.prepare().then(() => {
   const server = express()
 
   server.use(favicon(path.join(__dirname, '..', 'static', 'share.png')))
 
+  protectedRoutes.forEach(route => {
+    server.get(`/${route}`, (req, res, next) => {
+      const googleToken = getCookie('GTOKENID', req.headers.cookie)
+      if(!googleToken){
+        res.redirect('/')
+      }
+      else{
+        next()
+      }
+    })
+  })
+
+
   server.get('*', async (req, res) => {
-
-    const {path,query} = url.parse(req.url, true)
-
-    console.log({path,query})
-
-
-    const googleToken = getCookie('GTOKENID', req.headers.cookie)
-
-
-    if(!googleToken){
-      // app.render(req, res, '/login', query)
-    }
-
-    console.log('gotkenId', googleToken)
-
-    return handle(req, res)
-
-
+    handle(req, res)
   })
 
   server.listen(port, (err: Error) => {

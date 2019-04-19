@@ -6,8 +6,13 @@
 // GraphQL mutation operation: JoinChannel
 // ====================================================
 
+export interface JoinChannel_channelJoin {
+  __typename: "Channel";
+  id: string | null;
+}
+
 export interface JoinChannel {
-  channelJoin: string | null;
+  channelJoin: JoinChannel_channelJoin | null;
 }
 
 export interface JoinChannelVariables {
