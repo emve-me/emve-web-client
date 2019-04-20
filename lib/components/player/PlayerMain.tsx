@@ -4,6 +4,7 @@ import { Subscription } from 'react-apollo'
 import { VideoSubscription, VideoSubscriptionVariables } from '../../../gql_types/VideoSubscription'
 import { withRouter, WithRouterProps } from 'next/router'
 import UpComming from './UpComming'
+import YouTube from 'react-youtube'
 
 const VIDEOS_PUSHED = gql`
   subscription VideoSubscription ($channel:ID!){
@@ -17,9 +18,47 @@ class VideosSubscription extends Subscription <VideoSubscription, VideoSubscript
 }
 
 
-class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
+const videos = ['zUyH3XhpLTo', 'vGc4mg5pul4', '3SQgTgDJMY8']
+
+type S = {
+  index: number
+}
+
+class PlayerMain extends Component <WithRouterProps<{ p: string; }>, S> {
+
+  state = { index: 0 }
 
   render() {
+
+
+    return (
+      <YouTube
+        videoId={videos[this.state.index]}
+        opts={{
+          height: '390',
+          width: '640',
+          playerVars: { // https://developers.google.com/youtube/player_parameters
+            autoplay: 1
+
+          }
+
+        }}
+        onEnd={(event) => {
+          console.log('on end', event)
+          this.setState(({ index }) => ({ index: index + 1 }))
+        }}
+        onReady={this._onReady}
+      />
+    )
+  }
+
+  _onReady(event) {
+    // access to player in all event handlers via event.target
+    //event.target.pauseVideo()
+  }
+
+
+  shmendender() {
 
     return <UpComming channel={this.props.router.query.p}/>
 
@@ -45,7 +84,8 @@ class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
 
 
       }}
-    </VideosSubscription>
+    </
+      VideosSubscription>
 
   }
 
