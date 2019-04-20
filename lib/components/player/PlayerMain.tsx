@@ -24,7 +24,8 @@ class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
     return <UpComming channel={this.props.router.query.p}/>
 
 
-    return <VideosSubscription subscription={VIDEOS_PUSHED} variables={{ channel: this.props.router.query.p }}>
+    return <VideosSubscription onSubscriptionData={(dd) => console.log('IDDD', dd.subscriptionData.data.videoPushed.id)}
+                               subscription={VIDEOS_PUSHED} variables={{ channel: this.props.router.query.p }}>
       {({ data, loading }) => {
 
 
@@ -37,6 +38,7 @@ class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
         }
 
         return data.videoPushed.id
+
         return <iframe style={{ width: '100vw', height: '100vh' }} width="100%" height="100%"
                        src={`https://www.youtube.com/embed/${data.videoPushed.id}?autoplay=1`}
                        frameBorder="0"/>
