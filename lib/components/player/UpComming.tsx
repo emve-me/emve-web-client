@@ -2,6 +2,8 @@ import { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../../gql_types/UpComingTracksGQL'
+import YouTubePlayer from 'youtube-player';
+
 
 const VIDEOS_PUSHED = gql`
   subscription VideoSubscription ($channel:ID!){
@@ -35,7 +37,8 @@ export default class UpComming extends Component <TProps> {
 
   render() {
 
-    return <UpComingTracksQuery query={UPCOMING_QUERY}
+
+      return <UpComingTracksQuery query={UPCOMING_QUERY}
                                 variables={{ channel: this.props.channel }}>{({ data, loading, subscribeToMore }) => {
       if (loading) {
         return 'Loading'

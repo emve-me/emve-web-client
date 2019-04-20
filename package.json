@@ -45,7 +45,8 @@
     "react-google-login": "^5.0.4",
     "serve-favicon": "^2.5.0",
     "subscriptions-transport-ws": "^0.9.16",
-    "vanilla-cookies": "^0.0.7"
+    "vanilla-cookies": "^0.0.7",
+    "youtube-player": "^5.5.2"
   },
   "devDependencies": {
     "apollo": "^2.8.3",
