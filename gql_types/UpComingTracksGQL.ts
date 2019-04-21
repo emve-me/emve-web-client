@@ -10,6 +10,7 @@ export interface UpComingTracksGQL_channel_tracks_edges_node {
   __typename: "Track";
   id: string | null;
   title: string | null;
+  videoId: string | null;
 }
 
 export interface UpComingTracksGQL_channel_tracks_edges {
