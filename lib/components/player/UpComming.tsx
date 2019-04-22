@@ -8,21 +8,26 @@ import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../../gql_types/Ma
 import { TrackOnChannel } from '../../../gql_types/TrackOnChannel'
 
 
-const VIDEOS_PUSHED = gql`
-  subscription VideoSubscription ($channel:ID!){
-    videoPushed(input:{channel:$channel}){
-      id
-    }
-  }
-`
-const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
+export const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
   id
   title
   videoId
+  played
 }`
+
+
+
+const VIDEOS_PUSHED = gql`
+  subscription VideoSubscription ($channel:ID!) {
+    videoPushed(input:{channel:$channel}) {
+      ... TrackOnChannel
+    }
+  }
+${TRAK_FRAG}`
+
 const UPCOMING_QUERY = gql`query UpComingTracksGQL($channel: ID!) {
   channel(id: $channel){
-    tracks{
+    tracks(played: false){
       edges{
         node{
           ... TrackOnChannel
@@ -83,9 +88,9 @@ export default class UpComming extends Component <TProps> {
       subscribeToMore({
         document: VIDEOS_PUSHED, variables: { channel: this.props.channel }, updateQuery: (prev, next) => {
 
-          console.log('SUSBCRIPTION DATA', next.subscriptionData.data.channel)
+          // console.log('SUSBCRIPTION DATA', next.subscriptionData.data.channel)
 
-          console.log({ prev })
+          console.log({ prev, next })
 
           return {
             channel:
@@ -112,7 +117,7 @@ export default class UpComming extends Component <TProps> {
             query: UPCOMING_QUERY,
             variables: { channel: this.props.channel }
           })
-          
+
           queryyyy.channel.tracks.edges = queryyyy.channel.tracks.edges.filter(({ node }) => node.id !== edges[0].node.id)
 
           client.writeQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
