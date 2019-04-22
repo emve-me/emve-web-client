@@ -27,9 +27,7 @@ type STATE = {}
 export class SearchResult extends Component<PROPS, STATE> {
   render() {
     const { item, channel } = this.props
-
-    console.log('ITEMM', item.id.videoId)
-
+    
     return (
       <AddVideoMutation mutation={ADD_VIDEO}>
         {(addVideo, { data }) => (

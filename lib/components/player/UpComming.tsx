@@ -1,15 +1,13 @@
 import { Component } from 'react'
-import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import {
   UpComingTracksGQL,
   UpComingTracksGQL_channel_tracks_edges, UpComingTracksGQL_channel_tracks_edges_node,
   UpComingTracksGQLVariables
 } from '../../../gql_types/UpComingTracksGQL'
-import YouTubePlayer from 'youtube-player'
 import YouTube from 'react-youtube'
 import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../../gql_types/MarkAsPlayedGQL'
-import { TrackOnChannel } from '../../../gql_types/TrackOnChannel'
+import gql from 'graphql-tag'
 
 
 export const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
@@ -107,7 +105,7 @@ export default class UpComming extends Component <TProps> {
 
       const { edges } = data.channel.tracks
 
-      console.log(edges.map(e=>e.node.title))
+      console.log(edges.map(e => e.node.title))
 
       if (edges.length > 0) {
         return <Player videoId={edges[0].node.videoId} onEnd={async () => {
