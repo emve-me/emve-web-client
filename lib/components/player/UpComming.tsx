@@ -96,8 +96,6 @@ export default class UpComming extends Component <TProps> {
           }
 
           prev.channel.tracks.edges.push(toPush)
-          // videoPushed: {id: "100", title: "The agony of trying to unsubscribe | James Veitch", videoId: "Dceyy0cX6J4", played: false, __typename: "Track"}
-
           return prev
         }
       })

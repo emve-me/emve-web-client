@@ -73,6 +73,8 @@ class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TSt
 
 
         <div style={{ height: 100, backgroundColor: 'azul' }}/>
+
+
         <UpCommingItemsConsumer channel={channel}>{({ upComming, loading }) => loading ? 'Loading' :
           <div>{upComming.map(({ node }) => <div
             key={node.id}>{node.title}</div>)}</div>}</UpCommingItemsConsumer>

@@ -7,7 +7,6 @@ import {
 } from '../../gql_types/UpComingTracksGQL'
 import gql from 'graphql-tag'
 
-
 export const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
   id
   title
@@ -52,6 +51,8 @@ export default class UpCommingItemsConsumer extends Component <TProps> {
 
   render() {
 
+    console.log('upcomming!?')
+
     return <UpComingTracksQuery query={UPCOMING_QUERY}
                                 variables={{ channel: this.props.channel }}>{({ data, error, loading, subscribeToMore, client }) => {
 
@@ -79,6 +80,8 @@ export default class UpCommingItemsConsumer extends Component <TProps> {
       })
 
       const { edges } = data.channel.tracks
+
+      console.log('UP COMMING', edges.map(({ node }) => node.title))
       return this.props.children({ error, upComming: edges, loading: false })
     }}</UpComingTracksQuery>
   }
