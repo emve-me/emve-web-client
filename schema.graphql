@@ -2475,6 +2475,7 @@ type Mutation {
     authenticate: ID
     channelCreate(input: ChannelCreateInput!): ID
     channelJoin(input: ChannelJoinInput!): Channel
+    markTrackAsPlayed(track: ID!): ID
     videoPush(input: VideoPushInput!): ID
 }
 

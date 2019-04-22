@@ -4,6 +4,8 @@ import { Query } from 'react-apollo'
 import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../../gql_types/UpComingTracksGQL'
 import YouTubePlayer from 'youtube-player'
 import YouTube from 'react-youtube'
+import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../../gql_types/MarkAsPlayedGQL'
+import { TrackOnChannel } from '../../../gql_types/TrackOnChannel'
 
 
 const VIDEOS_PUSHED = gql`
@@ -13,37 +15,46 @@ const VIDEOS_PUSHED = gql`
     }
   }
 `
+const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
+  id
+  title
+  videoId
+}`
 const UPCOMING_QUERY = gql`query UpComingTracksGQL($channel: ID!) {
   channel(id: $channel){
     tracks{
       edges{
         node{
-          id
-          title
-          videoId
+          ... TrackOnChannel
         }
       }
     }
   }
+}
+${TRAK_FRAG}`
+
+const GQL_MARK_AS_PLAYED = gql`mutation MarkAsPlayedGQL ($track : ID!){
+
+  markTrackAsPlayed(track: $track)
+
 }`
 
-const Player = ({ videId }) => {
-  return <YouTube
-    videoId={videId}
-    opts={{
-      height: '390',
-      width: '640',
-      playerVars: { // https://developers.google.com/youtube/player_parameters
-        autoplay: 1
-      }
-    }}
-    onEnd={(event) => {
-      console.log('on end', event)
-    }}
-
-  />
-
+type PlayerParams = {
+  videoId: string, onEnd: (event) => void
 }
+
+const Player = ({ videoId, onEnd }: PlayerParams) => <YouTube
+  videoId={videoId}
+  opts={{
+    height: '390',
+    width: '640',
+    playerVars: { // https://developers.google.com/youtube/player_parameters
+      autoplay: 1
+    }
+  }}
+  onEnd={onEnd}
+/>
+
 
 class UpComingTracksQuery extends Query<UpComingTracksGQL, UpComingTracksGQLVariables> {
 
@@ -57,11 +68,16 @@ export default class UpComming extends Component <TProps> {
 
   render() {
 
-
     return <UpComingTracksQuery query={UPCOMING_QUERY}
-                                variables={{ channel: this.props.channel }}>{({ data, loading, subscribeToMore }) => {
+                                variables={{ channel: this.props.channel }}>{({ data, error, loading, subscribeToMore, client }) => {
+
       if (loading) {
         return 'Loading'
+      }
+
+      if (error) {
+        console.error(error)
+        return 'Error'
       }
 
       subscribeToMore({
@@ -80,16 +96,40 @@ export default class UpComming extends Component <TProps> {
         }
       })
 
+
       const { edges } = data.channel.tracks
 
       if (edges.length > 0) {
+        return <Player videoId={edges[0].node.videoId} onEnd={async () => {
+          const mutationUpdate = await client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
+            mutation: GQL_MARK_AS_PLAYED,
+            variables: { track: edges[0].node.id }
+          })
 
+          console.log('mutationUpdate', mutationUpdate)
 
-        return <Player videId={edges[0].node.videoId}/>
-//        return edges[0].node.videoId
+          const queryyyy = client.readQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
+            query: UPCOMING_QUERY,
+            variables: { channel: this.props.channel }
+          })
+          
+          queryyyy.channel.tracks.edges = queryyyy.channel.tracks.edges.filter(({ node }) => node.id !== edges[0].node.id)
+
+          client.writeQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
+            variables: { channel: this.props.channel },
+            query: UPCOMING_QUERY,
+            data: queryyyy
+          })
+
+          console.log('queryyyy')
+//          const fragment = client.readFragment<TrackOnChannel>({ fragment: TRAK_FRAG, id: edges[0].node.id })
+          //        console.log('FRAGMENT', fragment)
+
+        }}/>
       }
 
-      return <div>Add a video!!</div>
+      return <
+        div>Add a video!!</div>
 
     }}</UpComingTracksQuery>
   }
