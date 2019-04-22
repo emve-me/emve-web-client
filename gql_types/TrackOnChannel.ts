@@ -11,4 +11,5 @@ export interface TrackOnChannel {
   id: string | null;
   title: string | null;
   videoId: string | null;
+  played: boolean | null;
 }

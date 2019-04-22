@@ -7,8 +7,11 @@
 // ====================================================
 
 export interface VideoSubscription_videoPushed {
-  __typename: "Video";
+  __typename: "Track";
   id: string | null;
+  title: string | null;
+  videoId: string | null;
+  played: boolean | null;
 }
 
 export interface VideoSubscription {

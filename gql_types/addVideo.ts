@@ -6,8 +6,16 @@
 // GraphQL mutation operation: addVideo
 // ====================================================
 
+export interface addVideo_videoPush {
+  __typename: "Track";
+  id: string | null;
+  title: string | null;
+  videoId: string | null;
+  played: boolean | null;
+}
+
 export interface addVideo {
-  videoPush: string | null;
+  videoPush: addVideo_videoPush | null;
 }
 
 export interface addVideoVariables {

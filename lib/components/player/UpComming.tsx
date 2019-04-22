@@ -1,7 +1,11 @@
 import { Component } from 'react'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../../gql_types/UpComingTracksGQL'
+import {
+  UpComingTracksGQL,
+  UpComingTracksGQL_channel_tracks_edges, UpComingTracksGQL_channel_tracks_edges_node,
+  UpComingTracksGQLVariables
+} from '../../../gql_types/UpComingTracksGQL'
 import YouTubePlayer from 'youtube-player'
 import YouTube from 'react-youtube'
 import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../../gql_types/MarkAsPlayedGQL'
@@ -14,7 +18,6 @@ export const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
   videoId
   played
 }`
-
 
 
 const VIDEOS_PUSHED = gql`
@@ -38,10 +41,8 @@ const UPCOMING_QUERY = gql`query UpComingTracksGQL($channel: ID!) {
 }
 ${TRAK_FRAG}`
 
-const GQL_MARK_AS_PLAYED = gql`mutation MarkAsPlayedGQL ($track : ID!){
-
+const GQL_MARK_AS_PLAYED = gql`mutation MarkAsPlayedGQL ($track : ID!) {
   markTrackAsPlayed(track: $track)
-
 }`
 
 type PlayerParams = {
@@ -69,6 +70,7 @@ type TProps = {
   channel: string
 }
 
+// make a track list provider
 export default class UpComming extends Component <TProps> {
 
   render() {
@@ -88,21 +90,24 @@ export default class UpComming extends Component <TProps> {
       subscribeToMore({
         document: VIDEOS_PUSHED, variables: { channel: this.props.channel }, updateQuery: (prev, next) => {
 
-          // console.log('SUSBCRIPTION DATA', next.subscriptionData.data.channel)
+          console.log({ prev, next, pushed: (next.subscriptionData.data as any).videoPushed })
 
-          console.log({ prev, next })
-
-          return {
-            channel:
-              null
-
-
+          const toPush: UpComingTracksGQL_channel_tracks_edges = {
+            __typename: 'TracksEdge',
+            node: (next.subscriptionData.data as any).videoPushed
           }
+
+          prev.channel.tracks.edges.push(toPush)
+          // videoPushed: {id: "100", title: "The agony of trying to unsubscribe | James Veitch", videoId: "Dceyy0cX6J4", played: false, __typename: "Track"}
+
+          return prev
         }
       })
 
 
       const { edges } = data.channel.tracks
+
+      console.log(edges.map(e=>e.node.title))
 
       if (edges.length > 0) {
         return <Player videoId={edges[0].node.videoId} onEnd={async () => {
@@ -133,8 +138,7 @@ export default class UpComming extends Component <TProps> {
         }}/>
       }
 
-      return <
-        div>Add a video!!</div>
+      return <div>Add a video!!</div>
 
     }}</UpComingTracksQuery>
   }

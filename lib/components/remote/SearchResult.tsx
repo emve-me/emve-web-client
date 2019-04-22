@@ -28,6 +28,8 @@ export class SearchResult extends Component<PROPS, STATE> {
   render() {
     const { item, channel } = this.props
 
+    console.log('ITEMM', item.id.videoId)
+
     return (
       <AddVideoMutation mutation={ADD_VIDEO}>
         {(addVideo, { data }) => (
@@ -43,6 +45,7 @@ export class SearchResult extends Component<PROPS, STATE> {
               console.log('resp', addVideoResp)
             }}
             style={{ cursor: 'pointer', padding: '1rem' }}>
+            {item.id.videoId}
             <div
               style={{
                 fontFamily: 'arial',
