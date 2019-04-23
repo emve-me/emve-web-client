@@ -1,3 +1,8 @@
+# TODO
+
+- when listing tracks join now playing status
+- have server determine now playing 
+- server can also determine up next 
 
 # Agenda
 
