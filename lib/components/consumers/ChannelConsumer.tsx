@@ -50,6 +50,7 @@ type TRenderProps = {
   loading: boolean
   upComing?: Array<UpComingTracksGQL_channel_tracks_edges>
   nowPlaying?: TrackOnChannel
+  replaceNowPlaying?: (nowPlaying: TrackOnChannel) => void
 }
 
 // todo have a type for the cache shape
@@ -96,6 +97,15 @@ class ChannelConsumer extends Component <WithApolloClient<TProps>> {
     })
   }
 
+  replaceNowPlaying = (nowPlaying: TrackOnChannel) => {
+    const channelState = this.readTracksFromCache()
+    channelState.channel.nowPlaying = nowPlaying
+    if (nowPlaying) {
+      channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(({ node }) => node.id !== nowPlaying.id)
+    }
+    this.writeTracksToCache(channelState)
+  }
+
   readTracksFromCache = () => {
     const { client, channel } = this.props
     return client.readQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
@@ -138,6 +148,7 @@ class ChannelConsumer extends Component <WithApolloClient<TProps>> {
       const { edges } = data.channel.tracks
 
       return this.props.children({
+        replaceNowPlaying: this.replaceNowPlaying,
         nowPlaying: data.channel.nowPlaying,
         error,
         upComing: edges,

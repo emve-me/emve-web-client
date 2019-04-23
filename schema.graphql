@@ -2477,8 +2477,7 @@ type Mutation {
     authenticate: ID
     channelCreate(input: ChannelCreateInput!): ID
     channelJoin(input: ChannelJoinInput!): Channel
-    markTrackAsNowPlaying(track: ID!): ID
-    markTrackAsPlayed(track: ID!): ID
+    markTrackAsPlayed(input: MarkTrakAsPlayedInput!): ID
     videoPush(input: VideoPushInput!): Track
 }
 
@@ -4856,6 +4855,11 @@ channelName: String
 
 input ChannelJoinInput {
 channelId: ID!
+}
+
+input MarkTrakAsPlayedInput {
+nextTrack: ID
+track: ID!
 }
 
 input TrackUpdatedInput {

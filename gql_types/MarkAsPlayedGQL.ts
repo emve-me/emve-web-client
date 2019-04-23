@@ -12,4 +12,5 @@ export interface MarkAsPlayedGQL {
 
 export interface MarkAsPlayedGQLVariables {
   track: string;
+  nextTrack?: string | null;
 }

@@ -29,6 +29,7 @@
         - React 
         - Apollo 
             - Splits API transport into websockets and HTTP requests
+            - For subscriptions, did not like their suggested implementation so used lower level workaround
     - Backend 
         - gapi-to-graphql (Link to Library)           
         - Postgres
@@ -42,4 +43,4 @@
             - Uses custom utilities to aid deployment (link to NPM libraries)
 
 
-
+ 

@@ -6,8 +6,8 @@ import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../../gql_types/Ma
 import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../../gql_types/UpComingTracksGQL'
 import gql from 'graphql-tag'
 
-const GQL_MARK_AS_PLAYED = gql`mutation MarkAsPlayedGQL ($track : ID!) {
-  markTrackAsPlayed(track: $track)
+const GQL_MARK_AS_PLAYED = gql`mutation MarkAsPlayedGQL ($track : ID!, $nextTrack: ID) {
+  markTrackAsPlayed(input:{track: $track,nextTrack :$nextTrack})
 }`
 
 class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
@@ -16,25 +16,28 @@ class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
 
     const { p: channel } = this.props.router.query
 
-    return <ChannelConsumer channel={channel}>{({ error, nowPlaying, loading, upComing, updateCache, client }) => {
+    return <ChannelConsumer
+      channel={channel}>{({ error, nowPlaying, replaceNowPlaying, loading, upComing, updateCache, client }) => {
 
       if (loading) {
         return 'Loading'
       }
 
-      if (upComing.length === 0) {
+      if (upComing.length === 0 && !nowPlaying) {
         return <div>EMTPY STATE</div>
       } else {
 
-        const nowPlaying = upComing[0]
-        const videoId = nowPlaying.node.videoId
 
         return <>
-          {nowPlaying ? <div>{nowPlaying.node.title}</div> : false}
-          {upComing.map(({ node }) => <div style={{ border: 'solid 1px #eee', padding: 4 }}
-                                           key={node.id}>{node.title}</div>)}
+          <div>Now Playing:
+            {nowPlaying ? <div>{nowPlaying.title}</div> : false}</div>
+
+          <div>Up comming:
+            {upComing.map(({ node }) => <div style={{ border: 'solid 1px #eee', padding: 4 }}
+                                             key={node.id}>{node.title}</div>)}</div>
+
           <YouTube
-            videoId={videoId}
+            videoId={nowPlaying.videoId}
             opts={{
               height: '390',
               width: '640',
@@ -42,21 +45,25 @@ class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
                 autoplay: 1
               }
             }}
-            onPlay={async () => {
-              // TODO ON SERVER KEEP TRACK OF CURRENTLY PLAYING TRACK IN CHANNEL
-              client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
-                mutation: GQL_MARK_AS_PLAYED,
-                variables: { track: nowPlaying.node.id }
-              })
-            }}
             onEnd={async () => {
-              updateCache((currentState) => {
-                  currentState.channel.tracks.edges = currentState.channel.tracks.edges.filter(({ node }) => node.id !== nowPlaying.node.id)
-                  return currentState
-                }
-              )
+              if (upComing.length > 0) {
+                replaceNowPlaying(upComing[0].node)
+
+                client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
+                  mutation: GQL_MARK_AS_PLAYED,
+                  variables: { track: nowPlaying.id, nextTrack: upComing[0].node.id }
+                })
+              } else {
+                replaceNowPlaying(null)
+
+                client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
+                  mutation: GQL_MARK_AS_PLAYED,
+                  variables: { track: nowPlaying.id }
+                })
+              }
             }}
-          /></>
+          />
+        </>
 
       }
 
