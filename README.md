@@ -33,14 +33,18 @@
     - Backend 
         - gapi-to-graphql (Link to Library)           
         - Postgres
+            - Knex for query building   
+                - No ORM
+                - No GraphQL / DB in one, ex: graph.cool
+            - Migra - diffing for migrations 
         - Apollo Server
-        - Did not use
-            - ORM
-            - GraphQL / DB in one, ex: graph.cool 
     - Dev opps
         - Docker Compose for local development
         - GitLab CI / CD for deployment to App Engine 
             - Uses custom utilities to aid deployment (link to NPM libraries)
-
-
+    - Security
+        - Access to channels are inherently insecure to prioritize convenience, the following precautions have been taken to  mitigate this:   
+            - Channel IDs are in a custom base 26 encoded alphabet (the alphabet but scrambled) to avoid users being able to guess channel IDs of an ongoing sessions
+            - Channels ID start at 26^4 to minimize guessability 
+        
  

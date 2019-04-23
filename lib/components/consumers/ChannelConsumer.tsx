@@ -1,12 +1,15 @@
 import { Component } from 'react'
 import { Query, withApollo, WithApolloClient } from 'react-apollo'
 import {
-  UpComingTracksGQL, UpComingTracksGQL_channel_tracks_edges, UpComingTracksGQLVariables
+  UpComingTracksGQL,
+  UpComingTracksGQL_channel_tracks_edges,
+  UpComingTracksGQLVariables
 } from '../../../gql_types/UpComingTracksGQL'
 import { VideoSubscription, VideoSubscriptionVariables } from '../../../gql_types/VideoSubscription'
 import gql from 'graphql-tag'
 import { ApolloClient } from 'apollo-client'
 import { TrackOnChannel } from '../../../gql_types/TrackOnChannel'
+import { TrackState } from '../../../gql_types/globalTypes'
 
 export const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
   id
@@ -78,11 +81,40 @@ class ChannelConsumer extends Component <WithApolloClient<TProps>> {
 
         console.log('subscription data', data)
 
-        // const toPush: UpComingTracksGQL_channel_tracks_edges = {
-        //   __typename: 'TracksEdge',
-        //   node: data.trackUpdated
-        // }
-        //
+
+        const channelState = this.readTracksFromCache()
+
+
+        switch (data.trackUpdated.state) {
+          case TrackState.playing:
+
+            channelState.channel.nowPlaying = data.trackUpdated
+
+            break
+          case TrackState.played:
+            // kick it off the list
+
+
+            break
+          case TrackState.upcoming:
+            const toPush: UpComingTracksGQL_channel_tracks_edges = {
+              __typename: 'TracksEdge',
+              node: data.trackUpdated
+            }
+
+            const exists = channelState.channel.tracks.edges.find(({ node }) => node.id === toPush.node.id)
+            console.log('adding an up commming track', exists)
+            if (!exists) {
+              channelState.channel.tracks.edges.push(toPush)
+            } else {
+              return
+            }
+            break
+        }
+
+        this.writeTracksToCache(channelState)
+
+
         // this.readModWrite(dd => {
         //   dd.channel.tracks.edges.push(toPush)
         //   return dd

@@ -73,12 +73,14 @@ class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TSt
 
         <div style={{ height: 100, backgroundColor: 'azul' }}/>
 
-        <UpComingItemsConsumer channel={channel}>{({ upComing, loading }) => loading ? 'Loading' :
-          <div>{upComing.map(({ node }) => <div
-            key={node.id}>{node.title}</div>)}</div>}</UpComingItemsConsumer>
+        <UpComingItemsConsumer channel={channel}>{({ upComing, nowPlaying, loading }) => loading ? 'Loading' :
+          <>{nowPlaying ? <div>{nowPlaying.title}</div> : <div>NOTHING PLAYING</div>}
+            <div>{upComing.map(({ node }) => <div
+              key={node.id}>{node.title}</div>)}</div>
+          </>}
+        </UpComingItemsConsumer>
 
         <div style={{ paddingTop: '6rem', maxWidth: 550, margin: '0 auto' }}>
-          {/*<SubscriptionTest/>*/}
           <YouTubeSearchQuery query={SEARCH_QUERY} variables={{ q: this.state.search }}>
             {({ loading, error, data }) => {
               if (loading) {
