@@ -5,20 +5,21 @@ import { SearchResult } from './SearchResult'
 import { withRouter, WithRouterProps } from 'next/router'
 import { YouTubeSearch, YouTubeSearchVariables } from '../../../gql_types/YouTubeSearch'
 import UpComingItemsConsumer from '../consumers/UpComingItemsConsumer'
+import { element } from 'prop-types'
 
 // TODO remove key from here
 const SEARCH_QUERY = gql`
   query YouTubeSearch($q: String) {
     YoutubeApi(key: "AIzaSyDtlCouvXU0kcAKF-UZWVNe3sQpoxHBsa0") {
       search {
-        list(q: $q, part: "snippet", type:"video", videoEmbeddable: TRUE) {
+        list(q: $q, part: "snippet", type:"video", videoEmbeddable: TRUE, maxResults: 16) {
           items {
             id {
               videoId
+              kind
             }
-
             snippet {
-
+              liveBroadcastContent
               title
               thumbnails {
                 high {
@@ -71,9 +72,7 @@ class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TSt
           />
         </div>
 
-
         <div style={{ height: 100, backgroundColor: 'azul' }}/>
-
 
         <UpComingItemsConsumer channel={channel}>{({ upComing, loading }) => loading ? 'Loading' :
           <div>{upComing.map(({ node }) => <div
@@ -92,7 +91,7 @@ class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TSt
                 return <div>Error</div>
               }
 
-              return data.YoutubeApi.search.list.items.map(element => (
+              return data.YoutubeApi.search.list.items.filter(video => video.snippet.liveBroadcastContent === 'none').map(element => (
                 <SearchResult channel={channel} item={element} key={element.id.videoId}/>
               ))
             }}

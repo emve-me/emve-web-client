@@ -14,7 +14,7 @@ export default class LoggedInUserConsumer extends Component <TProps> {
                   fetchPolicy='cache-only'>{({ error, loading, data, client }) => {
 
       if (error) {
-        console.log(error)
+        console.error(error)
         return <div>Error</div>
       }
 

@@ -6,6 +6,12 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum TrackState {
+  not_played = "not_played",
+  played = "played",
+  playing = "playing",
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

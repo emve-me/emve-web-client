@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { TrackState } from "./globalTypes";
+
 // ====================================================
 // GraphQL query operation: UpComingTracksGQL
 // ====================================================
@@ -11,7 +13,7 @@ export interface UpComingTracksGQL_channel_tracks_edges_node {
   id: string | null;
   title: string | null;
   videoId: string | null;
-  played: boolean | null;
+  state: TrackState | null;
 }
 
 export interface UpComingTracksGQL_channel_tracks_edges {

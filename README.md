@@ -1,3 +1,21 @@
+
+# Agenda
+
+- Demo & Background
+    - Made emve ~6 years ago 
+    - Remade it ~4 years ago
+    - Made it again ~1.5 weeks ago
+- Dev opps 
+    - Onboarding - git pull, docker-compose up and your good to go
+    - Deployment, using GitLab CI / CD and custom tooling
+- Stack 
+    - NextJS  React / Apollo / Postgres / Typescript 
+    - gapi-to-graphql
+- Strong typing everywhere 
+    - Generate Typescript type definitions from GraphQL schema
+    
+     
+
 ssr benefits for authentication 
 
 Server side rendering 

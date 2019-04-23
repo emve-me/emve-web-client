@@ -14,6 +14,10 @@ export interface YouTubeSearch_YoutubeApi_search_list_items_id {
    * value is youtube#video.
    */
   videoId: string | null;
+  /**
+   * The type of the API resource.
+   */
+  kind: string | null;
 }
 
 export interface YouTubeSearch_YoutubeApi_search_list_items_snippet_thumbnails_high {
@@ -34,6 +38,11 @@ export interface YouTubeSearch_YoutubeApi_search_list_items_snippet_thumbnails {
 
 export interface YouTubeSearch_YoutubeApi_search_list_items_snippet {
   __typename: "SearchResultSnippet";
+  /**
+   * It indicates if the resource (video or channel) has upcoming/active live
+   * broadcast content. Or it's "none" if there is not any upcoming/active live broadcasts.
+   */
+  liveBroadcastContent: string | null;
   /**
    * The title of the search result.
    */

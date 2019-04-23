@@ -2,6 +2,8 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { TrackState } from "./globalTypes";
+
 // ====================================================
 // GraphQL mutation operation: addVideo
 // ====================================================
@@ -11,7 +13,7 @@ export interface addVideo_videoPush {
   id: string | null;
   title: string | null;
   videoId: string | null;
-  played: boolean | null;
+  state: TrackState | null;
 }
 
 export interface addVideo {

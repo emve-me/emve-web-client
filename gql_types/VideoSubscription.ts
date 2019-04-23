@@ -2,20 +2,22 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
+import { TrackState } from "./globalTypes";
+
 // ====================================================
 // GraphQL subscription operation: VideoSubscription
 // ====================================================
 
-export interface VideoSubscription_videoPushed {
+export interface VideoSubscription_trackUpdated {
   __typename: "Track";
   id: string | null;
   title: string | null;
   videoId: string | null;
-  played: boolean | null;
+  state: TrackState | null;
 }
 
 export interface VideoSubscription {
-  videoPushed: VideoSubscription_videoPushed | null;
+  trackUpdated: VideoSubscription_trackUpdated | null;
 }
 
 export interface VideoSubscriptionVariables {
