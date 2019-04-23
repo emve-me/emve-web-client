@@ -511,6 +511,7 @@ type Channel {
     createdOn: String
     id: ID
     name: String
+    nowPlaying: Track
     owner: User
     track: Track
     tracks(after: ID, first: Int, played: Boolean): Tracks
@@ -4702,9 +4703,9 @@ enum TfmtCaptionsEnumParam {
 }
 
 enum TrackState {
-    not_played
     played
     playing
+    upcoming
 }
 
 enum VideoCaptionSearchEnumParam {

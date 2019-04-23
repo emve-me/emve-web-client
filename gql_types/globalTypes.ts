@@ -7,9 +7,9 @@
 //==============================================================
 
 export enum TrackState {
-  not_played = "not_played",
   played = "played",
   playing = "playing",
+  upcoming = "upcoming",
 }
 
 //==============================================================

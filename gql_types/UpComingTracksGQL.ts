@@ -8,6 +8,14 @@ import { TrackState } from "./globalTypes";
 // GraphQL query operation: UpComingTracksGQL
 // ====================================================
 
+export interface UpComingTracksGQL_channel_nowPlaying {
+  __typename: "Track";
+  id: string | null;
+  title: string | null;
+  videoId: string | null;
+  state: TrackState | null;
+}
+
 export interface UpComingTracksGQL_channel_tracks_edges_node {
   __typename: "Track";
   id: string | null;
@@ -28,6 +36,7 @@ export interface UpComingTracksGQL_channel_tracks {
 
 export interface UpComingTracksGQL_channel {
   __typename: "Channel";
+  nowPlaying: UpComingTracksGQL_channel_nowPlaying | null;
   tracks: UpComingTracksGQL_channel_tracks | null;
 }
 

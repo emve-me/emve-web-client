@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter, WithRouterProps } from 'next/router'
-import UpComingItemsConsumer from '../consumers/UpComingItemsConsumer'
+import ChannelConsumer from '../consumers/ChannelConsumer'
 import YouTube from 'react-youtube'
 import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../../gql_types/MarkAsPlayedGQL'
 import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../../gql_types/UpComingTracksGQL'
@@ -16,7 +16,7 @@ class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
 
     const { p: channel } = this.props.router.query
 
-    return <UpComingItemsConsumer channel={channel}>{({ error, loading, upComing, updateCache, client }) => {
+    return <ChannelConsumer channel={channel}>{({ error, nowPlaying, loading, upComing, updateCache, client }) => {
 
       if (loading) {
         return 'Loading'
@@ -30,6 +30,7 @@ class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
         const videoId = nowPlaying.node.videoId
 
         return <>
+          {nowPlaying ? <div>{nowPlaying.node.title}</div> : false}
           {upComing.map(({ node }) => <div style={{ border: 'solid 1px #eee', padding: 4 }}
                                            key={node.id}>{node.title}</div>)}
           <YouTube
@@ -59,7 +60,7 @@ class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
 
       }
 
-    }}</UpComingItemsConsumer>
+    }}</ChannelConsumer>
   }
 }
 

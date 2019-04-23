@@ -6,6 +6,7 @@ import {
 import { VideoSubscription, VideoSubscriptionVariables } from '../../../gql_types/VideoSubscription'
 import gql from 'graphql-tag'
 import { ApolloClient } from 'apollo-client'
+import { TrackOnChannel } from '../../../gql_types/TrackOnChannel'
 
 export const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
   id
@@ -24,6 +25,9 @@ ${TRAK_FRAG}`
 
 const UPCOMING_QUERY = gql`query UpComingTracksGQL($channel: ID!) {
   channel(id: $channel){
+    nowPlaying {
+      ... TrackOnChannel
+    }
     tracks(played: false){
       edges{
         node{
@@ -40,14 +44,22 @@ class UpComingTracksQuery extends Query<UpComingTracksGQL, UpComingTracksGQLVari
 }
 
 //
+type TRenderProps = {
+  client: ApolloClient<{}>
+  updateCache?: (modifier: (data: UpComingTracksGQL) => UpComingTracksGQL) => void, error?
+  loading: boolean
+  upComing?: Array<UpComingTracksGQL_channel_tracks_edges>
+  nowPlaying?: TrackOnChannel
+}
+
 // todo have a type for the cache shape
 type TProps = {
   channel: string
-  children: ({ upComing, loading, error, updateCache, client }: { client: ApolloClient<{}>, updateCache?: (modifier: (data: UpComingTracksGQL) => UpComingTracksGQL) => void, error?, loading: boolean, upComing?: Array<UpComingTracksGQL_channel_tracks_edges> }) => React.ReactNode
+  children: ({ nowPlaying, upComing, loading, error, updateCache, client }: TRenderProps) => React.ReactNode
 }
 
 // make a track list provider
-class UpComingItemsConsumer extends Component <WithApolloClient<TProps>> {
+class ChannelConsumer extends Component <WithApolloClient<TProps>> {
 
   subscription: ZenObservable.Subscription
 
@@ -125,11 +137,18 @@ class UpComingItemsConsumer extends Component <WithApolloClient<TProps>> {
 
       const { edges } = data.channel.tracks
 
-      return this.props.children({ error, upComing: edges, loading: false, updateCache: this.readModWrite, client })
+      return this.props.children({
+        nowPlaying: data.channel.nowPlaying,
+        error,
+        upComing: edges,
+        loading: false,
+        updateCache: this.readModWrite,
+        client
+      })
     }}</UpComingTracksQuery>
   }
 }
 
-export default withApollo<TProps>(UpComingItemsConsumer)
+export default withApollo<TProps>(ChannelConsumer)
 
 
