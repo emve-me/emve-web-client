@@ -1,75 +1,28 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import gql from 'graphql-tag'
 import { Subscription } from 'react-apollo'
 import { VideoSubscription, VideoSubscriptionVariables } from '../../../gql_types/VideoSubscription'
 import { withRouter, WithRouterProps } from 'next/router'
-import UpComming from './UpComming'
+import UpComing from './UpComing'
 import YouTube from 'react-youtube'
+import UpComingItemsConsumer from '../consumers/UpComingItemsConsumer'
 
-const VIDEOS_PUSHED = gql`
-  subscription VideoSubscription ($channel:ID!){
-    videoPushed(input:{channel:$channel}){
-      id
-    }
-  }
-`
-
-class VideosSubscription extends Subscription <VideoSubscription, VideoSubscriptionVariables> {
-}
-
-
-const videos = ['zUyH3XhpLTo', 'vGc4mg5pul4', '3SQgTgDJMY8']
-
-type S = {
-  index: number
-}
-
-class PlayerMain extends Component <WithRouterProps<{ p: string; }>, S> {
-
-  state = { index: 0 }
-
-  bender() {
-
-
-
-  }
-
-  _onReady(event) {
-    // access to player in all event handlers via event.target
-    //event.target.pauseVideo()
-  }
-
+class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
 
   render() {
 
-    return <UpComming channel={this.props.router.query.p}/>
+    const { p: channel } = this.props.router.query
 
+    return <UpComingItemsConsumer channel={channel}>{({ error, loading, upComing }) => {
 
-    // return <VideosSubscription onSubscriptionData={(dd) => console.log('IDDD', dd.subscriptionData.data.videoPushed.id)}
-    //                            subscription={VIDEOS_PUSHED} variables={{ channel: this.props.router.query.p }}>
-    //   {({ data, loading }) => {
-    //
-    //
-    //     if (loading) {
-    //       return <div>Loading</div>
-    //     }
-    //
-    //     if (!data) {
-    //       return <div>Select a video</div>
-    //     }
-    //
-    //     return data.videoPushed.id
-    //
-    //     return <iframe style={{ width: '100vw', height: '100vh' }} width="100%" height="100%"
-    //                    src={`https://www.youtube.com/embed/${data.videoPushed.id}?autoplay=1`}
-    //                    frameBorder="0"/>
-    //
-    //
-    //   }}
-    // </VideosSubscription>
+      if (loading) {
+        return 'Loading'
+      }
 
+      return upComing.map(ele => <div key={ele.node.id}>{ele.node.title}</div>)
+
+    }}</UpComingItemsConsumer>
   }
-
 }
 
 export default withRouter(PlayerMain)

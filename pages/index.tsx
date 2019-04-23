@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Login from '../lib/components/Login'
-import LoggedInUserConsumer from '../lib/components/LoggedInUserConsumer'
+import LoggedInUserConsumer from '../lib/components/consumers/LoggedInUserConsumer'
 import RemoteMain from '../lib/components/remote/RemoteMain'
 import ChannelCreate from '../lib/components/start/ChannelCreate'
 import AccountThumb from '../lib/components/AccountThumb'

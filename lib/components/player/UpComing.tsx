@@ -69,7 +69,7 @@ type TProps = {
 }
 
 // make a track list provider
-export default class UpComming extends Component <TProps> {
+export default class UpComing extends Component <TProps> {
 
   render() {
 
@@ -85,20 +85,20 @@ export default class UpComming extends Component <TProps> {
         return 'Error'
       }
 
-      subscribeToMore({
-        document: VIDEOS_PUSHED, variables: { channel: this.props.channel }, updateQuery: (prev, next) => {
-
-          console.log({ prev, next, pushed: (next.subscriptionData.data as any).videoPushed })
-
-          const toPush: UpComingTracksGQL_channel_tracks_edges = {
-            __typename: 'TracksEdge',
-            node: (next.subscriptionData.data as any).videoPushed
-          }
-
-          prev.channel.tracks.edges.push(toPush)
-          return prev
-        }
-      })
+      // subscribeToMore({
+      //   document: VIDEOS_PUSHED, variables: { channel: this.props.channel }, updateQuery: (prev, next) => {
+      //
+      //     console.log({ prev, next, pushed: (next.subscriptionData.data as any).videoPushed })
+      //
+      //     const toPush: UpComingTracksGQL_channel_tracks_edges = {
+      //       __typename: 'TracksEdge',
+      //       node: (next.subscriptionData.data as any).videoPushed
+      //     }
+      //
+      //     prev.channel.tracks.edges.push(toPush)
+      //     return prev
+      //   }
+      // })
 
 
       const { edges } = data.channel.tracks

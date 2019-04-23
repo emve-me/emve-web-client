@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import { Mutation } from 'react-apollo'
 import { addVideo, addVideoVariables } from '../../../gql_types/addVideo'
 import { YouTubeSearch_YoutubeApi_search_list_items } from '../../../gql_types/YouTubeSearch'
-import { TRAK_FRAG } from '../player/UpComming'
+import { TRAK_FRAG } from '../player/UpComing'
 
 const ADD_VIDEO = gql`
   mutation addVideo($videoId: ID!, $channel: ID!, $title : String) {
@@ -27,7 +27,7 @@ type STATE = {}
 export class SearchResult extends Component<PROPS, STATE> {
   render() {
     const { item, channel } = this.props
-    
+
     return (
       <AddVideoMutation mutation={ADD_VIDEO}>
         {(addVideo, { data }) => (

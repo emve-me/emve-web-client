@@ -1,4 +1,4 @@
-import LoggedInUserConsumer from './LoggedInUserConsumer'
+import LoggedInUserConsumer from './consumers/LoggedInUserConsumer'
 import React from 'react'
 import { deleteCookie } from 'vanilla-cookies'
 

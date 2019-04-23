@@ -4,7 +4,7 @@ import { Query } from 'react-apollo'
 import { SearchResult } from './SearchResult'
 import { withRouter, WithRouterProps } from 'next/router'
 import { YouTubeSearch, YouTubeSearchVariables } from '../../../gql_types/YouTubeSearch'
-import UpCommingItemsConsumer from '../UpCommingItemsConsumer'
+import UpComingItemsConsumer from '../consumers/UpComingItemsConsumer'
 
 // TODO remove key from here
 const SEARCH_QUERY = gql`
@@ -75,9 +75,9 @@ class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TSt
         <div style={{ height: 100, backgroundColor: 'azul' }}/>
 
 
-        <UpCommingItemsConsumer channel={channel}>{({ upComming, loading }) => loading ? 'Loading' :
-          <div>{upComming.map(({ node }) => <div
-            key={node.id}>{node.title}</div>)}</div>}</UpCommingItemsConsumer>
+        <UpComingItemsConsumer channel={channel}>{({ upComing, loading }) => loading ? 'Loading' :
+          <div>{upComing.map(({ node }) => <div
+            key={node.id}>{node.title}</div>)}</div>}</UpComingItemsConsumer>
 
         <div style={{ paddingTop: '6rem', maxWidth: 550, margin: '0 auto' }}>
           {/*<SubscriptionTest/>*/}
