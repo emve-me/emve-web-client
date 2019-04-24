@@ -81,44 +81,36 @@ class ChannelConsumer extends Component <WithApolloClient<TProps>> {
 
         console.log('subscription data', data)
 
-
         const channelState = this.readTracksFromCache()
 
-
         switch (data.trackUpdated.state) {
-          case TrackState.playing:
-
+          case TrackState.playing: {
             channelState.channel.nowPlaying = data.trackUpdated
-
+          }
             break
-          case TrackState.played:
-            // kick it off the list
-
-
+          case TrackState.played: {
+            channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(({ node }) => node.id !== data.trackUpdated.id)
+            console.log('PLAYED - REMOVE', data.trackUpdated.id, channelState.channel.tracks.edges)
+          }
             break
-          case TrackState.upcoming:
+          case TrackState.upcoming: {
             const toPush: UpComingTracksGQL_channel_tracks_edges = {
               __typename: 'TracksEdge',
               node: data.trackUpdated
             }
 
             const exists = channelState.channel.tracks.edges.find(({ node }) => node.id === toPush.node.id)
-            console.log('adding an up commming track', exists)
+
             if (!exists) {
               channelState.channel.tracks.edges.push(toPush)
             } else {
               return
             }
+          }
             break
         }
 
         this.writeTracksToCache(channelState)
-
-
-        // this.readModWrite(dd => {
-        //   dd.channel.tracks.edges.push(toPush)
-        //   return dd
-        // })
       },
       error(err) {
         console.error(`Finished with error: ${err}`)
