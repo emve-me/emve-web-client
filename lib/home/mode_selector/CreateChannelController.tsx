@@ -11,7 +11,7 @@ const CREATE_CHANNEL = gql`
 `
 
 type TChildren = {
-  createParty: () => void
+  createParty: () => Promise<void>
 }
 
 type TProps = {

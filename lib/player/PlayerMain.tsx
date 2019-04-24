@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter, WithRouterProps } from 'next/router'
-import ChannelConsumer from '../consumers/ChannelConsumer'
+import ChannelConsumer from '../consumers/ChannelController'
 import YouTube from 'react-youtube'
 import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../gql_types/MarkAsPlayedGQL'
 import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../gql_types/UpComingTracksGQL'

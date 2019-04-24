@@ -4,7 +4,7 @@ import { Query } from 'react-apollo'
 import { SearchResult } from './SearchResult'
 import { withRouter, WithRouterProps } from 'next/router'
 import { YouTubeSearch, YouTubeSearchVariables } from '../../gql_types/YouTubeSearch'
-import UpComingItemsConsumer from '../consumers/ChannelConsumer'
+import UpComingItemsConsumer from '../consumers/ChannelController'
 
 // TODO remove key from here
 const SEARCH_QUERY = gql`

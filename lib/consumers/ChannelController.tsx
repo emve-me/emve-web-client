@@ -63,7 +63,7 @@ type TProps = {
 }
 
 // make a track list provider
-class ChannelConsumer extends Component <WithApolloClient<TProps>> {
+class ChannelController extends Component <WithApolloClient<TProps>> {
 
   subscription: ZenObservable.Subscription
 
@@ -188,6 +188,6 @@ class ChannelConsumer extends Component <WithApolloClient<TProps>> {
   }
 }
 
-export default withApollo<TProps>(ChannelConsumer)
+export default withApollo<TProps>(ChannelController)
 
 
