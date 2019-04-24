@@ -3,14 +3,23 @@ import React from 'react'
 import TV from '../../icons/TVIcon'
 import Mobile from '../../icons/MobileIcon'
 import CreateChannelController from './CreateChannelController'
+import MobileOutlineIcon from '../../icons/MobileOutlineIcon'
+import SelectionButton from './SelectionButton'
 
-export default () => <>
+export default () => <div
+  style={{ height: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}>
 
-  <Link href='/join'>
-    <Mobile size={100}/>
-  </Link>
+  <div style={{ fontSize: 40 }}>Use this device as a</div>
 
-  <CreateChannelController>{({ createParty }) => <div onClick={createParty}>
-    <TV size={100}/></div>}</CreateChannelController>
+  <div style={{ padding: '100px 0 260px 0', display: 'flex', width: '60%', justifyContent: 'space-around' }}>
 
-</>
+    <Link href='/join'>
+      <SelectionButton icon={<MobileOutlineIcon size={150}/>} label='Remote'/>
+    </Link>
+
+    <CreateChannelController>{({ createParty }) =>
+      <SelectionButton label='Player' onClick={createParty}
+                       icon={<TV size={150}/>}/>}
+    </CreateChannelController>
+  </div>
+</div>

@@ -30,6 +30,7 @@ class MyApp extends App<PROPS> {
           />
         </Head>
 
+        { /*language=CSS*/ }
         <style jsx global>{`
           body {
             color: ${textColor};
@@ -38,12 +39,17 @@ class MyApp extends App<PROPS> {
             margin: 0;
             padding: 0;
             overflow-y: auto;
+            height: 100%;
+          }
+          
+          #__next {
+            height: 100%;
           }
           
           html {
             height: 100%;
           }
-
+          
           img,
           svg {
             border: 0;

@@ -15,7 +15,7 @@ export default class LoggedInUserConsumer extends Component <TProps> {
 
       if (error) {
         console.error(error)
-        return <div>Error</div>
+        return <div>Error Logging In</div>
       }
 
       if (loading) {
