@@ -86,10 +86,14 @@ class ChannelConsumer extends Component <WithApolloClient<TProps>> {
         switch (data.trackUpdated.state) {
           case TrackState.playing: {
             channelState.channel.nowPlaying = data.trackUpdated
+            channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(({ node }) => node.id !== data.trackUpdated.id)
           }
             break
           case TrackState.played: {
             channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(({ node }) => node.id !== data.trackUpdated.id)
+            if (channelState.channel.nowPlaying && channelState.channel.nowPlaying.id === data.trackUpdated.id) {
+              channelState.channel.nowPlaying = null
+            }
             console.log('PLAYED - REMOVE', data.trackUpdated.id, channelState.channel.tracks.edges)
           }
             break

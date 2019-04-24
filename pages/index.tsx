@@ -25,9 +25,12 @@ export default class Index extends Component<props, state> {
           <Link href='/join'>
             <div>Join Party</div>
           </Link>
+
           <Link href='/start'>
             <div>Start a Party</div>
           </Link>
+
+
         </Shell>
       }
     }}
