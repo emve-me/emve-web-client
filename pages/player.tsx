@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import Login from '../lib/components/Login'
-import LoggedInUserConsumer from '../lib/components/consumers/LoggedInUserConsumer'
-import PlayerMain  from '../lib/components/player/PlayerMain'
-import Shell from '../lib/components/Shell'
+import Login from '../lib/Login'
+import LoggedInUserConsumer from '../lib/consumers/LoggedInUserConsumer'
+import PlayerMain  from '../lib/player/PlayerMain'
+import Shell from '../lib/Shell'
 
 
 export default class Index extends Component{

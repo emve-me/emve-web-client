@@ -4,12 +4,12 @@ import {
   UpComingTracksGQL,
   UpComingTracksGQL_channel_tracks_edges,
   UpComingTracksGQLVariables
-} from '../../../gql_types/UpComingTracksGQL'
-import { VideoSubscription, VideoSubscriptionVariables } from '../../../gql_types/VideoSubscription'
+} from '../../gql_types/UpComingTracksGQL'
+import { VideoSubscription, VideoSubscriptionVariables } from '../../gql_types/VideoSubscription'
 import gql from 'graphql-tag'
 import { ApolloClient } from 'apollo-client'
-import { TrackOnChannel } from '../../../gql_types/TrackOnChannel'
-import { TrackState } from '../../../gql_types/globalTypes'
+import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
+import { TrackState } from '../../gql_types/globalTypes'
 
 export const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
   id

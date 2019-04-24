@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-import { LOGGED_IN_USER } from '../../gql'
+import { LOGGED_IN_USER } from '../gql'
 
 
 type TProps = {

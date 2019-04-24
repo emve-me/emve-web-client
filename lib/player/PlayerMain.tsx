@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { withRouter, WithRouterProps } from 'next/router'
 import ChannelConsumer from '../consumers/ChannelConsumer'
 import YouTube from 'react-youtube'
-import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../../gql_types/MarkAsPlayedGQL'
-import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../../gql_types/UpComingTracksGQL'
+import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../gql_types/MarkAsPlayedGQL'
+import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../gql_types/UpComingTracksGQL'
 import gql from 'graphql-tag'
 
 const GQL_MARK_AS_PLAYED = gql`mutation MarkAsPlayedGQL ($track : ID!, $nextTrack: ID) {

@@ -3,7 +3,7 @@ import App, { Container } from 'next/app'
 
 import Head from 'next/head'
 import { ApolloProvider } from 'react-apollo'
-import withApollo from '../lib/components/withApollo'
+import withApollo from '../lib/withApollo'
 import { ApolloClient } from 'apollo-client'
 
 type PROPS = {

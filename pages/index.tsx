@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import Login from '../lib/components/Login'
-import LoggedInUserConsumer from '../lib/components/consumers/LoggedInUserConsumer'
-import RemoteMain from '../lib/components/remote/RemoteMain'
-import ChannelCreate from '../lib/components/start/ChannelCreate'
-import AccountThumb from '../lib/components/AccountThumb'
-import Router from 'next/router'
-import Link from 'next/link'
-import Shell from '../lib/components/Shell'
+import Login from '../lib/Login'
+import LoggedInUserConsumer from '../lib/consumers/LoggedInUserConsumer'
+import RemoteMain from '../lib/remote/RemoteMain'
+import Shell from '../lib/Shell'
+import ModeSelector from '../lib/home/mode_selector/ModeSelector'
 
 type props = {}
 
@@ -21,16 +18,7 @@ export default class Index extends Component<props, state> {
       } else {
 
         return <Shell>
-
-          <Link href='/join'>
-            <div>Join Party</div>
-          </Link>
-
-          <Link href='/start'>
-            <div>Start a Party</div>
-          </Link>
-
-
+          <ModeSelector/>
         </Shell>
       }
     }}

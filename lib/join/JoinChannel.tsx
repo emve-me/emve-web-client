@@ -5,7 +5,7 @@ import { ApolloConsumer, Mutation } from 'react-apollo'
 import {
   JoinChannel as GQJoinChannel,
   JoinChannelVariables as GQJoinChannelVariables
-} from '../../../gql_types/JoinChannel'
+} from '../../gql_types/JoinChannel'
 import Router from 'next/router'
 
 type TProps = {}
