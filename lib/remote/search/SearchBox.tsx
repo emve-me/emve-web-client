@@ -4,8 +4,12 @@ type TProps = { value: string, placeholder: string, onChange: (value: string) =>
 
 export class SearchBox extends Component<TProps> {
 
-  keyListener = ({ key }: KeyboardEvent) => {
-    if (key === 'Escape') this.props.onChange('')
+  keyListener = ({ key, composed, code }: KeyboardEvent) => {
+    if (key === 'Escape') {
+      this.props.onChange('')
+    } else {
+      console.log({key, composed, code})
+    }
   }
 
   componentDidMount() {
@@ -19,19 +23,20 @@ export class SearchBox extends Component<TProps> {
   render() {
     const { value, placeholder, onChange } = this.props
 
-    return <div style={{ position: 'fixed', top: 0, left: 0, right: 0, backgroundColor:'red' }}>
+    return <div style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
       <input
         style={{
+          height: 80,
           textAlign: 'center',
-          padding: '1rem',
-          backgroundColor: 'rgba(255, 255, 0, 0.9)',
+          padding: 0,
+          margin: 0,
+          backgroundColor: 'rgba(255, 255, 255, 0.9)',
           width: '100%',
           border: 'none',
           outline: 'none',
           fontSize: 40
         }}
         value={value}
-        autoFocus={true}
         placeholder={placeholder}
         onChange={e => onChange(e.target.value)}
         type="text"

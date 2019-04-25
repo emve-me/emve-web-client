@@ -1,27 +1,21 @@
 import React, { Component } from 'react'
-import { withRouter, WithRouterProps } from 'next/router'
 import SearchResults from './search/SearchResults'
 import UpComming from './UpComming'
 import { SearchBox } from './search/SearchBox'
 
-// TODO remove key from here
-type TState = { search: string }
 
-type TProps = {}
-
-class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TState> {
+export default class RemoteMain extends Component<{ channel: string }, { search: string }> {
 
   state = { search: '' }
 
   render() {
 
-    const channel = this.props.router.query.p
+    const { channel } = this.props
     const { search } = this.state
 
     return (
       <>
         <SearchBox value={search} placeholder='Search' onChange={search => this.setState({ search })}/>
-
         <div style={{
           paddingTop: '6rem',
           alignItems: 'center',
@@ -29,11 +23,13 @@ class RemoteMain extends Component<TProps & WithRouterProps<{ p: string; }>, TSt
           flexDirection: 'column',
           justifyContent: 'center'
         }}>
-          {search.trim() ? <SearchResults channel={channel} search={search}/> : <UpComming channel={channel}/>}
+          {search.trim() ?
+            <SearchResults onSelect={(item => this.setState({ search: '' }))} channel={channel} search={search}/> :
+            <UpComming channel={channel}/>}
         </div>
       </>
     )
   }
 }
 
-export default withRouter(RemoteMain)
+

@@ -33,6 +33,7 @@ export default class JoinChannel extends Component <TProps, TState> {
                 outline: none;
                 height: 100px;
                 font-size: 50px;
+                margin: 0;
                 padding: 10px;
                 width: 220px;
                 text-align: center;
@@ -56,7 +57,9 @@ export default class JoinChannel extends Component <TProps, TState> {
 
         <div style={{ paddingTop: 60, paddingBottom: 120 }}>
           <input placeholder='CODE' autoFocus={true}
-                 onKeyDown={e => e.keyCode === 13 ? joinChannel(pairingCode) : undefined}
+                 onKeyDown={({ keyCode }) => {
+                   if (keyCode === 13) joinChannel(pairingCode)
+                 }}
                  className='input' type='text' value={pairingCode}
                  onChange={e => this.setState({ pairingCode: e.target.value.toUpperCase() })}/>
           <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 12 }}>

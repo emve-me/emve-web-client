@@ -4,7 +4,11 @@ import React from 'react'
 import query from 'apollo-cache-inmemory/lib/fragmentMatcherIntrospectionQuery'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
-import { YouTubeSearch, YouTubeSearchVariables } from '../../../gql_types/YouTubeSearch'
+import {
+  YouTubeSearch,
+  YouTubeSearch_YoutubeApi_search_list_items,
+  YouTubeSearchVariables
+} from '../../../gql_types/YouTubeSearch'
 
 
 const SEARCH_QUERY = gql`
@@ -39,9 +43,10 @@ class YouTubeSearchQuery extends Query<YouTubeSearch, YouTubeSearchVariables> {
 type TProps = {
   channel: string
   search: string
+  onSelect: (item:YouTubeSearch_YoutubeApi_search_list_items) => void
 }
 
-export default ({ channel, search }: TProps) => (
+export default ({ channel, search,onSelect}: TProps) => (
   <YouTubeSearchQuery query={SEARCH_QUERY} variables={{ q: search }}>
     {({ loading, error, data }) => {
       if (loading) {
@@ -54,7 +59,7 @@ export default ({ channel, search }: TProps) => (
       }
 
       return data.YoutubeApi.search.list.items.filter(video => video.snippet.liveBroadcastContent === 'none').map(element => (
-        <SearchResult channel={channel} item={element} key={element.id.videoId}/>
+        <SearchResult onSelect={onSelect} channel={channel} item={element} key={element.id.videoId}/>
       ))
     }}
   </YouTubeSearchQuery>)
