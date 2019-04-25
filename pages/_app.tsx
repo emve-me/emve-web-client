@@ -18,7 +18,7 @@ class MyApp extends App<PROPS> {
   render() {
     const { Component, pageProps, apollo } = this.props
 
-    const textColor = '#000'
+    const textColor = '#222'
 
     return (
       <Container>

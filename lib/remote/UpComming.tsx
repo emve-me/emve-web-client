@@ -4,6 +4,7 @@ import LoadingIndicator from '../ui/LoadingIndicator'
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
 import { TrackState } from '../../gql_types/globalTypes'
 import SearchIcon from '../icons/SearchIcon'
+import RemoteEmptyState from './RemoteEmptyState'
 
 type TProps = {
   channel: string
@@ -18,7 +19,7 @@ const Track = ({ thumb, title, owner, state }: TrackOnChannel) => <div
 
   <div>
     {state === TrackState.playing ? <div>now playing</div> : false}
-    <div>{title}</div>
+    <div dangerouslySetInnerHTML={{ __html: title }}/>
     <div style={{ display: 'flex', alignItems: 'center', paddingTop: 4 }}>
       <img src={owner.picture} style={{ width: 25, height: 25, borderRadius: 50 }}/>
       <div style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>{owner.fullName}</div>
@@ -35,19 +36,7 @@ export default ({ channel }: TProps) => <UpComingItemsConsumer
   }
 
   return <>
-    {!nowPlaying ?
-      <div style={{
-        padding: '20px 0',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column'
-      }}>
-
-        <SearchIcon size={200} fill={'#666'}/>
-        <div style={{ fontSize: 30, color:'#555' }}>nothing playing</div>
-        <div style={{ paddingTop: 6 }}>Start typing to find a song ...</div>
-      </div> : false}
+    {!nowPlaying && upComing.length === 0 ? <RemoteEmptyState/> : false}
 
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       {nowPlaying ? <Track {...nowPlaying} /> : false}

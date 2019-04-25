@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Shell from '../Shell'
+import getConfig from 'next/config'
 
 
 export default class PlayerEmptyState extends Component<{ channel: string }> {
@@ -8,7 +9,7 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
 
     const { channel } = this.props
 
-    const directJoinLink = `https://emve.me/join?p=${channel}`
+    const directJoinLink = `${getConfig().publicRuntimeConfig.baseUrl}/remote?p=${channel}`
 
     return <Shell>
 
@@ -34,11 +35,13 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
         flexDirection: 'column',
         alignItems: 'center'
       }}>
-        <div style={{ fontSize: 40, paddingBottom: 16 }}>Visit emve.me on another device as a remote</div>
+        <div style={{ fontSize: 40, paddingBottom: 16, textAlign: 'center' }}>Visit emve.me on another device as a
+          remote
+        </div>
         <div style={{ fontSize: 30, paddingBottom: 16 }}>Pairing code</div>
         <div className='channel'>{channel}</div>
-        <div style={{paddingTop:16}}>OR</div>
-        <div style={{padding:'16px 0 8px 0'}}>Share this direct join link</div>
+        <div style={{ paddingTop: 16 }}>OR</div>
+        <div style={{ padding: '16px 0 8px 0' }}>Share this direct join link</div>
         <div><a href={directJoinLink} target='_blank'>{directJoinLink}</a></div>
       </div>
     </Shell>
