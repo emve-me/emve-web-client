@@ -3,7 +3,6 @@ import React from 'react'
 import LoadingIndicator from '../ui/LoadingIndicator'
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
 import { TrackState } from '../../gql_types/globalTypes'
-import SearchIcon from '../icons/SearchIcon'
 import RemoteEmptyState from './RemoteEmptyState'
 
 type TProps = {

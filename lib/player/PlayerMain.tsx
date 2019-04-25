@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import { withRouter, WithRouterProps } from 'next/router'
 import ChannelConsumer from '../consumers/ChannelController'
 import YouTube from 'react-youtube'
 import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../gql_types/MarkAsPlayedGQL'
-import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../gql_types/UpComingTracksGQL'
 import gql from 'graphql-tag'
 import LoadingIndicator from '../ui/LoadingIndicator'
 import PlayerEmptyState from './PlayerEmptyState'
@@ -30,12 +28,13 @@ export default class PlayerMain extends Component <{ channel: string }, {}> {
 
       } else {
 
-        return <>
+        return <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: 'green' }}>
           <YouTube
+
             videoId={nowPlaying.videoId}
             opts={{
-              height: '100vh',
-              width: '100vw',
+              height: '100%',
+              width: '100%',
               playerVars: {
                 autoplay: 1
               }
@@ -58,7 +57,7 @@ export default class PlayerMain extends Component <{ channel: string }, {}> {
               }
             }}
           />
-        </>
+        </div>
 
       }
 

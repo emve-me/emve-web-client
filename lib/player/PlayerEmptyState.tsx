@@ -38,7 +38,7 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
         <div style={{ fontSize: 40, paddingBottom: 16, textAlign: 'center' }}>Visit emve.me on another device as a
           remote
         </div>
-        <div style={{ fontSize: 30, paddingBottom: 16 }}>Pairing code</div>
+        <div style={{ fontSize: 30, paddingBottom: 16 }}>Enter pairing code</div>
         <div className='channel'>{channel}</div>
         <div style={{ paddingTop: 16 }}>OR</div>
         <div style={{ padding: '16px 0 8px 0' }}>Share this direct join link</div>
