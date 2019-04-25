@@ -23,9 +23,10 @@ export default class RemoteMain extends Component<{ channel: string }, { search:
           flexDirection: 'column',
           justifyContent: 'center'
         }}>
-          {search.trim() ?
-            <SearchResults onSelect={(item => this.setState({ search: '' }))} channel={channel} search={search}/> :
-            <UpComming channel={channel}/>}
+          <div style={{ maxWidth: 700 }}>
+            {search.trim() ?
+              <SearchResults onSelect={(item => this.setState({ search: '' }))} channel={channel} search={search}/> :
+              <UpComming channel={channel}/>}</div>
         </div>
       </>
     )

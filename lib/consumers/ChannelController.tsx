@@ -17,6 +17,11 @@ export const TRAK_FRAG = gql`fragment TrackOnChannel on Track {
   videoId
   state
   thumb
+  owner{
+    fullName
+    firstName
+    picture
+  }
 }`
 
 const VIDEOS_PUSHED = gql`
