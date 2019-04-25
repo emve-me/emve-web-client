@@ -31,6 +31,8 @@ export default ({ children }: { children: React.ReactNode }) => {
     <header>
       <HeartIcon size={30}/>
 
+      <div id='HEADER_PORTAL'/>
+
       <AccountThumb thumbSize={30}/>
 
     </header>

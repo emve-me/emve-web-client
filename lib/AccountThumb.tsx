@@ -9,6 +9,6 @@ export default ({ style, thumbSize = 40 }: { thumbSize?: number | string, style?
       <div><img onClick={() => {
         deleteCookie('GTOKENID')
         window.location.href = '/'
-      }} style={{ borderRadius: 100, width: thumbSize }} src={user.picture}/></div> : false}       </div>}
+      }} style={{ borderRadius: 100, width: thumbSize, cursor:'pointer' }} src={user.picture}/></div> : false}       </div>}
   </LoggedInUserController>
 </div>
