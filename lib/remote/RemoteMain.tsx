@@ -16,7 +16,6 @@ export default class RemoteMain extends Component<{ channel: string }, { search:
 
     return (
       <>
-        <HeaderPortal>
           <SearchBox value={search} placeholder='Search' onChange={search => this.setState({ search })}/>
           <div style={{
             paddingTop: '6rem',
@@ -30,7 +29,7 @@ export default class RemoteMain extends Component<{ channel: string }, { search:
                 <SearchResults onSelect={(item => this.setState({ search: '' }))} channel={channel} search={search}/> :
                 <UpComming channel={channel}/>}</div>
           </div>
-        </HeaderPortal>
+
       </>
     )
   }

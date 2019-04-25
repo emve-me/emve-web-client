@@ -2,13 +2,9 @@ import { Button, TextField } from '@material-ui/core'
 import React, { Component } from 'react'
 import JoinChannelController from './JoinChannelController'
 
-type TProps = {}
-
-type TState = { pairingCode: string }
-
 
 // todo handle invalid code error message
-export default class JoinChannel extends Component <TProps, TState> {
+export default class JoinChannel extends Component <{}, { pairingCode: string }> {
 
   state = { pairingCode: '' }
 

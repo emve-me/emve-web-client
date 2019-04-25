@@ -15,13 +15,12 @@ export default ({ children }: { children: React.ReactNode }) => {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 14px;
+            padding: 0px 14px;
             position: fixed;
-            top:0;
-            right:0;
-            left:0;
-            
-            
+            top: 0;
+            right: 0;
+            left: 0;
+            height: 70px;
         }
 
 
@@ -29,9 +28,10 @@ export default ({ children }: { children: React.ReactNode }) => {
     </style>
 
     <header>
+
       <HeartIcon size={30}/>
 
-      <div id='HEADER_PORTAL'/>
+      <div style={{ flex: 1 }} id='HEADER_PORTAL'/>
 
       <AccountThumb thumbSize={30}/>
 
