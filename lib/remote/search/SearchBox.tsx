@@ -2,19 +2,21 @@ import React, { Component } from 'react'
 import { validate } from 'graphql'
 import HeaderPortal from '../../HeaderPortal'
 import SearchIcon from '../../icons/SearchIcon'
+import BackIcon from '../../icons/BackIcon'
 
 type TProps = { value: string, placeholder: string, onChange: (value: string) => void }
+type TState = { searching: boolean }
 
-export class SearchBox extends Component<TProps, { focused: boolean }> {
+export class SearchBox extends Component<TProps, TState> {
 
-  state = { focused: false }
+  state = { searching: false }
   inputRef = React.createRef<HTMLInputElement>()
 
   keyListener = ({ key, composed, code, target }: KeyboardEvent) => {
     if (key === 'Escape') {
-      this.props.onChange('')
+      this.deactivateSearch()
     } else if (target !== this.inputRef.current && key.length === 1 && key.match(/[a-z0-9]/i)) {
-      this.inputRef.current.focus()
+      this.activateSearch()
     } else if (key === 'Backspace' && this.props.value.trim()) {
       this.inputRef.current.focus()
     }
@@ -28,8 +30,26 @@ export class SearchBox extends Component<TProps, { focused: boolean }> {
     document.removeEventListener('keydown', this.keyListener, false)
   }
 
+  toggleSearch = () => {
+    this.setState(({ searching }) => ({
+      searching: !searching
+    }))
+  }
+
+  activateSearch = () => {
+    console.log('activate search')
+    this.setState({ searching: true }, () => this.inputRef.current.focus())
+  }
+
+  deactivateSearch = () => {
+    this.props.onChange('')
+    this.setState({ searching: false })
+  }
+
+
   render() {
     const { value, placeholder, onChange } = this.props
+    const { searching } = this.state
 
     return <HeaderPortal>
       <div className='root'>
@@ -41,15 +61,15 @@ export class SearchBox extends Component<TProps, { focused: boolean }> {
             }
 
             .searchField {
-                text-align: center;
-                padding: 0;
+                text-align: left;
+                padding: 0 0 0 10px;
                 margin: 0;
-                backgroundColor: rgba(255, 255, 255, 0.9);
-                width: 100%;
+                backgroundColor: #FFF;
                 border: none;
                 outline: none;
-                font-size: 20px;
-                display: none;
+                font-size: 16px;
+                flex:1;
+
             }
 
             .searchOutline {
@@ -62,22 +82,40 @@ export class SearchBox extends Component<TProps, { focused: boolean }> {
                 width: 800px;
                 height: 44px;
                 box-shadow: 1px 1px 1px #bbb;
-
+                cursor: pointer;
 
             }
         `}
         </style>
-        <div className='searchOutline'>
-          <SearchIcon/>
-          <input className='searchField'
-                 ref={this.inputRef}
+        <div className='searchOutline' onClick={() => {
 
+          console.log('searching', searching)
+          if (!searching) {
+            this.activateSearch()
+          }
+        }}>
 
-                 value={value}
-                 placeholder={placeholder}
-                 onChange={e => onChange(e.target.value)}
-                 type="text"
+          <SearchIcon style={{ display: !searching ? 'block' : 'none' }}/>
+          <div style={{ display: !searching ? 'block' : 'none', paddingLeft: 10, color: '#555' }}>{placeholder}</div>
+
+          <BackIcon onClick={(e) => {
+            e.stopPropagation()
+            console.log('stopped prop')
+            this.deactivateSearch()
+          }} style={{ display: searching ? 'block' : 'none' }}/>
+          <input
+            style={{ display: searching ? 'block' : 'none' }}
+            className='searchField'
+            ref={this.inputRef}
+            value={value}
+            onBlur={() => window.setTimeout(this.deactivateSearch, 100)}
+            autoFocus={true}
+            placeholder={placeholder}
+            onChange={e => onChange(e.target.value)}
+            type="text"
           />
+
+
         </div>
       </div>
     </HeaderPortal>

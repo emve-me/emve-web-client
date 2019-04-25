@@ -11,6 +11,8 @@ export default ({ icon, label, onClick }: TProps) => <div className='root' onCli
   { /*language=CSS*/}
   <style jsx>{`
       .root {
+          background-color: #FFF;
+          box-shadow: 1px 1px 1px #bbb;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -20,9 +22,9 @@ export default ({ icon, label, onClick }: TProps) => <div className='root' onCli
           padding: 40px 80px;
           cursor: pointer;
       }
-      
+
       .root:hover {
-        background-color: aliceblue;
+          background-color: aliceblue;
       }
   `}</style>
   {icon}

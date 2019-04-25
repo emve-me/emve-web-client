@@ -33,7 +33,7 @@ export default ({ children }: { children: React.ReactNode }) => {
 
       <div style={{ flex: 1 }} id='HEADER_PORTAL'/>
 
-      <AccountThumb thumbSize={30}/>
+      <AccountThumb thumbSize={33}/>
 
     </header>
     {children}
