@@ -13,7 +13,8 @@ type PROPS = {
 class MyApp extends App<PROPS> {
 
 
-  componentDidMount() {}
+  componentDidMount() {
+  }
 
   render() {
     const { Component, pageProps, apollo } = this.props
@@ -30,7 +31,7 @@ class MyApp extends App<PROPS> {
           />
         </Head>
 
-        { /*language=CSS*/ }
+        { /*language=CSS*/}
         <style jsx global>{`
           body {
             color: ${textColor};
@@ -80,6 +81,15 @@ class MyApp extends App<PROPS> {
               sans-serif;
             text-decoration: none;
             outline: none;
+          }
+          
+          .playerContainer {
+            position: fixed;
+            top:0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            
           }
         `}</style>
 

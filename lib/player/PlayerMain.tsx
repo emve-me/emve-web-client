@@ -5,6 +5,10 @@ import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../gql_types/MarkA
 import gql from 'graphql-tag'
 import LoadingIndicator from '../ui/LoadingIndicator'
 import PlayerEmptyState from './PlayerEmptyState'
+import Shell from '../Shell'
+
+import css from 'styled-jsx/css'
+
 
 const GQL_MARK_AS_PLAYED = gql`mutation MarkAsPlayedGQL ($track : ID!, $nextTrack: ID) {
   markTrackAsPlayed(input:{track: $track,nextTrack :$nextTrack})
@@ -16,9 +20,9 @@ export default class PlayerMain extends Component <{ channel: string }, {}> {
 
     const { channel } = this.props
 
+
     return <ChannelConsumer
       channel={channel}>{({ error, nowPlaying, replaceNowPlaying, loading, upComing, updateCache, client }) => {
-
       if (loading) {
         return <LoadingIndicator/>
       }
@@ -28,9 +32,9 @@ export default class PlayerMain extends Component <{ channel: string }, {}> {
 
       } else {
 
-        return <div style={{ position: 'fixed', top: 0, right: 0, bottom: 0, left: 0, backgroundColor: 'green' }}>
+        return <>
           <YouTube
-
+            containerClassName='playerContainer'
             videoId={nowPlaying.videoId}
             opts={{
               height: '100%',
@@ -57,8 +61,7 @@ export default class PlayerMain extends Component <{ channel: string }, {}> {
               }
             }}
           />
-        </div>
-
+        </>
       }
 
     }}</ChannelConsumer>
