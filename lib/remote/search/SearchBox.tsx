@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
+import { validate } from 'graphql'
 
 type TProps = { value: string, placeholder: string, onChange: (value: string) => void }
 
-export class SearchBox extends Component<TProps> {
+export class SearchBox extends Component<TProps, { focused: boolean }> {
 
-  keyListener = ({ key, composed, code }: KeyboardEvent) => {
+  state = { focused: false }
+  inputRef = React.createRef<HTMLInputElement>()
+
+  keyListener = ({ key, composed, code, target }: KeyboardEvent) => {
     if (key === 'Escape') {
       this.props.onChange('')
-    } else {
-      console.log({key, composed, code})
+    } else if (target !== this.inputRef.current && key.length === 1 && key.match(/[a-z0-9]/i)) {
+      this.inputRef.current.focus()
+    } else if (key === 'Backspace' && this.props.value.trim()) {
+      this.inputRef.current.focus()
     }
   }
 
@@ -25,7 +31,10 @@ export class SearchBox extends Component<TProps> {
 
     return <div style={{ position: 'fixed', top: 0, left: 0, right: 0 }}>
       <input
+        ref={this.inputRef}
+
         style={{
+          color: !value ? 'transparent' : undefined,
           height: 80,
           textAlign: 'center',
           padding: 0,
