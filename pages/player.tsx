@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import PlayerMain from '../lib/player/PlayerMain'
-import Shell from '../lib/Shell'
+import { withRouter, WithRouterProps } from 'next/router'
 
+class Player extends Component <WithRouterProps<{ p: string; }>> {
 
-export default class Index extends Component {
   render() {
-    return <Shell><PlayerMain/></Shell>
+    return <PlayerMain channel={this.props.router.query.p}/>
   }
 }
+
+export default withRouter(Player)

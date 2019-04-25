@@ -5,42 +5,37 @@ import YouTube from 'react-youtube'
 import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../gql_types/MarkAsPlayedGQL'
 import { UpComingTracksGQL, UpComingTracksGQLVariables } from '../../gql_types/UpComingTracksGQL'
 import gql from 'graphql-tag'
+import LoadingIndicator from '../ui/LoadingIndicator'
+import PlayerEmptyState from './PlayerEmptyState'
 
 const GQL_MARK_AS_PLAYED = gql`mutation MarkAsPlayedGQL ($track : ID!, $nextTrack: ID) {
   markTrackAsPlayed(input:{track: $track,nextTrack :$nextTrack})
 }`
 
-class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
+export default class PlayerMain extends Component <{ channel: string }, {}> {
 
   render() {
 
-    const { p: channel } = this.props.router.query
+    const { channel } = this.props
 
     return <ChannelConsumer
       channel={channel}>{({ error, nowPlaying, replaceNowPlaying, loading, upComing, updateCache, client }) => {
 
       if (loading) {
-        return 'Loading'
+        return <LoadingIndicator/>
       }
 
       if (upComing.length === 0 && !nowPlaying) {
-        return <div>EMTPY STATE</div>
+        return <PlayerEmptyState channel={channel}/>
+
       } else {
 
-
         return <>
-          <div>Now Playing:
-            {nowPlaying ? <div>{nowPlaying.title}</div> : false}</div>
-
-          <div>Up comming:
-            {upComing.map(({ node }) => <div style={{ border: 'solid 1px #eee', padding: 4 }}
-                                             key={node.id}>{node.title}</div>)}</div>
-
           <YouTube
             videoId={nowPlaying.videoId}
             opts={{
-              height: '390',
-              width: '640',
+              height: '100vh',
+              width: '100vw',
               playerVars: {
                 autoplay: 1
               }
@@ -71,4 +66,3 @@ class PlayerMain extends Component <WithRouterProps<{ p: string; }>, {}> {
   }
 }
 
-export default withRouter(PlayerMain)
