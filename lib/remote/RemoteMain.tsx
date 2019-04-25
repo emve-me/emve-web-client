@@ -2,12 +2,19 @@ import React, { Component } from 'react'
 import SearchResults from './search/SearchResults'
 import UpComming from './UpComming'
 import { SearchBox } from './search/SearchBox'
-import HeaderPortal from '../HeaderPortal'
 
+type TProps = {
+  channel: string
+}
 
-export default class RemoteMain extends Component<{ channel: string }, { search: string }> {
+type TState = {
+  search: string
+  searching: boolean
+}
 
-  state = { search: '' }
+export default class RemoteMain extends Component  <TProps, TState> {
+
+  state = { search: '', searching: false }
 
   render() {
 
@@ -16,20 +23,18 @@ export default class RemoteMain extends Component<{ channel: string }, { search:
 
     return (
       <>
-          <SearchBox value={search} placeholder='Search' onChange={search => this.setState({ search })}/>
-          <div style={{
-            paddingTop: '6rem',
-            alignItems: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center'
-          }}>
-            <div style={{ maxWidth: 700 }}>
-              {search.trim() ?
-                <SearchResults onSelect={(item => this.setState({ search: '' }))} channel={channel} search={search}/> :
-                <UpComming channel={channel}/>}</div>
-          </div>
-
+        <SearchBox value={search} placeholder='Search YouTube' onChange={search => this.setState({ search })}/>
+        <div style={{
+          width: 800, paddingTop: '6rem',
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center'
+        }}>
+          {search.trim() ?
+            <SearchResults onSelect={(item => this.setState({ search: '' }))} channel={channel} search={search}/> :
+            <UpComming channel={channel}/>}
+        </div>
       </>
     )
   }

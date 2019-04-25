@@ -40,7 +40,7 @@ class MyApp extends App<PROPS> {
             padding: 0;
             overflow-y: auto;
             height: 100%;
-            background-color: #f9f9f9;
+            background-color: #fAFAFA;
           }
           
           #__next {
