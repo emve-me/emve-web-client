@@ -14,6 +14,7 @@ export interface UpComingTracksGQL_channel_nowPlaying {
   title: string | null;
   videoId: string | null;
   state: TrackState | null;
+  thumb: string | null;
 }
 
 export interface UpComingTracksGQL_channel_tracks_edges_node {
@@ -22,6 +23,7 @@ export interface UpComingTracksGQL_channel_tracks_edges_node {
   title: string | null;
   videoId: string | null;
   state: TrackState | null;
+  thumb: string | null;
 }
 
 export interface UpComingTracksGQL_channel_tracks_edges {

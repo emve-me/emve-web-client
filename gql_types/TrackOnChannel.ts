@@ -14,4 +14,5 @@ export interface TrackOnChannel {
   title: string | null;
   videoId: string | null;
   state: TrackState | null;
+  thumb: string | null;
 }

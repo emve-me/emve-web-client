@@ -3662,10 +3662,10 @@ type TokenPagination {
 
 type Track {
     addedOn: String
-    channel: Channel
     id: ID
     owner: User
     state: TrackState
+    thumb: String
     title: String
     videoId: ID
 }

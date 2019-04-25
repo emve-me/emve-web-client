@@ -14,6 +14,7 @@ export interface VideoSubscription_trackUpdated {
   title: string | null;
   videoId: string | null;
   state: TrackState | null;
+  thumb: string | null;
 }
 
 export interface VideoSubscription {

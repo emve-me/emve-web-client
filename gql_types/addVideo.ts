@@ -14,6 +14,7 @@ export interface addVideo_videoPush {
   title: string | null;
   videoId: string | null;
   state: TrackState | null;
+  thumb: string | null;
 }
 
 export interface addVideo {
