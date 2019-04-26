@@ -1,7 +1,7 @@
 runtime: nodejs10
 env: standard
 
-service: client
+service: default
 
 handlers:
   - url: /(.*\.(bmp|gif|ico|jpeg|jpg|png|css|js|ico))
