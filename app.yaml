@@ -3,12 +3,15 @@ env: standard
 
 service: default
 
+
+
 handlers:
   - url: /(.*\.(bmp|gif|ico|jpeg|jpg|png|css|js|ico))
     static_files: static/\1
     upload: static/(.*)
     secure: always
-
+  - url: /
+    secure: always
 
 env_variables:
   NODE_ENV: 'production'

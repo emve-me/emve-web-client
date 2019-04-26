@@ -1,7 +1,6 @@
 deploy:
   image: "rlancer/gcloud-node:1.0.2"
   script:
-    - rm Dockerfile # for app engine flex?
     - npm i
     - npm run build
     - echo $GCLOUD_SERVICE > /tmp/$CI_PIPELINE_ID.json
