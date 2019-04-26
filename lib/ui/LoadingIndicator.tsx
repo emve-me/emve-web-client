@@ -1,6 +1,11 @@
+import HeartIconSpinner from '../icons/HeartIconSpinner'
+
 const LoadingIndicator = (props) => (
-  <div style={{width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-    <img src={'/static/Ripple.gif'}/>
+  <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+
+
+    <HeartIconSpinner/>
+
   </div>
 )
 

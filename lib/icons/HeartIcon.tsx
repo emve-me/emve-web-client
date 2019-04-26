@@ -1,10 +1,10 @@
 type TProps = {
-  size: number | string
+  size?: number | string
   onClick?
   style?: React.CSSProperties
 }
 
-export default ({ size, onClick, style }: TProps) =>
+export default ({ size=40, onClick, style }: TProps) =>
   <svg onClick={onClick} viewBox="0 -28 512.00001 512" width={size}
        style={{ transform: 'rotate(90deg)', flexShrink: 0, ...style }}>
     <path

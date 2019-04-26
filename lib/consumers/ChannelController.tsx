@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { Query, withApollo, WithApolloClient } from 'react-apollo'
 import {
-  UpComingTracksGQL,
+  UpComingTracksGQL, UpComingTracksGQL_channel_owner,
   UpComingTracksGQL_channel_tracks_edges,
   UpComingTracksGQLVariables
 } from '../../gql_types/UpComingTracksGQL'
@@ -63,6 +63,7 @@ type TRenderProps = {
   loading: boolean
   upComing?: Array<UpComingTracksGQL_channel_tracks_edges>
   nowPlaying?: TrackOnChannel
+  owner?: UpComingTracksGQL_channel_owner
   replaceNowPlaying?: (nowPlaying: TrackOnChannel) => void
 }
 
@@ -190,7 +191,8 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
         upComing: edges,
         loading: false,
         updateCache: this.readModWrite,
-        client
+        client,
+        owner: data.channel.owner
       })
     }}</UpComingTracksQuery>
   }

@@ -23,11 +23,10 @@ export default class RemoteMain extends Component  <TProps, TState> {
 
     return (
       <>
-
         <SearchBox value={search} placeholder='Search YouTube' onChange={search => this.setState({ search })}/>
         <div style={{
           width: 800, paddingTop: '6rem',
-          margin:'0 auto',
+          margin: '0 auto',
           alignItems: 'center',
           display: 'flex',
           flexDirection: 'column',

@@ -11,11 +11,9 @@ type TProps = {
 
 const Track = ({ thumb, title, owner, state }: TrackOnChannel) => <div
   style={{ display: 'flex', alignItems: 'center', marginBottom: 26 }}>
-
   <div style={{ paddingRight: 16 }}>
     <img style={{ width: 140, borderRadius: 6 }} src={thumb}/>
   </div>
-
   <div>
     {state === TrackState.playing ? <div>now playing</div> : false}
     <div dangerouslySetInnerHTML={{ __html: title }}/>
@@ -24,11 +22,16 @@ const Track = ({ thumb, title, owner, state }: TrackOnChannel) => <div
       <div style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>{owner.fullName}</div>
     </div>
   </div>
-
 </div>
 
+const Card = ({ children }: { children: React.ReactNode }) =>
+  (<div style={{ backgroundColor: '#fff', padding: 16, borderRadius: 3, border: 'solid 1px #ccc' }}>
+      {children}
+    </div>
+  )
+
 export default ({ channel }: TProps) => <ChannelController
-  channel={channel}>{({ upComing, nowPlaying, loading }) => {
+  channel={channel}>{({ upComing, nowPlaying, loading, owner }) => {
 
   if (loading) {
     return <LoadingIndicator/>
@@ -38,6 +41,8 @@ export default ({ channel }: TProps) => <ChannelController
     {!nowPlaying && upComing.length === 0 ? <RemoteEmptyState/> : false}
 
 
+    <img style={{ borderRadius: 50, width: 50 }} src={owner.picture}/>
+    {owner.fullName}
 
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       {nowPlaying ? <Track {...nowPlaying} /> : false}
