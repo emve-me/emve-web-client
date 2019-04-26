@@ -19,7 +19,7 @@ export class SearchBox extends Component<TProps, TState> {
     debounceDelay: 400
   }
 
-  debounceHandle
+  debounceHandle?: number
   state = { searching: false }
   inputRef = React.createRef<HTMLInputElement>()
 

@@ -9,24 +9,23 @@ type TProps = {
 
 type TState = {
   search: string
-  searchDebounced: string
+  debouncedSearch: string
   searching: boolean
 }
 
 export default class RemoteMain extends Component  <TProps, TState> {
 
-  state = { search: '', searchDebounced: '', searching: false }
-
+  state = { search: '', debouncedSearch: '', searching: false }
 
   render() {
 
     const { channel } = this.props
-    const { search, searchDebounced } = this.state
+    const { search, debouncedSearch } = this.state
 
     return (
       <>
         <SearchBox value={search} placeholder='Search YouTube'
-                   onChangeDebounced={searchDebounced => this.setState({ searchDebounced })}
+                   onChangeDebounced={debouncedSearch => this.setState({ debouncedSearch })}
                    onChange={search => this.setState({ search })}/>
         <div style={{
           width: 800, paddingTop: '6rem',
@@ -37,8 +36,8 @@ export default class RemoteMain extends Component  <TProps, TState> {
           justifyContent: 'center'
         }}>
           {search.trim() ?
-            <SearchResults onSelect={(item => this.setState({ search: '', searchDebounced: '' }))} channel={channel}
-                           search={searchDebounced.trim()}/> :
+            <SearchResults onSelect={(item => this.setState({ search: '', debouncedSearch: '' }))} channel={channel}
+                           search={debouncedSearch.trim()}/> :
             <UpComming channel={channel}/>}
         </div>
       </>
