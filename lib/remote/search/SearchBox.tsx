@@ -4,11 +4,22 @@ import HeaderPortal from '../../HeaderPortal'
 import SearchIcon from '../../icons/SearchIcon'
 import BackIcon from '../../icons/BackIcon'
 
-type TProps = { value: string, placeholder: string, onChange: (value: string) => void }
+type TProps = {
+  value: string
+  placeholder: string
+  onChange: (value: string) => void
+  debounceDelay?: number
+  onChangeDebounced?: (value: string) => void
+}
 type TState = { searching: boolean }
 
 export class SearchBox extends Component<TProps, TState> {
 
+  static defaultProps = {
+    debounceDelay: 400
+  }
+
+  debounceHandle
   state = { searching: false }
   inputRef = React.createRef<HTMLInputElement>()
 
@@ -30,12 +41,6 @@ export class SearchBox extends Component<TProps, TState> {
     document.removeEventListener('keydown', this.keyListener, false)
   }
 
-  toggleSearch = () => {
-    this.setState(({ searching }) => ({
-      searching: !searching
-    }))
-  }
-
   activateSearch = () => {
     console.log('activate search')
     this.setState({ searching: true }, () => this.inputRef.current.focus())
@@ -48,7 +53,7 @@ export class SearchBox extends Component<TProps, TState> {
 
 
   render() {
-    const { value, placeholder, onChange } = this.props
+    const { value, placeholder, onChange, onChangeDebounced, debounceDelay } = this.props
     const { searching } = this.state
 
     return <HeaderPortal>
@@ -68,7 +73,7 @@ export class SearchBox extends Component<TProps, TState> {
                 border: none;
                 outline: none;
                 font-size: 16px;
-                flex:1;
+                flex: 1;
 
             }
 
@@ -89,7 +94,6 @@ export class SearchBox extends Component<TProps, TState> {
         </style>
         <div className='searchOutline' onClick={() => {
 
-          console.log('searching', searching)
           if (!searching) {
             this.activateSearch()
           }
@@ -111,9 +115,20 @@ export class SearchBox extends Component<TProps, TState> {
             onBlur={() => window.setTimeout(this.deactivateSearch, 100)}
             autoFocus={true}
             placeholder={placeholder}
-            onChange={e => onChange(e.target.value)}
-            type="text"
-          />
+            onChange={({ target: { value } }) => {
+
+              if (onChangeDebounced) {
+                if (this.debounceHandle) {
+                  window.clearTimeout(this.debounceHandle)
+                }
+                this.debounceHandle = window.setTimeout(() => {
+                  this.debounceHandle = null
+                  onChangeDebounced(value)
+                }, debounceDelay)
+              }
+              onChange(value)
+            }}
+            type='text'/>
 
 
         </div>
