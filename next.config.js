@@ -5,7 +5,7 @@ module.exports = withTypescript({
   serverRuntimeConfig: {
     // Will only be available on the server side
 
-    graphQLEndpoint: 'http://localhost:4000'
+    graphQLEndpoint: 'http://backend:4000'
   },
   publicRuntimeConfig: {
     // Will be available on both server and client

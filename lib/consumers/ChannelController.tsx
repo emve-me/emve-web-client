@@ -172,7 +172,7 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
   }
 
   render() {
-    return <UpComingTracksQuery query={UPCOMING_QUERY}
+    return <UpComingTracksQuery query={UPCOMING_QUERY} ssr={true}
                                 variables={{ channel: this.props.channel }}>{({ data, error, loading, client }) => {
 
       if (loading) {
