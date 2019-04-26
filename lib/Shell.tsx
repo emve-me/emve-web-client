@@ -33,6 +33,7 @@ export default ({ children }: { children: React.ReactNode }) => {
       <AccountThumb thumbSize={33}/>
 
     </header>
+    <div style={{ height: 70 }}></div>
     {children}
   </>
 

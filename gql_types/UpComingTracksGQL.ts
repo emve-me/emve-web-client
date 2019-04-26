@@ -28,6 +28,7 @@ export interface UpComingTracksGQL_channel_nowPlaying {
 export interface UpComingTracksGQL_channel_owner {
   __typename: "User";
   fullName: string | null;
+  firstName: string | null;
   picture: string | null;
   id: string | null;
 }

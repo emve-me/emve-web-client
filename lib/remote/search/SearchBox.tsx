@@ -1,6 +1,4 @@
-import React, { Component } from 'react'
-import { validate } from 'graphql'
-import HeaderPortal from '../../HeaderPortal'
+import { Component, createRef } from 'react'
 import SearchIcon from '../../icons/SearchIcon'
 import BackIcon from '../../icons/BackIcon'
 
@@ -10,18 +8,20 @@ type TProps = {
   onChange: (value: string) => void
   debounceDelay?: number
   onChangeDebounced?: (value: string) => void
+  width?: string
 }
 type TState = { searching: boolean }
 
 export class SearchBox extends Component<TProps, TState> {
 
   static defaultProps = {
-    debounceDelay: 400
+    debounceDelay: 400,
+
   }
 
   debounceHandle?: number
   state = { searching: false }
-  inputRef = React.createRef<HTMLInputElement>()
+  inputRef = createRef<HTMLInputElement>()
 
   keyListener = ({ key, composed, code, target }: KeyboardEvent) => {
     if (key === 'Escape') {
@@ -53,87 +53,83 @@ export class SearchBox extends Component<TProps, TState> {
 
 
   render() {
-    const { value, placeholder, onChange, onChangeDebounced, debounceDelay } = this.props
+    const { value, width, placeholder, onChange, onChangeDebounced, debounceDelay } = this.props
     const { searching } = this.state
 
-    return <HeaderPortal>
-      <div className='root'>
-        { /*language=CSS*/}
-        <style jsx>{`
-            .root {
-                display: flex;
-                justify-content: center;
-            }
+    return <>
+      { /*language=CSS*/}
+      <style jsx>{`
+         
 
-            .searchField {
-                text-align: left;
-                padding: 0 0 0 10px;
-                margin: 0;
-                backgroundColor: #FFF;
-                border: none;
-                outline: none;
-                font-size: 16px;
-                flex: 1;
+          .searchField {
+              text-align: left;
+              padding: 0 0 0 10px;
+              margin: 0;
+              backgroundColor: #FFF;
+              border: none;
+              outline: none;
+              font-size: 16px;
+              flex: 1;
 
-            }
-
-            .searchOutline {
-                display: flex;
-                align-items: center;
-                padding-left: 16px;
-                background-color: #fefefe;
-                border: solid 1px #ddd;
-                border-radius: 6px;
-                width: 800px;
-                height: 44px;
-                box-shadow: 1px 1px 1px #bbb;
-                cursor: pointer;
-
-            }
-        `}
-        </style>
-        <div className='searchOutline' onClick={() => {
-
-          if (!searching) {
-            this.activateSearch()
           }
-        }}>
 
-          <SearchIcon style={{ display: !searching ? 'block' : 'none' }}/>
-          <div style={{ display: !searching ? 'block' : 'none', paddingLeft: 10, color: '#555' }}>{placeholder}</div>
+          .searchOutline {
+              display: flex;
+              align-items: center;
+              padding-left: 16px;
+              background-color: #fefefe;
+              border: solid 1px #ddd;
+              border-radius: 6px;
+              ${width ? `width: ${width};` :''};
+              height: 44px;
+              box-shadow: 1px 1px 1px #bbb;
+              cursor: pointer;
 
-          <BackIcon onClick={(e) => {
-            e.stopPropagation()
-            console.log('stopped prop')
-            this.deactivateSearch()
-          }} style={{ display: searching ? 'block' : 'none' }}/>
-          <input
-            style={{ display: searching ? 'block' : 'none' }}
-            className='searchField'
-            ref={this.inputRef}
-            value={value}
-            onBlur={() => window.setTimeout(this.deactivateSearch, 100)}
-            autoFocus={true}
-            placeholder={placeholder}
-            onChange={({ target: { value } }) => {
+          }
+      `}
+      </style>
+      <div className='searchOutline' onClick={() => {
 
-              if (onChangeDebounced) {
-                if (this.debounceHandle) {
-                  window.clearTimeout(this.debounceHandle)
-                }
-                this.debounceHandle = window.setTimeout(() => {
-                  this.debounceHandle = null
-                  onChangeDebounced(value)
-                }, debounceDelay)
+        if (!searching) {
+          this.activateSearch()
+        }
+      }}>
+
+        <SearchIcon style={{ display: !searching ? 'block' : 'none' }}/>
+        <div style={{ display: !searching ? 'block' : 'none', paddingLeft: 10, color: '#555' }}>{placeholder}</div>
+
+        <BackIcon onClick={(e) => {
+          e.stopPropagation()
+          console.log('stopped prop')
+          this.deactivateSearch()
+        }} style={{ display: searching ? 'block' : 'none' }}/>
+        <input
+          style={{ display: searching ? 'block' : 'none' }}
+          className='searchField'
+          ref={this.inputRef}
+          value={value}
+          onBlur={() => window.setTimeout(this.deactivateSearch, 100)}
+          autoFocus={true}
+          placeholder={placeholder}
+          onChange={({ target: { value } }) => {
+
+            if (onChangeDebounced) {
+              if (this.debounceHandle) {
+                window.clearTimeout(this.debounceHandle)
               }
-              onChange(value)
-            }}
-            type='text'/>
+              this.debounceHandle = window.setTimeout(() => {
+                this.debounceHandle = null
+                onChangeDebounced(value)
+              }, debounceDelay)
+            }
+            onChange(value)
+          }}
+          type='text'/>
 
 
-        </div>
       </div>
-    </HeaderPortal>
+    </>
+
 
   }
 

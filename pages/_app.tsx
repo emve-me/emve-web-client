@@ -57,6 +57,7 @@ class MyApp extends App<PROPS> {
           
           html {
             height: 100%;
+             box-sizing: border-box;
           }
           
           img,
@@ -90,6 +91,11 @@ class MyApp extends App<PROPS> {
             outline: none;
             color: dodgerblue;
           }
+          
+          *, *:before, *:after {
+            box-sizing: inherit;
+          } 
+
         `}</style>
 
         <ApolloProvider client={apollo}>

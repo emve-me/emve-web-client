@@ -39,6 +39,7 @@ const UPCOMING_QUERY = gql`query UpComingTracksGQL($channel: ID!) {
     }
     owner{
       fullName
+      firstName
       picture
       id
     }
