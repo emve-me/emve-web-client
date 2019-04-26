@@ -10,7 +10,7 @@ handlers:
   - url: /.next
     static_dir: .next
     secure: always
-  - url: /
+  - url: /*
     secure: always
 
 env_variables:
