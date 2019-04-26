@@ -1,0 +1,3 @@
+dispatch:
+  - url: "emve.me/api/*"
+    service: api
