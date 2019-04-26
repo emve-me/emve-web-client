@@ -1,7 +1,7 @@
 {
   "name": "collab-admin",
   "version": "1.0.0",
-  "description": "",
+  "description": "emve.me, play youtube videos with friends.",
   "scripts": {
     "dev": "nodemon -e ts,tsx -w src --exec \"ts-node -r dotenv/config  src/server.ts\"",
     "clean": "rm -rf .next && rm -rf dist",
@@ -59,7 +59,7 @@
     "typescript": "^3.4.5"
   },
   "engines": {
-    "node": "10.13.0",
-    "npm": "6.4.1"
+    "node": "10.15.3",
+    "npm": "6.9.0"
   }
 }

@@ -1,48 +1,29 @@
 import express from 'express'
 import next from 'next'
-import favicon from 'serve-favicon'
-import path from 'path'
 import { getCookie } from 'vanilla-cookies'
-import url from 'url'
 
 const dev = process.env.NODE_ENV !== 'production'
-
-
-export type TContext = {
-  isLoggedIn: boolean
-  user?: {
-    picture: string
-    email: string
-    name: string
-    id: string
-  }
-  dev: boolean
-}
 
 const port = process.env.PORT || 3035
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-const protectedRoutes = ['player', 'start', 'join', 'remote']
+const protectedRoutes = ['player', 'join', 'remote']
 
 app.prepare().then(() => {
   const server = express()
 
-  server.use(favicon(path.join(__dirname, '..', 'static', 'share.png')))
-
   protectedRoutes.forEach(route => {
     server.get(`/${route}`, (req, res, next) => {
       const googleToken = getCookie('GTOKENID', req.headers.cookie)
-      if(!googleToken){
+      if (!googleToken) {
         res.redirect('/')
-      }
-      else{
+      } else {
         next()
       }
     })
   })
-
-
+  
   server.get('*', async (req, res) => {
     handle(req, res)
   })

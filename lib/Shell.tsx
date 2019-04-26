@@ -1,7 +1,7 @@
 import React from 'react'
 import AccountThumb from './AccountThumb'
 import HeartIcon from './icons/HeartIcon'
-import Logo from './ui/Logo'
+import Link from 'next/link'
 
 export default ({ children }: { children: React.ReactNode }) => {
 
@@ -28,9 +28,9 @@ export default ({ children }: { children: React.ReactNode }) => {
     </style>
 
     <header>
-
-      <HeartIcon size={30}/>
-
+      <Link href='/'>
+        <HeartIcon style={{ cursor: 'pointer' }} size={30}/>
+      </Link>
       <div style={{ flex: 1 }} id='HEADER_PORTAL'/>
 
       <AccountThumb thumbSize={33}/>

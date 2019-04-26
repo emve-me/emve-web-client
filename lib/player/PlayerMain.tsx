@@ -5,15 +5,13 @@ import { MarkAsPlayedGQL, MarkAsPlayedGQLVariables } from '../../gql_types/MarkA
 import gql from 'graphql-tag'
 import LoadingIndicator from '../ui/LoadingIndicator'
 import PlayerEmptyState from './PlayerEmptyState'
-import Shell from '../Shell'
-
-import css from 'styled-jsx/css'
 
 
 const GQL_MARK_AS_PLAYED = gql`mutation MarkAsPlayedGQL ($track : ID!, $nextTrack: ID) {
   markTrackAsPlayed(input:{track: $track,nextTrack :$nextTrack})
 }`
 
+// todo move mark as played to channel consumer
 export default class PlayerMain extends Component <{ channel: string }, {}> {
 
   render() {
@@ -31,8 +29,17 @@ export default class PlayerMain extends Component <{ channel: string }, {}> {
         return <PlayerEmptyState channel={channel}/>
 
       } else {
-
+        
         return <>
+          <style jsx global>{`
+          .playerContainer {
+            position: fixed;
+            top:0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+          }`}
+          </style>
           <YouTube
             containerClassName='playerContainer'
             videoId={nowPlaying.videoId}
