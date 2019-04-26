@@ -37,6 +37,11 @@ const UPCOMING_QUERY = gql`query UpComingTracksGQL($channel: ID!) {
     nowPlaying {
       ... TrackOnChannel
     }
+    owner{
+      fullName
+      picture
+      id
+    }
     tracks(played: false){
       edges{
         node{
@@ -52,7 +57,6 @@ class UpComingTracksQuery extends Query<UpComingTracksGQL, UpComingTracksGQLVari
 
 }
 
-//
 type TRenderProps = {
   client: ApolloClient<{}>
   updateCache?: (modifier: (data: UpComingTracksGQL) => UpComingTracksGQL) => void, error?
@@ -84,8 +88,6 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
 
     this.subscription = subscriptionObservable.subscribe({
       next: ({ data }) => {
-
-        console.log('subscription data', data)
 
         const channelState = this.readTracksFromCache()
 

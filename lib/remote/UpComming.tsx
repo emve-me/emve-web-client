@@ -1,4 +1,4 @@
-import UpComingItemsConsumer from '../consumers/ChannelController'
+import ChannelController from '../consumers/ChannelController'
 import React from 'react'
 import LoadingIndicator from '../ui/LoadingIndicator'
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
@@ -27,7 +27,7 @@ const Track = ({ thumb, title, owner, state }: TrackOnChannel) => <div
 
 </div>
 
-export default ({ channel }: TProps) => <UpComingItemsConsumer
+export default ({ channel }: TProps) => <ChannelController
   channel={channel}>{({ upComing, nowPlaying, loading }) => {
 
   if (loading) {
@@ -37,6 +37,8 @@ export default ({ channel }: TProps) => <UpComingItemsConsumer
   return <>
     {!nowPlaying && upComing.length === 0 ? <RemoteEmptyState/> : false}
 
+
+
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
       {nowPlaying ? <Track {...nowPlaying} /> : false}
       {upComing.map(({ node }) =>
@@ -45,6 +47,6 @@ export default ({ channel }: TProps) => <UpComingItemsConsumer
   </>
 
 
-}}</UpComingItemsConsumer>
+}}</ChannelController>
 
 

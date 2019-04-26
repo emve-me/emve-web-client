@@ -25,6 +25,13 @@ export interface UpComingTracksGQL_channel_nowPlaying {
   owner: UpComingTracksGQL_channel_nowPlaying_owner | null;
 }
 
+export interface UpComingTracksGQL_channel_owner {
+  __typename: "User";
+  fullName: string | null;
+  picture: string | null;
+  id: string | null;
+}
+
 export interface UpComingTracksGQL_channel_tracks_edges_node_owner {
   __typename: "User";
   fullName: string | null;
@@ -55,6 +62,7 @@ export interface UpComingTracksGQL_channel_tracks {
 export interface UpComingTracksGQL_channel {
   __typename: "Channel";
   nowPlaying: UpComingTracksGQL_channel_nowPlaying | null;
+  owner: UpComingTracksGQL_channel_owner | null;
   tracks: UpComingTracksGQL_channel_tracks | null;
 }
 

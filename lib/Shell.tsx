@@ -8,7 +8,6 @@ export default ({ children }: { children: React.ReactNode }) => {
   return <>
     { /*language=CSS*/}
     <style jsx>{`
-
         header {
             border-bottom: solid 1px rgba(0, 0, 0, 0.25);
             background-color: white;
@@ -22,8 +21,6 @@ export default ({ children }: { children: React.ReactNode }) => {
             left: 0;
             height: 70px;
         }
-
-
     `}
     </style>
 

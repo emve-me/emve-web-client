@@ -30,6 +30,18 @@
         - Apollo 
             - Splits API transport into websockets and HTTP requests
             - For subscriptions, did not like their suggested implementation so used lower level workaround
+        - UX
+            - Kept flows a simple as possible
+            - Empty states 
+            - Streamline creating a party to one click
+            - Remote, dead simple, default to showing your parties status or a very familiar search bar to find a song
+        - Code origination
+            - React / Apollo let you use components for everything
+                - Positive, use familiar constructs 
+                - Negative, can lead to unwieldy components
+                    - Mitigated by making two classes of components based on responsibility 
+                        - View components, responsible for UI only
+                        - Controller components, responsible for data operations                           
     - Backend 
         - gapi-to-graphql (Link to Library)           
         - Postgres
