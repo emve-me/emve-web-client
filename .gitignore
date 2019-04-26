@@ -8,5 +8,4 @@
 /cloud_sql_proxy
 /server-ca.pem
 /dist/
-/app.yaml
 /.env
