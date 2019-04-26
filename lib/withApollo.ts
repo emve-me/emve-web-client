@@ -63,7 +63,7 @@ export default withApollo(({ headers, initialState, ctx }) => {
 
         return object.id
       }
-    })
+    }).restore(initialState || {})
 
 
     if (headers && typeof headers.cookie === 'string') {
