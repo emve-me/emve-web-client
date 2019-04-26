@@ -6,10 +6,14 @@ service: default
 
 
 handlers:
-  - url: /(.*\.(bmp|gif|ico|jpeg|jpg|png|css|js|ico))
-    static_files: static/\1
-    upload: static/(.*)
+  - url: /static
+    static_dir: static
     secure: always
+
+  - url: /.next
+      static_dir: .next
+      secure: always
+
   - url: /
     secure: always
 
