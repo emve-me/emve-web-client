@@ -25,12 +25,28 @@ class RemoteMain extends Component  <TProps, TState> {
     const { channel } = this.props
     const { search, debouncedSearch } = this.state
 
-    const isSearching = !search.trim()
+    const isSearching = search.trim()
 
 //    this.props.toggleState(isSearching)
 
     return (
       <>
+        { /*language=CSS*/}
+        <style jsx>{`
+
+            .container {
+                width: 800px;
+                padding-top: 32px;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+            }`
+        }
+
+
+        </style>
         <HeaderPortal>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <SearchBox width='800px' value={search} placeholder='Search YouTube'
@@ -39,20 +55,13 @@ class RemoteMain extends Component  <TProps, TState> {
           </div>
         </HeaderPortal>
 
-        <div style={{
-          width: 800, paddingTop: '32px',
-          margin: '0 auto',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center'
-        }}>
-
+        <div className='container' style={{ display: isSearching ? 'flex' : 'none' }}>
           <SearchResults onSelect={(item => this.setState({ search: '', debouncedSearch: '' }))} channel={channel}
                          search={debouncedSearch.trim()}/>
+        </div>
 
-
+        <div className='container' style={{ display: !isSearching ? 'flex' : 'none' }}>
           <UpComming channel={channel}/>
-
         </div>
       </>
     )
