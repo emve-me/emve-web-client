@@ -6,6 +6,7 @@ import HeaderPortal from '../HeaderPortal'
 
 type TProps = {
   channel: string
+  toggleState: (searching: boolean) => void
 }
 
 type TState = {
@@ -25,6 +26,8 @@ class RemoteMain extends Component  <TProps, TState> {
     const { search, debouncedSearch } = this.state
 
     const isSearching = !search.trim()
+
+//    this.props.toggleState(isSearching)
 
     return (
       <>
@@ -46,6 +49,10 @@ class RemoteMain extends Component  <TProps, TState> {
 
           <SearchResults onSelect={(item => this.setState({ search: '', debouncedSearch: '' }))} channel={channel}
                          search={debouncedSearch.trim()}/>
+
+
+          <UpComming channel={channel}/>
+
         </div>
       </>
     )
@@ -53,9 +60,15 @@ class RemoteMain extends Component  <TProps, TState> {
 }
 
 
-export default ({ channel }) => <>
-  <RemoteMain channel={channel}/>
-  <UpComming channel={channel}/>
+export default class Re extends Component <{ channel: string }, { searching: boolean }> {
 
-</>
+
+  render() {
+    const { channel } = this.props
+
+    return <>
+      <RemoteMain toggleState={searching => null} channel={channel}/>
+    </>
+  }
+}
 

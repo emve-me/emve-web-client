@@ -160,6 +160,8 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
       query: UPCOMING_QUERY,
       data
     })
+
+    this.forceUpdate()
   }
 
   readModWrite = (modifier: (data: UpComingTracksGQL) => UpComingTracksGQL) => {
@@ -167,6 +169,7 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
   }
 
   componentWillUnmount() {
+    console.log('unmounting controller')
     if (this.subscription) {
       this.subscription.unsubscribe()
     }

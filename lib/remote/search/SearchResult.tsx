@@ -23,8 +23,9 @@ export class SearchResult extends Component<TProps> {
           <>
             <div
               onClick={() => {
-                onSelect(item)
                 addVideo()
+                onSelect(item)
+
               }}
               style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', width: 480 }}>
 

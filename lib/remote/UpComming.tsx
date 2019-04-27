@@ -49,12 +49,9 @@ export default ({ channel }: TProps) => <ChannelController
 
   return <>
 
-
     {!hasTracks ? <Card><RemoteEmptyState/></Card> : false}
 
-
     {hasTracks ?
-
       <Card>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
           {nowPlaying ? <>
