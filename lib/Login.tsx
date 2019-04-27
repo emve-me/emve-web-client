@@ -5,12 +5,10 @@ import jwtIO from 'jsonwebtoken'
 import { LOGGED_IN_USER } from './gql'
 import { setCookie } from 'vanilla-cookies'
 import gql from 'graphql-tag'
+import getConfig from 'next/config'
 
 
-type data = {}
-
-type params = {}
-
+const { oAuthClientId } = getConfig().publicRuntimeConfig
 const GQL_AUTHENTICATE = gql`mutation Authenticate {
   authenticate
 }`
@@ -40,7 +38,7 @@ export default class Login extends Component<{}, {}> {
           console.error(err)
         }}
 
-        clientId="1066657144492-gjcrv2nk0eghepj8mma7la5tbt0n6k22.apps.googleusercontent.com"
+        clientId={oAuthClientId}
       />
 
     }}</ApolloConsumer>

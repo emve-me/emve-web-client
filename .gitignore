@@ -9,3 +9,4 @@
 /server-ca.pem
 /dist/
 /.env
+/app.yaml
