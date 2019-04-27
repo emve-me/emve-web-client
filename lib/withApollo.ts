@@ -11,12 +11,15 @@ import { split } from 'apollo-link'
 import { getMainDefinition } from 'apollo-utilities'
 import { getCookie } from 'vanilla-cookies'
 
+const config = getConfig()
+const gqlEndpoint = process.browser
+  ? config.publicRuntimeConfig.graphQLEndpoint
+  : config.serverRuntimeConfig.graphQLEndpoint
+
+const gqlSubscription = config.publicRuntimeConfig.graphQLSubscription
 
 export default withApollo(({ headers, initialState, ctx }) => {
 
-  const gqlEndpoint = process.browser
-    ? getConfig().publicRuntimeConfig.graphQLEndpoint
-    : getConfig().serverRuntimeConfig.graphQLEndpoint
 
   const httpLink = createHttpLink({
     uri: gqlEndpoint
@@ -97,7 +100,7 @@ export default withApollo(({ headers, initialState, ctx }) => {
       return kind === 'OperationDefinition' && operation === 'subscription'
     },
     new WebSocketLink({
-      uri: `ws://localhost:4000/graphql`,
+      uri: gqlSubscription,
       options: {
         reconnect: true
       }
