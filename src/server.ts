@@ -23,7 +23,21 @@ app.prepare().then(() => {
       }
     })
   })
-  
+
+  server.all('*', (req, resp, next) => {
+
+
+    console.log('hostname', req.hostname)
+    if (req.hostname.startsWith('www.')) {
+
+      resp.redirect(301, 'https://' + req.hostname.replace('www.', ''))
+
+    } else {
+      next()
+    }
+
+  })
+
   server.get('*', async (req, res) => {
     handle(req, res)
   })

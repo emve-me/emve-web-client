@@ -22,8 +22,6 @@ export default withApollo(({ headers, initialState, ctx }) => {
     uri: gqlEndpoint
   })
 
-  // TODO MAKE SURE STATE IS PROPER HYDRATED
-  console.log('initialState', initialState)
 
   const getJWTFromCookieString = (cookieString: string) => getCookie('GTOKENID', cookieString)
 
