@@ -1,4 +1,9 @@
+stages:
+  - deploy
+  - dispatch
+
 deploy:
+  stage: deploy
   image: "rlancer/gcloud-node:1.0.2"
   script:
     - npm i
@@ -11,6 +16,7 @@ deploy:
   only:
     - prod
 dispatch:
+  stage: dispatch
   image: "rlancer/gcloud-node:1.0.2"
     script:
       - echo $GCLOUD_SERVICE > /tmp/$CI_PIPELINE_ID.json
@@ -18,6 +24,6 @@ dispatch:
       - gcloud --quiet --project $GCLOUD_PROJECT_ID app deploy dispatch.yaml
     tags:
       - theonlyrunnerthatshouldeverbeusedbycollaborizm
-  when: manual
+    when: manual
 
 
