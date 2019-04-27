@@ -23,6 +23,8 @@ export default class RemoteMain extends Component  <TProps, TState> {
     const { channel } = this.props
     const { search, debouncedSearch } = this.state
 
+    const isSearching = !search.trim()
+
     return (
       <>
         <HeaderPortal>
@@ -40,10 +42,10 @@ export default class RemoteMain extends Component  <TProps, TState> {
           flexDirection: 'column',
           justifyContent: 'center'
         }}>
-          {search.trim() ?
+
             <SearchResults onSelect={(item => this.setState({ search: '', debouncedSearch: '' }))} channel={channel}
-                           search={debouncedSearch.trim()}/> :
-            <UpComming channel={channel}/>}
+                           search={debouncedSearch.trim()}/>
+            <UpComming channel={channel}/>
         </div>
       </>
     )

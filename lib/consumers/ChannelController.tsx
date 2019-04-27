@@ -90,6 +90,7 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
 
     this.subscription = subscriptionObservable.subscribe({
       next: ({ data }) => {
+        console.log('got subscription data', data)
 
         const channelState = this.readTracksFromCache()
 
@@ -104,7 +105,6 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
             if (channelState.channel.nowPlaying && channelState.channel.nowPlaying.id === data.trackUpdated.id) {
               channelState.channel.nowPlaying = null
             }
-            console.log('PLAYED - REMOVE', data.trackUpdated.id, channelState.channel.tracks.edges)
           }
             break
           case TrackState.upcoming: {
@@ -154,6 +154,7 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
 
   writeTracksToCache = (data) => {
     const { client, channel } = this.props
+
     client.writeQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
       variables: { channel },
       query: UPCOMING_QUERY,
@@ -172,7 +173,7 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
   }
 
   render() {
-    return <UpComingTracksQuery query={UPCOMING_QUERY} ssr={true}
+    return <UpComingTracksQuery query={UPCOMING_QUERY}
                                 variables={{ channel: this.props.channel }}>{({ data, error, loading, client }) => {
 
       if (loading) {
@@ -182,6 +183,8 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
       if (error) {
         return this.props.children({ loading: false, error, client })
       }
+
+      console.log('RERENDERING CHANNEL')
 
       const { edges } = data.channel.tracks
 
