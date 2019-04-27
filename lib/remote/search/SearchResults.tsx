@@ -15,7 +15,7 @@ const SEARCH_QUERY = gql`
   query YouTubeSearch($q: String) {
     YoutubeApi(key: "AIzaSyDtlCouvXU0kcAKF-UZWVNe3sQpoxHBsa0") {
       search {
-        list(q: $q, part: "snippet", type:"video", videoEmbeddable: TRUE, maxResults: 16) {
+        list(q: $q, part: "snippet", type:"video", videoEmbeddable: TRUE, maxResults: 8) {
           items {
             id {
               videoId

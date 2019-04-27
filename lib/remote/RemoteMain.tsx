@@ -14,7 +14,8 @@ type TState = {
   searching: boolean
 }
 
-export default class RemoteMain extends Component  <TProps, TState> {
+
+class RemoteMain extends Component  <TProps, TState> {
 
   state = { search: '', debouncedSearch: '', searching: false }
 
@@ -43,13 +44,18 @@ export default class RemoteMain extends Component  <TProps, TState> {
           justifyContent: 'center'
         }}>
 
-            <SearchResults onSelect={(item => this.setState({ search: '', debouncedSearch: '' }))} channel={channel}
-                           search={debouncedSearch.trim()}/>
-            <UpComming channel={channel}/>
+          <SearchResults onSelect={(item => this.setState({ search: '', debouncedSearch: '' }))} channel={channel}
+                         search={debouncedSearch.trim()}/>
         </div>
       </>
     )
   }
 }
 
+
+export default ({ channel }) => <>
+  <RemoteMain channel={channel}/>
+  <UpComming channel={channel}/>
+
+</>
 
