@@ -55,9 +55,13 @@ class MyApp extends App<PROPS> {
             height: 100%;
           }
           
+          body{
+            min-width: 400px;
+          }
+          
           html {
-            height: 100%;
-             box-sizing: border-box;
+            height: 100%;           
+            box-sizing: border-box;
           }
           
           img,

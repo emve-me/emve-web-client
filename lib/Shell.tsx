@@ -36,7 +36,8 @@ export default class Shell extends Component<TProps> {
         <Link href='/'>
           <HeartIcon style={{ cursor: 'pointer' }} size={30}/>
         </Link>
-        <div style={{ flex: 1 }} id='HEADER_PORTAL'>{this.props.header}</div>
+
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>{this.props.header}</div>
 
         <AccountThumb thumbSize={33}/>
 

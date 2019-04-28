@@ -15,7 +15,7 @@ type TState = { searching: boolean }
 export class SearchBox extends Component<TProps, TState> {
 
   static defaultProps = {
-    debounceDelay: 400,
+    debounceDelay: 400
 
   }
 
@@ -58,13 +58,13 @@ export class SearchBox extends Component<TProps, TState> {
     return <>
       { /*language=CSS*/}
       <style jsx>{`
-         
+
 
           .searchField {
               text-align: left;
               padding: 0 0 0 10px;
               margin: 0;
-              backgroundColor: #FFF;
+              background-color: #FFF;
               border: none;
               outline: none;
               font-size: 16px;
@@ -76,14 +76,22 @@ export class SearchBox extends Component<TProps, TState> {
               display: flex;
               align-items: center;
               padding-left: 16px;
-              background-color: #fefefe;
+              background-color: #FFF;
               border: solid 1px #ddd;
               border-radius: 6px;
-              ${width ? `width: ${width};` :''};
+              width: 800px;
               height: 44px;
               box-shadow: 1px 1px 1px #bbb;
               cursor: pointer;
+          }
 
+          @media only screen and (max-width: 905px) {
+              .searchOutline {
+                  border-radius: 6px;
+                  width: 100%;
+                  border: none;
+                  box-shadow: none;
+              }
           }
       `}
       </style>
