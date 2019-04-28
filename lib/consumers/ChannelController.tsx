@@ -90,7 +90,6 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
 
     this.subscription = subscriptionObservable.subscribe({
       next: ({ data }) => {
-        console.log('got subscription data', data)
 
         const channelState = this.readTracksFromCache()
 
@@ -169,7 +168,6 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
   }
 
   componentWillUnmount() {
-    console.log('unmounting controller')
     if (this.subscription) {
       this.subscription.unsubscribe()
     }
@@ -187,7 +185,6 @@ class ChannelController extends Component <WithApolloClient<TProps>> {
         return this.props.children({ loading: false, error, client })
       }
 
-      console.log('RERENDERING CHANNEL')
 
       const { edges } = data.channel.tracks
 

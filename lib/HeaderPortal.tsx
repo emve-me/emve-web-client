@@ -2,12 +2,16 @@ import { createPortal } from 'react-dom'
 import { Component } from 'react'
 
 
-export default class HeaderPortal extends Component {
+export default class HeaderPortal extends Component<{ headerNode?: HTMLElement }> {
 
   element?: HTMLElement
 
   componentDidMount() {
     this.element = document.getElementById('HEADER_PORTAL')
+    while (this.element.firstChild) {
+      this.element.removeChild(this.element.firstChild)
+    }
+
     this.forceUpdate()
   }
 
@@ -19,7 +23,7 @@ export default class HeaderPortal extends Component {
 
     return createPortal(
       this.props.children,
-      this.element
+      this.props.headerNode || this.element
     )
   }
 }

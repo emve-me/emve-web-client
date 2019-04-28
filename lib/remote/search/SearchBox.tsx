@@ -3,9 +3,9 @@ import SearchIcon from '../../icons/SearchIcon'
 import BackIcon from '../../icons/BackIcon'
 
 type TProps = {
-  value: string
+  value?: string
   placeholder: string
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
   debounceDelay?: number
   onChangeDebounced?: (value: string) => void
   width?: string
@@ -42,7 +42,6 @@ export class SearchBox extends Component<TProps, TState> {
   }
 
   activateSearch = () => {
-    console.log('activate search')
     this.setState({ searching: true }, () => this.inputRef.current.focus())
   }
 
@@ -100,7 +99,6 @@ export class SearchBox extends Component<TProps, TState> {
 
         <BackIcon onClick={(e) => {
           e.stopPropagation()
-          console.log('stopped prop')
           this.deactivateSearch()
         }} style={{ display: searching ? 'block' : 'none' }}/>
         <input

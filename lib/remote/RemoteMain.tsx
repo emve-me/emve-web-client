@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
+import React, { Component, RefObject } from 'react'
 import SearchResults from './search/SearchResults'
 import UpComming from './UpComming'
 import { SearchBox } from './search/SearchBox'
 import HeaderPortal from '../HeaderPortal'
+import Shell from '../Shell'
 
 type TProps = {
   channel: string
-  toggleState: (searching: boolean) => void
+  shell?: RefObject<Shell>
 }
 
 type TState = {
@@ -16,24 +17,24 @@ type TState = {
 }
 
 
-class RemoteMain extends Component  <TProps, TState> {
+export default class RemoteMain extends Component  <TProps, TState> {
 
   state = { search: '', debouncedSearch: '', searching: false }
 
   render() {
 
-    const { channel } = this.props
+
+    const { channel, shell } = this.props
     const { search, debouncedSearch } = this.state
+
 
     const isSearching = search.trim()
 
-//    this.props.toggleState(isSearching)
 
     return (
       <>
         { /*language=CSS*/}
         <style jsx>{`
-
             .container {
                 width: 800px;
                 padding-top: 32px;
@@ -44,8 +45,6 @@ class RemoteMain extends Component  <TProps, TState> {
 
             }`
         }
-
-
         </style>
         <HeaderPortal>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -68,16 +67,4 @@ class RemoteMain extends Component  <TProps, TState> {
   }
 }
 
-
-export default class Re extends Component <{ channel: string }, { searching: boolean }> {
-
-
-  render() {
-    const { channel } = this.props
-
-    return <>
-      <RemoteMain toggleState={searching => null} channel={channel}/>
-    </>
-  }
-}
 
