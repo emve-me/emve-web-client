@@ -46,7 +46,6 @@ export default class RemoteMain extends Component  <TProps, TState> {
                 .container {
                 width: auto;
                     flex: 1px;
-                    background-color: bisque;
                     margin: 0 32px 0 32px;
                 }
             }`
