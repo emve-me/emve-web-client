@@ -5,18 +5,61 @@ import Mobile from '../../icons/MobileIcon'
 import CreateChannelController from './CreateChannelController'
 import MobileOutlineIcon from '../../icons/MobileOutlineIcon'
 import SelectionButton from './SelectionButton'
+import Shell from '../../Shell'
 
-export default () => <div
-  style={{ height: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center' }}>
+export default () => <div className='root'
+>
+
+  { /*language=CSS*/}
+  <style jsx>{`
+      .root {
+          padding-top: 100px;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          justify-content: center;
+      }
+
+      .mode_selector {
+          padding-top: 100px;
+          display: flex;
+          width: 800px;
+          justify-content: space-between;
+      }
+
+      .remote {
+      }
+
+      @media only screen and (max-width: 905px) {
+
+          .root {
+              padding-top: 50px;
+          }
+
+          .mode_selector {
+              flex-direction: column;
+              padding-top: 50px;
+              width: auto;
+          }
+
+          .remote {
+              padding-bottom: 50px;
+          }
+
+      }`
+  }
+  </style>
+
 
   <div style={{ fontSize: 40 }}>Use this device as a</div>
 
-  <div style={{ padding: '100px 0 260px 0', display: 'flex', width: '60%', justifyContent: 'space-around' }}>
+  <div className='mode_selector'>
 
-    <Link href='/join'>
-      <SelectionButton icon={<MobileOutlineIcon size={150}/>} label='Remote'/>
-    </Link>
-
+    <div className='remote'>
+      <Link href='/join'>
+        <SelectionButton icon={<MobileOutlineIcon size={150}/>} label='Remote'/>
+      </Link>
+    </div>
     <CreateChannelController>{({ createParty }) =>
       <SelectionButton label='Player' onClick={createParty}
                        icon={<TV size={150}/>}/>}

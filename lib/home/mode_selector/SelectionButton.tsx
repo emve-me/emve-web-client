@@ -4,9 +4,11 @@ type TProps = {
   icon: React.ReactNode
   label: string
   onClick?: () => void
+  className?: string
 }
 
-export default ({ icon, label, onClick }: TProps) => <div className='root' onClick={onClick}>
+export default ({ icon, label, onClick }: TProps) => <div className='root'
+                                                          onClick={onClick}>
 
   { /*language=CSS*/}
   <style jsx>{`
@@ -19,7 +21,8 @@ export default ({ icon, label, onClick }: TProps) => <div className='root' onCli
           flex-direction: column;
           border: solid 3px #999;
           border-radius: 20px;
-          padding: 40px 80px;
+          width: 317px;
+          height: 270px;
           cursor: pointer;
       }
 
