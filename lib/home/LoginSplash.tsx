@@ -9,25 +9,6 @@ type TInfoProps = {
   className: string
 }
 
-const PlayerInfo = ({ className }: TInfoProps) => (
-  <div className={className}>
-    <TVIcon size={150} />
-    <h2>Setup the big screen as the player</h2>
-  </div>
-)
-
-const RemoteInfo = ({ className }: TInfoProps) => (
-  <div className={className}>
-    <div
-      style={{ display: 'flex', width: 400, justifyContent: 'space-between' }}>
-      <MobileOutlineIcon size={100} />
-      <MobileOutlineIcon size={100} />
-      <MobileOutlineIcon size={100} />
-    </div>
-    <h2>Friends DJ using their phone</h2>
-  </div>
-)
-
 export default class LoginSplash extends Component {
   render() {
     return (
@@ -43,29 +24,28 @@ export default class LoginSplash extends Component {
               align-items: center;
             }
 
-            h2,
             h3 {
               padding: 25px 0;
+            }
+
+            h2 {
+              padding-top: 25px;
             }
 
             h1 {
               padding-bottom: 50px;
             }
 
-            @media only screen and (max-width: 905px) {
-              .container {
-              }
-            }
-          `}
-        </style>
-        {/*language=CSS*/}
-        <style jsx global>
-          {`
             .info {
               display: flex;
               flex-direction: column;
               justify-content: center;
               align-items: center;
+            }
+
+            @media only screen and (max-width: 905px) {
+              .container {
+              }
             }
           `}
         </style>
@@ -76,13 +56,38 @@ export default class LoginSplash extends Component {
           <h1>A social video jukebox</h1>
 
           <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-            <PlayerInfo className="info" />
+            <div className="info">
+              <TVIcon size={150} />
+              <h2>Setup the big screen as the player</h2>
+            </div>
 
             <div style={{ width: 50 }} />
-            <RemoteInfo className="info" />
+
+            <div className="info">
+              <div
+                style={{
+                  display: 'flex',
+                  width: 330,
+                  justifyContent: 'space-between'
+                }}>
+                <MobileOutlineIcon size={110} />
+                <MobileOutlineIcon size={110} />
+                <MobileOutlineIcon size={110} />
+              </div>
+              <h2>Friends DJ using their phone</h2>
+            </div>
           </div>
-          <h3>Sign in to get started</h3>
-          <Login />
+
+          <div
+            style={{
+              paddingTop: 50,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center'
+            }}>
+            <div style={{ paddingBottom: 15 }}>Sign in to get started</div>
+            <Login />
+          </div>
         </div>
         <div
           style={{
