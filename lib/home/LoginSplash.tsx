@@ -147,7 +147,7 @@ export default class LoginSplash extends Component {
             alignItems: 'flex-end',
             justifyContent: 'center',
             display: 'flex',
-            padding: '32px 16px 0 0'
+            padding: '32px 0 26px 0'
           }}>
           A personal project / experiment by&nbsp;<a href="">Robert Lancer</a>
         </div>
