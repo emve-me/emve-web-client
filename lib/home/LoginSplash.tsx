@@ -56,6 +56,10 @@ export default class LoginSplash extends Component {
               display: block;
             }
 
+            .login {
+              padding-top: 50px;
+            }
+
             @media only screen and (max-width: 905px) {
               h2 {
                 padding-top: 0px;
@@ -81,6 +85,10 @@ export default class LoginSplash extends Component {
 
               .mobile {
                 display: block;
+              }
+
+              .login {
+                padding-top: 25px;
               }
             }
           `}
@@ -116,13 +124,7 @@ export default class LoginSplash extends Component {
             </div>
           </div>
 
-          <div
-            style={{
-              paddingTop: 50,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center'
-            }}>
+          <div className="login">
             <Login />
           </div>
         </div>
