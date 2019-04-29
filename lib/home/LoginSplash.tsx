@@ -72,6 +72,7 @@ export default class LoginSplash extends Component {
 
               .infoContainer {
                 flex-direction: column;
+                align-items: center;
               }
 
               .desktop {
