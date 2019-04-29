@@ -44,11 +44,11 @@ export default class Shell extends Component<TProps> {
 
             @media only screen and (max-width: 905px) {
               header {
-                display: ${visibleOnMobile ? 'block' : 'none'};
+                display: ${visibleOnMobile ? 'flex' : 'none'};
               }
 
               .bodyContainer {
-                padding-top: 0;
+                padding-top: ${visibleOnMobile ? '70px' : '0'};
               }
             }
           `}
