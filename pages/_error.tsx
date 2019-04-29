@@ -32,7 +32,7 @@ export default class Error extends Component<{ statusCode: number }> {
 
             h1 {
               text-align: center;
-              padding-bottom: 16px;
+              padding: 0 16px 16px 16px;
             }
 
             a {

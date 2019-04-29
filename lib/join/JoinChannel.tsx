@@ -35,6 +35,7 @@ export default class JoinChannel extends Component<
                 padding: 10px;
                 width: 220px;
                 text-align: center;
+                background-color: #fff;
               }
 
               .joinButton {
@@ -70,7 +71,7 @@ export default class JoinChannel extends Component<
             <div className="pairingCodeContainer">
               <input
                 placeholder="CODE"
-                autoFocus={true}
+                autoFocus
                 onKeyDown={({ keyCode }) => {
                   if (keyCode === 13) joinChannel(pairingCode)
                 }}
