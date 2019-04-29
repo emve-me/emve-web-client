@@ -49,15 +49,34 @@ class MyApp extends App<PROPS> {
             overflow-y: auto;
             height: 100%;
             background-color: #fAFAFA;
+            min-width: 400px;
           }
           
           #__next {
             height: 100%;
           }
           
-          body{
-            min-width: 400px;
+          h1 {
+            font-size: 40px;
+            font-weight: normal;
+            margin: 0;
           }
+          
+          h2 {
+            font-size: 30px;
+            font-weight: normal;
+            margin: 0;
+          }
+          
+          @media only screen and (max-width: 905px) {
+                h1 {
+                    font-size: 30px;
+                }
+                
+                h2 {
+                    font-size: 20px;
+                }
+            }
           
           html {
             height: 100%;           

@@ -19,7 +19,7 @@ export default class JoinChannel extends Component <{}, { pairingCode: string }>
             .root {
                 display: flex;
                 align-items: center;
-                justify-content: center;    
+                justify-content: center;
                 flex-direction: column;
                 padding-top: 100px;
             }
@@ -47,11 +47,26 @@ export default class JoinChannel extends Component <{}, { pairingCode: string }>
                 background-color: aliceblue;
             }
 
+            .paringCodeContainer {
+                padding-top: 60px;
+                padding-bottom: 0px;
+            }
+
+            @media only screen and (max-width: 905px) {
+                .root {
+                    padding-top: 50px;
+                }
+
+                .pairingCodeContainer {
+                    padding-top: 30px;
+                }
+            }
+
         `}</style>
 
-        <div style={{ fontSize: 40 }}>Player pairing code</div>
+        <h1>Player pairing code</h1>
 
-        <div style={{ paddingTop: 60, paddingBottom: 120 }}>
+        <div className='pairingCodeContainer'>
           <input placeholder='CODE' autoFocus={true}
                  onKeyDown={({ keyCode }) => {
                    if (keyCode === 13) joinChannel(pairingCode)

@@ -15,6 +15,10 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
 
       { /*language=CSS*/}
       <style jsx>{`
+          .root {
+              padding-top: 100px;
+          }
+
           .channel {
               border: 4px dashed #666;
               height: 100px;
@@ -26,18 +30,26 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
               display: flex;
               justify-content: center;
               align-items: center;
-          }`}
+          }
+
+          @media only screen and (max-width: 905px) {
+              .root {
+                  padding-top: 50px;
+              }
+          }
+
+      `}
       </style>
-      <div style={{
+      <div className='root' style={{
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
         alignItems: 'center'
       }}>
-        <div style={{ fontSize: 40, paddingBottom: 16, textAlign: 'center' }}>Visit emve.me on another device as a
+        <h1 style={{ paddingBottom: 16, textAlign: 'center' }}>Visit emve.me on another device as a
           remote
-        </div>
-        <div style={{ fontSize: 30, paddingBottom: 16 }}>Enter pairing code</div>
+        </h1>
+        <h2 style={{ paddingBottom: 16 }}>Enter pairing code</h2>
         <div className='channel'>{channel}</div>
         <div style={{ paddingTop: 16 }}>OR</div>
         <div style={{ padding: '16px 0 8px 0' }}>Share this direct join link</div>

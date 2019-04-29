@@ -33,17 +33,18 @@ export default () => <div className='root'
       @media only screen and (max-width: 905px) {
 
           .root {
-              padding-top: 50px;
+              padding-top: 25px;
           }
 
           .mode_selector {
               flex-direction: column;
-              padding-top: 50px;
+              padding: 25px 0;
+              
               width: auto;
           }
 
           .remote {
-              padding-bottom: 50px;
+              padding-bottom: 25px;
           }
 
       }`
@@ -51,7 +52,7 @@ export default () => <div className='root'
   </style>
 
 
-  <div style={{ fontSize: 40 }}>Use this device as a</div>
+  <h1>Use this device as a</h1>
 
   <div className='mode_selector'>
 
