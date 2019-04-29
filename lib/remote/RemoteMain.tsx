@@ -46,12 +46,12 @@ export default class RemoteMain extends Component<TProps, TState> {
               display: flex;
               flex-direction: column;
               justify-content: center;
+              flex: 1;
             }
 
             @media only screen and (max-width: 905px) {
               .container {
                 width: auto;
-                flex: 1px;
                 padding-top: 16px;
                 margin: 0 16px 0 16px;
               }

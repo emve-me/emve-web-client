@@ -8,15 +8,13 @@ type TProps = {
 }
 
 export default class Shell extends Component<TProps> {
-
-
   render() {
-
-
-    return <>
-      { /*language=CSS*/}
-      <style jsx>{`
-          header {
+    return (
+      <>
+        {/*language=CSS*/}
+        <style jsx>
+          {`
+            header {
               border-bottom: solid 1px rgba(0, 0, 0, 0.25);
               background-color: white;
               display: flex;
@@ -28,22 +26,31 @@ export default class Shell extends Component<TProps> {
               right: 0;
               left: 0;
               height: 70px;
-          }
-      `}
-      </style>
+            }
+          `}
+        </style>
 
-      <header>
-        <Link href='/'>
-          <HeartIcon style={{ cursor: 'pointer' }} size={30}/>
-        </Link>
+        <header>
+          <Link href="/">
+            <HeartIcon style={{ cursor: 'pointer' }} size={30} />
+          </Link>
 
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>{this.props.header}</div>
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>
+            {this.props.header}
+          </div>
 
-        <AccountThumb thumbSize={33}/>
-
-      </header>
-      <div style={{ height: 70 }}></div>
-      {this.props.children}
-    </>
+          <AccountThumb thumbSize={33} />
+        </header>
+        <div
+          style={{
+            paddingTop: 70,
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column'
+          }}>
+          {this.props.children}
+        </div>
+      </>
+    )
   }
 }

@@ -11,10 +11,7 @@ type PROPS = {
 }
 
 class MyApp extends App<PROPS> {
-
-
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     const { Component, pageProps, apollo } = this.props
@@ -29,16 +26,34 @@ class MyApp extends App<PROPS> {
             name="viewport"
             content="initial-scale=1.0, width=device-width"
           />
-          <link rel="apple-touch-icon" sizes="180x180" href="/static/apple-touch-icon.png"/>
-          <link rel="icon" type="image/png" sizes="32x32" href="/static/favicon-32x32.png"/>
-          <link rel="icon" type="image/png" sizes="16x16" href="/static/favicon-16x16.png"/>
-          <link rel="manifest" href="/static/site.webmanifest"/>
-          <link rel="mask-icon" href="/static/safari-pinned-tab.svg" color="#5bbad5"/>
-          <meta name="msapplication-TileColor" content="#da532c"/>
-          <meta name="theme-color" content="#ffffff"/>
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/static/apple-touch-icon.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/static/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/static/favicon-16x16.png"
+          />
+          <link rel="manifest" href="/static/site.webmanifest" />
+          <link
+            rel="mask-icon"
+            href="/static/safari-pinned-tab.svg"
+            color="#5bbad5"
+          />
+          <meta name="msapplication-TileColor" content="#da532c" />
+          <meta name="theme-color" content="#ffffff" />
         </Head>
 
-        { /*language=CSS*/}
+        {/*language=CSS*/}
         <style jsx global>{`
           body {
             color: ${textColor};
@@ -48,41 +63,49 @@ class MyApp extends App<PROPS> {
             padding: 0;
             overflow-y: auto;
             height: 100%;
-            background-color: #fAFAFA;
+            background-color: #fafafa;
             min-width: 400px;
           }
-          
+
           #__next {
             height: 100%;
+            display: flex;
+            flex-direction: column;
           }
-          
+
           h1 {
             font-size: 40px;
             font-weight: normal;
             margin: 0;
           }
-          
+
           h2 {
             font-size: 30px;
             font-weight: normal;
             margin: 0;
           }
-          
+
+          h3 {
+            font-size: 20px;
+            font-weight: normal;
+            margin: 0;
+          }
+
           @media only screen and (max-width: 905px) {
-                h1 {
-                    font-size: 30px;
-                }
-                
-                h2 {
-                    font-size: 20px;
-                }
+            h1 {
+              font-size: 30px;
             }
-          
+
+            h2 {
+              font-size: 20px;
+            }
+          }
+
           html {
-            height: 100%;           
+            height: 100%;
             box-sizing: border-box;
           }
-          
+
           img,
           svg {
             border: 0;
@@ -114,11 +137,12 @@ class MyApp extends App<PROPS> {
             outline: none;
             color: dodgerblue;
           }
-          
-          *, *:before, *:after {
-            box-sizing: inherit;
-          } 
 
+          *,
+          *:before,
+          *:after {
+            box-sizing: inherit;
+          }
         `}</style>
 
         <ApolloProvider client={apollo}>
