@@ -65,6 +65,16 @@ export default class LoginSplash extends Component {
               display: none;
             }
 
+            .footer {
+              position: absolute;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              display: flex;
+              justify-content: center;
+              padding: 62px 0 26px 0;
+            }
+
             @media only screen and (max-width: 905px) {
               .container {
                 padding-top: 25px;
@@ -101,6 +111,13 @@ export default class LoginSplash extends Component {
 
               .logo {
                 display: block;
+              }
+
+              .footer {
+                position: static;
+                display: flex;
+                justify-content: center;
+                padding: 62px 0 26px 0;
               }
             }
           `}
@@ -141,14 +158,7 @@ export default class LoginSplash extends Component {
             <Login />
           </div>
         </div>
-        <div
-          style={{
-            flex: 1,
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-            display: 'flex',
-            padding: '32px 0 26px 0'
-          }}>
+        <div className="footer">
           A personal project / experiment by&nbsp;<a href="">Robert Lancer</a>
         </div>
       </Shell>

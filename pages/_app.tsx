@@ -69,8 +69,6 @@ class MyApp extends App<PROPS> {
 
           #__next {
             height: 100%;
-            display: flex;
-            flex-direction: column;
           }
 
           h1 {
@@ -92,10 +90,6 @@ class MyApp extends App<PROPS> {
           }
 
           @media only screen and (max-width: 905px) {
-            #__next {
-              display: block;
-            }
-
             h1 {
               font-size: 30px;
             }
