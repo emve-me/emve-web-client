@@ -36,6 +36,15 @@ export default class LoginSplash extends Component {
               padding-bottom: 50px;
             }
 
+            .infoContainer {
+              display: flex;
+              align-items: flex-end;
+            }
+
+            .spacer {
+              width: 50px;
+            }
+
             .info {
               display: flex;
               flex-direction: column;
@@ -43,8 +52,33 @@ export default class LoginSplash extends Component {
               align-items: center;
             }
 
+            .mobile {
+              display: none;
+            }
+
+            .desktop {
+              display: block;
+            }
+
             @media only screen and (max-width: 905px) {
-              .container {
+              h2 {
+                padding-bottom: 16px;
+              }
+
+              .spacer {
+                height: 25px;
+              }
+
+              .infoContainer {
+                flex-direction: column;
+              }
+
+              .desktop {
+                display: none;
+              }
+
+              .mobile {
+                display: block;
               }
             }
           `}
@@ -55,15 +89,17 @@ export default class LoginSplash extends Component {
           style={{ display: 'flex', justifyContent: 'center' }}>
           <h1>A social video jukebox</h1>
 
-          <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <div className="infoContainer">
             <div className="info">
+              <h2 className="mobile">Use the big screen as the player</h2>
               <TVIcon size={150} />
-              <h2>Setup the big screen as the player</h2>
+              <h2 className="desktop">Use the big screen as the player</h2>
             </div>
 
-            <div style={{ width: 50 }} />
+            <div className="spacer" />
 
             <div className="info">
+              <h2 className="mobile">Friends DJ using their phone</h2>
               <div
                 style={{
                   display: 'flex',
@@ -74,7 +110,7 @@ export default class LoginSplash extends Component {
                 <MobileOutlineIcon size={110} />
                 <MobileOutlineIcon size={110} />
               </div>
-              <h2>Friends DJ using their phone</h2>
+              <h2 className="desktop">Friends DJ using their phone</h2>
             </div>
           </div>
 
@@ -85,7 +121,6 @@ export default class LoginSplash extends Component {
               flexDirection: 'column',
               alignItems: 'center'
             }}>
-            <div style={{ paddingBottom: 15 }}>Sign in to get started</div>
             <Login />
           </div>
         </div>
