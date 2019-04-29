@@ -5,10 +5,17 @@ import Link from 'next/link'
 
 type TProps = {
   header?: React.ReactNode
+  visibleOnMobile?: boolean
 }
 
 export default class Shell extends Component<TProps> {
+  static defaultProps = {
+    visibleOnMobile: true
+  }
+
   render() {
+    const { visibleOnMobile } = this.props
+
     return (
       <>
         {/*language=CSS*/}
@@ -27,6 +34,23 @@ export default class Shell extends Component<TProps> {
               left: 0;
               height: 70px;
             }
+
+            .bodyContainer {
+              padding-top: 70px;
+              flex: 1;
+              display: flex;
+              flex-direction: column;
+            }
+
+            @media only screen and (max-width: 905px) {
+              header {
+                display: ${visibleOnMobile ? 'block' : 'none'};
+              }
+
+              .bodyContainer {
+                padding-top: 0;
+              }
+            }
           `}
         </style>
 
@@ -41,15 +65,7 @@ export default class Shell extends Component<TProps> {
 
           <AccountThumb thumbSize={33} />
         </header>
-        <div
-          style={{
-            paddingTop: 70,
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column'
-          }}>
-          {this.props.children}
-        </div>
+        <div className="bodyContainer">{this.props.children}</div>
       </>
     )
   }

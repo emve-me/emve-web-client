@@ -4,6 +4,7 @@ import Shell from '../Shell'
 import MobileIcon from '../icons/MobileIcon'
 import TVIcon from '../icons/TVIcon'
 import MobileOutlineIcon from '../icons/MobileOutlineIcon'
+import HeartIcon from '../icons/HeartIcon'
 
 type TInfoProps = {
   className: string
@@ -12,7 +13,7 @@ type TInfoProps = {
 export default class LoginSplash extends Component {
   render() {
     return (
-      <Shell>
+      <Shell visibleOnMobile={false}>
         {/*language=CSS*/}
         <style jsx>
           {`
@@ -60,14 +61,21 @@ export default class LoginSplash extends Component {
               padding-top: 50px;
             }
 
+            .logo {
+              display: none;
+            }
+
             @media only screen and (max-width: 905px) {
+              .container {
+                padding-top: 25px;
+              }
               h2 {
                 padding-top: 0px;
                 padding-bottom: 16px;
               }
 
               h1 {
-                padding-bottom: 16px;
+                padding: 16px 0;
               }
 
               .spacer {
@@ -90,13 +98,18 @@ export default class LoginSplash extends Component {
               .login {
                 padding-top: 25px;
               }
+
+              .logo {
+                display: block;
+              }
             }
           `}
         </style>
 
-        <div
-          className="container"
-          style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="container">
+          <div className="logo">
+            <HeartIcon />
+          </div>
           <h1>A social video jukebox</h1>
 
           <div className="infoContainer">
