@@ -9,6 +9,8 @@ import {
   YouTubeSearch_YoutubeApi_search_list_items,
   YouTubeSearchVariables
 } from '../../../gql_types/YouTubeSearch'
+import { element } from 'prop-types'
+import Card from '../Card'
 
 const SEARCH_QUERY = gql`
   query YouTubeSearch($q: String) {
@@ -51,9 +53,7 @@ type TProps = {
 }
 
 export default ({ channel, search, onSelect }: TProps) =>
-  !search ? (
-    undefined
-  ) : (
+  !search ? null : (
     <YouTubeSearchQuery query={SEARCH_QUERY} variables={{ q: search }}>
       {({ loading, error, data }) => {
         if (loading) {
@@ -65,16 +65,30 @@ export default ({ channel, search, onSelect }: TProps) =>
           return <div>Error</div>
         }
 
-        return data.YoutubeApi.search.list.items
-          .filter(video => video.snippet.liveBroadcastContent === 'none')
-          .map(element => (
-            <SearchResult
-              onSelect={onSelect}
-              channel={channel}
-              item={element}
-              key={element.id.videoId}
-            />
-          ))
+        const results = data.YoutubeApi.search.list.items.filter(
+          video => video.snippet.liveBroadcastContent === 'none'
+        )
+
+        if (results.length === 0) {
+          return (
+            <div style={{ padding: 16, textAlign: 'center' }}>
+              No results! Please refine search
+            </div>
+          )
+        }
+
+        return (
+          <Card>
+            {results.map(element => (
+              <SearchResult
+                onSelect={onSelect}
+                channel={channel}
+                item={element}
+                key={element.id.videoId}
+              />
+            ))}
+          </Card>
+        )
       }}
     </YouTubeSearchQuery>
   )

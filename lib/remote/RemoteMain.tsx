@@ -27,6 +27,7 @@ export default class RemoteMain extends Component<TProps, TState> {
       <Shell
         header={
           <SearchBox
+            debounceDelay={100}
             value={search}
             placeholder="Search YouTube"
             onChangeDebounced={debouncedSearch =>

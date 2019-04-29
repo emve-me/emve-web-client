@@ -1,64 +1,13 @@
 import ChannelController from '../consumers/ChannelController'
 import React from 'react'
 import LoadingIndicator from '../ui/LoadingIndicator'
-import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
-import { TrackState } from '../../gql_types/globalTypes'
 import RemoteEmptyState from './RemoteEmptyState'
-import Shell from '../Shell'
+import Card from './Card'
+import { UpCommingTrack } from './Track'
 
 type TProps = {
   channel: string
 }
-
-const Track = ({ thumb, title, owner, state }: TrackOnChannel) => (
-  <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
-    <div style={{ paddingRight: 16 }}>
-      <img style={{ width: 140, borderRadius: 6 }} src={thumb} />
-    </div>
-    <div>
-      <div dangerouslySetInnerHTML={{ __html: title }} />
-      <div style={{ display: 'flex', alignItems: 'center', paddingTop: 4 }}>
-        <img
-          src={owner.picture}
-          style={{ width: 25, height: 25, borderRadius: 50 }}
-        />
-        <div style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>
-          {owner.fullName}
-        </div>
-      </div>
-    </div>
-  </div>
-)
-
-const Card = ({
-  children,
-  style
-}: {
-  style?: React.CSSProperties
-  children: React.ReactNode
-}) => (
-  <div className="root" style={style}>
-    {/*language=CSS*/}
-    <style jsx>
-      {`
-        .root {
-          flex: 1;
-          margin-bottom: 24px;
-          background-color: #fff;
-          padding: 24px;
-          border-radius: 4px;
-          border: solid 1px #ccc;
-        }
-
-        @media only screen and (max-width: 905px) {
-          .root {
-          }
-        }
-      `}
-    </style>
-    {children}
-  </div>
-)
 
 export default ({ channel }: TProps) => (
   <ChannelController channel={channel}>
@@ -98,7 +47,7 @@ export default ({ channel }: TProps) => (
                       }}>
                       Now playing
                     </div>
-                    <Track {...nowPlaying} />
+                    <UpCommingTrack {...nowPlaying} />
                   </>
                 ) : (
                   false
@@ -118,7 +67,7 @@ export default ({ channel }: TProps) => (
                   false
                 )}
                 {upComing.map(({ node }) => (
-                  <Track key={node.id} {...node} />
+                  <UpCommingTrack key={node.id} {...node} />
                 ))}
               </div>
             </Card>
