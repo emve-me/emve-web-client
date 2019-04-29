@@ -24,10 +24,6 @@ export default class LoginSplash extends Component {
               align-items: center;
             }
 
-            h3 {
-              padding: 25px 0;
-            }
-
             h2 {
               padding-top: 25px;
             }
@@ -62,6 +58,11 @@ export default class LoginSplash extends Component {
 
             @media only screen and (max-width: 905px) {
               h2 {
+                padding-top: 0px;
+                padding-bottom: 16px;
+              }
+
+              h1 {
                 padding-bottom: 16px;
               }
 
@@ -130,7 +131,7 @@ export default class LoginSplash extends Component {
             alignItems: 'flex-end',
             justifyContent: 'center',
             display: 'flex',
-            paddingBottom: 16
+            padding: '16px 0'
           }}>
           A personal project / experiment by&nbsp;<a href="">Robert Lancer</a>
         </div>
