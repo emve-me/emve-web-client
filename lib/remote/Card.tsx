@@ -20,6 +20,7 @@ export default ({
 
         @media only screen and (max-width: 905px) {
           .root {
+            margin-bottom: 16px;
           }
         }
       `}
