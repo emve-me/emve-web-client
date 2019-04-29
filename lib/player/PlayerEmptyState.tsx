@@ -29,7 +29,6 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
           }`}
       </style>
       <div style={{
-        paddingTop: 150,
         display: 'flex',
         justifyContent: 'center',
         flexDirection: 'column',
