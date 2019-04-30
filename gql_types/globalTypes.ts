@@ -7,9 +7,10 @@
 //==============================================================
 
 export enum TrackState {
-  played = "played",
-  playing = "playing",
-  upcoming = "upcoming",
+  played = 'played',
+  playing = 'playing',
+  remove = 'remove',
+  upcoming = 'upcoming'
 }
 
 //==============================================================

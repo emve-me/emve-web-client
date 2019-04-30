@@ -1,6 +1,8 @@
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
 import React from 'react'
 import { TrackState } from '../../gql_types/globalTypes'
+import gql from 'graphql-tag'
+import RemoveTrackController from './RemoveTrackController'
 
 type TTrack = {
   onClick?: () => void
@@ -23,8 +25,6 @@ export function SearchResultTrack({ onClick, title, thumb, children }: TTrack) {
           }
 
           @media only screen and (max-width: 905px) {
-            .root {
-            }
           }
         `}
       </style>
@@ -40,7 +40,13 @@ export function SearchResultTrack({ onClick, title, thumb, children }: TTrack) {
   )
 }
 
-export function UpCommingTrack({ thumb, title, owner, state }: TrackOnChannel) {
+export function UpCommingTrack({
+  thumb,
+  title,
+  owner,
+  state,
+  id
+}: TrackOnChannel) {
   return (
     <SearchResultTrack title={title} thumb={thumb}>
       <div style={{ display: 'flex', alignItems: 'center', paddingTop: 4 }}>
@@ -53,9 +59,16 @@ export function UpCommingTrack({ thumb, title, owner, state }: TrackOnChannel) {
           {owner.fullName}
         </div>
 
-        <div style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>
-          &middot; <a>{state === TrackState.playing ? 'skip' : 'remove'}</a>
-        </div>
+        <div>{id}</div>
+        <RemoveTrackController track={id}>
+          {({ removeTrack }) => (
+            <div
+              onClick={removeTrack}
+              style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>
+              &middot; <a>{state === TrackState.playing ? 'skip' : 'remove'}</a>
+            </div>
+          )}
+        </RemoveTrackController>
       </div>
     </SearchResultTrack>
   )

@@ -17,7 +17,7 @@ export default ({ channel }: TProps) => (
         return <LoadingIndicator />
       }
 
-      const hasTracks = nowPlaying || upComing.length > 0
+      const hasTracks = nowPlaying || (upComing && upComing.length > 0)
 
       return (
         <>
