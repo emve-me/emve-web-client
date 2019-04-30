@@ -7,9 +7,9 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
   render() {
     const { channel } = this.props
 
-    const directJoinLink = `${
-      getConfig().publicRuntimeConfig.baseUrl
-    }/remote?p=${channel}`
+    const { baseUrl } = getConfig().publicRuntimeConfig
+
+    const directJoinLink = `${baseUrl}/remote?p=${channel}`
 
     return (
       <Shell visibleOnMobile={false}>
@@ -49,9 +49,12 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
             alignItems: 'center'
           }}>
           <h1 style={{ paddingBottom: 16, textAlign: 'center' }}>
-            Visit emve.me on another device as a remote
+            Pairing code
           </h1>
-          <h2 style={{ paddingBottom: 16 }}>Enter pairing code</h2>
+          <h2 style={{ paddingBottom: 16, textAlign: 'center' }}>
+            Join <a href={baseUrl}>emve.me</a> as a Remote and use this code:
+          </h2>
+
           <div className="channel">{channel}</div>
           <div style={{ paddingTop: 16 }}>OR</div>
           <div style={{ padding: '16px 0 8px 0' }}>
