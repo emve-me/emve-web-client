@@ -51,6 +51,7 @@ export default class Shell extends Component<TProps> {
             @media only screen and (max-width: 905px) {
               header {
                 display: ${visibleOnMobile ? 'flex' : 'none'};
+                height: 60px;
               }
 
               .logo {
@@ -58,7 +59,7 @@ export default class Shell extends Component<TProps> {
               }
 
               .bodyContainer {
-                padding-top: ${visibleOnMobile ? '70px' : '0'};
+                padding-top: ${visibleOnMobile ? '60px' : '0'};
               }
             }
           `}
