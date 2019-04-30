@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { ApolloConsumer } from 'react-apollo'
 import GoogleLogin from 'react-google-login'
-import jwtIO from 'jsonwebtoken'
 import { setCookie } from 'vanilla-cookies'
 import gql from 'graphql-tag'
 import getConfig from 'next/config'
@@ -32,12 +31,6 @@ export default class Login extends Component<{}, {}> {
             <GoogleLogin
               onSuccess={async response => {
                 const { profileObj, tokenId } = response as any
-
-                const loggedInUser = {
-                  ...(jwtIO.decode(tokenId) as any),
-                  id: 'LoggedInUser',
-                  __typename: 'User'
-                }
 
                 setCookie('GTOKENID', tokenId, 365)
 

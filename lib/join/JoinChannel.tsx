@@ -1,4 +1,3 @@
-import { Button, TextField } from '@material-ui/core'
 import React, { Component } from 'react'
 import JoinChannelController from './JoinChannelController'
 import MobileFooterNav from '../MobileFooterNav'

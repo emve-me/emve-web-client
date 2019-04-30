@@ -2,9 +2,7 @@
 
 - VALIDATE JWT token
 - pretty errors from gql
-- player controls
-- link to npm libs in this readme
-- remove youtbe key from client code
+- remove youtube key from client code
 
 # Agenda
 
