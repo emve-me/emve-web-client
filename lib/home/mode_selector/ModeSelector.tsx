@@ -31,9 +31,6 @@ export default () => (
             justify-content: space-between;
           }
 
-          .remote {
-          }
-
           .accountThumb {
             display: none;
           }

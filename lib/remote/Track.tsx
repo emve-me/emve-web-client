@@ -1,6 +1,6 @@
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
-import Shell from '../Shell'
 import React from 'react'
+import { TrackState } from '../../gql_types/globalTypes'
 
 type TTrack = {
   onClick?: () => void
@@ -20,9 +20,6 @@ export function SearchResultTrack({ onClick, title, thumb, children }: TTrack) {
             align-items: center;
             margin-bottom: 16px;
             cursor: ${onClick ? 'pointer' : ''};
-          }
-
-          .root :hover {
           }
 
           @media only screen and (max-width: 905px) {
@@ -51,8 +48,13 @@ export function UpCommingTrack({ thumb, title, owner, state }: TrackOnChannel) {
           src={owner.picture}
           style={{ width: 25, height: 25, borderRadius: 50 }}
         />
+
         <div style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>
           {owner.fullName}
+        </div>
+
+        <div style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>
+          &middot; <a>{state === TrackState.playing ? 'skip' : 'remove'}</a>
         </div>
       </div>
     </SearchResultTrack>
