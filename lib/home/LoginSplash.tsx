@@ -150,7 +150,7 @@ export default class LoginSplash extends Component {
                 <MobileOutlineIcon size={110} />
                 <MobileOutlineIcon size={110} />
               </div>
-              <h2 className="desktop">Friends DJ using their phone</h2>
+              <h2 className="desktop">Friends DJ using their phones</h2>
             </div>
           </div>
 
