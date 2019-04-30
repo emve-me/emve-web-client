@@ -134,6 +134,7 @@ class MyApp extends App<PROPS> {
             text-decoration: none;
             outline: none;
             color: dodgerblue;
+            cursor: pointer;
           }
 
           *,

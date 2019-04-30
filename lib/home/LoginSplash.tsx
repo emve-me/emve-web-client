@@ -159,7 +159,8 @@ export default class LoginSplash extends Component {
           </div>
         </div>
         <div className="footer">
-          A personal project / experiment by&nbsp;<a href="">Robert Lancer</a>
+          A personal project / experiment by&nbsp;
+          <a href="https://github.com/rlancer">Robert Lancer</a>
         </div>
       </Shell>
     )

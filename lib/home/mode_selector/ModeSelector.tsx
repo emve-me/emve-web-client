@@ -7,6 +7,8 @@ import MobileOutlineIcon from '../../icons/MobileOutlineIcon'
 import SelectionButton from './SelectionButton'
 import Shell from '../../Shell'
 import AccountThumb from '../../AccountThumb'
+import LoggedInUserController from '../../consumers/LoggedInUserController'
+import MobileFooterNav from '../../MobileFooterNav'
 
 export default () => (
   <Shell visibleOnMobile={false}>
@@ -43,9 +45,6 @@ export default () => (
 
             .accountThumb {
               display: block;
-              position: fixed;
-              right: 10px;
-              top: 10px;
             }
 
             .mode_selector {
@@ -61,10 +60,6 @@ export default () => (
           }
         `}
       </style>
-
-      <div className="accountThumb">
-        <AccountThumb thumbSize={33} />
-      </div>
 
       <h1>Use this device as a</h1>
 
@@ -87,6 +82,8 @@ export default () => (
           )}
         </CreateChannelController>
       </div>
+
+      <MobileFooterNav />
     </div>
   </Shell>
 )
