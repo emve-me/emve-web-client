@@ -9,13 +9,14 @@
 # Agenda
 
 - Demo & Background
+  - Inspired by the Nexus Q
   - Made emve ~6 years ago
   - Remade it ~4 years ago
   - Made it again ~2.5 weeks ago (mainly wanted to play around with GraphQL subscriptions)
 - Dev opps
   - Docker Compose for local development
   - GitLab CI / CD for deployment to App Engine
-    - Uses custom utilities to aid deployment (link to NPM libraries)
+    - [Uses custom utilities to aid deployment](https://medium.com/@robizm/gitlab-ci-cd-tooling-for-deploying-app-engine-node-apps-e2f32d5226e3)
   - Note on AppEngine
     - App is cloud agnostic, not using anything like Cloud Firestore, or AppSync that would make it harder port to a different provider
 - Stack
@@ -29,7 +30,7 @@
       - Google Login, JWT stored in Cookie
       - Redirs based on cookie, a value of SSR
       - JWT token send in header to API requests
-      - Cookie handling library (link)
+      - [Cookie handling library](https://www.npmjs.com/package/vanilla-cookies)
     - React
     - Apollo
       - Splits API transport into websockets and HTTP requests
@@ -47,7 +48,7 @@
             - View components, responsible for UI only
             - Controller components, responsible for data operations
   - Backend
-    - gapi-to-graphql (Link to Library)
+    - [gapi-to-graphql](https://github.com/rlancer/gapi-to-graphql)
     - Postgres
       - Knex for query building
         - No ORM
