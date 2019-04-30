@@ -3553,6 +3553,7 @@ type Track {
   state: TrackState
   thumb: String
   title: String
+  userCanRemove: Boolean
   videoId: ID
 }
 
@@ -4574,6 +4575,7 @@ enum TfmtCaptionsEnumParam {
 enum TrackState {
   played
   playing
+  remove
   upcoming
 }
 

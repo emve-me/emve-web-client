@@ -2,35 +2,36 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { TrackState } from "./globalTypes";
+import { TrackState } from './globalTypes'
 
 // ====================================================
 // GraphQL mutation operation: addVideo
 // ====================================================
 
 export interface addVideo_videoPush_owner {
-  __typename: "User";
-  fullName: string | null;
-  firstName: string | null;
-  picture: string | null;
+  __typename: 'User'
+  fullName: string | null
+  firstName: string | null
+  picture: string | null
 }
 
 export interface addVideo_videoPush {
-  __typename: "Track";
-  id: string | null;
-  title: string | null;
-  videoId: string | null;
-  state: TrackState | null;
-  thumb: string | null;
-  owner: addVideo_videoPush_owner | null;
+  __typename: 'Track'
+  id: string | null
+  title: string | null
+  videoId: string | null
+  state: TrackState | null
+  thumb: string | null
+  userCanRemove: boolean | null
+  owner: addVideo_videoPush_owner | null
 }
 
 export interface addVideo {
-  videoPush: addVideo_videoPush | null;
+  videoPush: addVideo_videoPush | null
 }
 
 export interface addVideoVariables {
-  videoId: string;
-  channel: string;
-  title?: string | null;
+  videoId: string
+  channel: string
+  title?: string | null
 }

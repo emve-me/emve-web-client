@@ -1,6 +1,6 @@
 import React, { Component, RefObject } from 'react'
 import SearchResults from './search/SearchResults'
-import UpComming from './UpComming'
+import UpComing from './UpComing'
 import { SearchBox } from './search/SearchBox'
 import Shell from '../Shell'
 
@@ -75,7 +75,7 @@ export default class RemoteMain extends Component<TProps, TState> {
         <div
           className="container"
           style={{ display: !isSearching ? 'flex' : 'none' }}>
-          <UpComming channel={channel} />
+          <UpComing channel={channel} />
         </div>
       </Shell>
     )

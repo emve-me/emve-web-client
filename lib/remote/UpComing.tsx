@@ -3,7 +3,7 @@ import React from 'react'
 import LoadingIndicator from '../ui/LoadingIndicator'
 import RemoteEmptyState from './RemoteEmptyState'
 import Card from './Card'
-import { UpCommingTrack } from './Track'
+import { UpComingTrack } from './Track'
 import Link from 'next/link'
 
 type TProps = {
@@ -40,7 +40,7 @@ export default ({ channel }: TProps) => (
                       }}>
                       Now playing
                     </div>
-                    <UpCommingTrack {...nowPlaying} />
+                    <UpComingTrack {...nowPlaying} />
                   </>
                 ) : (
                   false
@@ -60,7 +60,7 @@ export default ({ channel }: TProps) => (
                   false
                 )}
                 {upComing.map(({ node }) => (
-                  <UpCommingTrack key={node.id} {...node} />
+                  <UpComingTrack key={node.id} {...node} />
                 ))}
               </div>
             </Card>

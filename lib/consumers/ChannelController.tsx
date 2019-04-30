@@ -22,6 +22,7 @@ export const TRAK_FRAG = gql`
     videoId
     state
     thumb
+    userCanRemove
     owner {
       fullName
       firstName

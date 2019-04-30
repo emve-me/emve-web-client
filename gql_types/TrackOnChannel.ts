@@ -2,25 +2,26 @@
 /* eslint-disable */
 // This file was automatically generated and should not be edited.
 
-import { TrackState } from "./globalTypes";
+import { TrackState } from './globalTypes'
 
 // ====================================================
 // GraphQL fragment: TrackOnChannel
 // ====================================================
 
 export interface TrackOnChannel_owner {
-  __typename: "User";
-  fullName: string | null;
-  firstName: string | null;
-  picture: string | null;
+  __typename: 'User'
+  fullName: string | null
+  firstName: string | null
+  picture: string | null
 }
 
 export interface TrackOnChannel {
-  __typename: "Track";
-  id: string | null;
-  title: string | null;
-  videoId: string | null;
-  state: TrackState | null;
-  thumb: string | null;
-  owner: TrackOnChannel_owner | null;
+  __typename: 'Track'
+  id: string | null
+  title: string | null
+  videoId: string | null
+  state: TrackState | null
+  thumb: string | null
+  userCanRemove: boolean | null
+  owner: TrackOnChannel_owner | null
 }

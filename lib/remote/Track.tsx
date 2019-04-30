@@ -40,11 +40,12 @@ export function SearchResultTrack({ onClick, title, thumb, children }: TTrack) {
   )
 }
 
-export function UpCommingTrack({
+export function UpComingTrack({
   thumb,
   title,
   owner,
   state,
+  userCanRemove,
   id
 }: TrackOnChannel) {
   return (
@@ -59,16 +60,20 @@ export function UpCommingTrack({
           {owner.fullName}
         </div>
 
-        <div>{id}</div>
-        <RemoveTrackController track={id}>
-          {({ removeTrack }) => (
-            <div
-              onClick={removeTrack}
-              style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>
-              &middot; <a>{state === TrackState.playing ? 'skip' : 'remove'}</a>
-            </div>
-          )}
-        </RemoveTrackController>
+        {userCanRemove ? (
+          <RemoveTrackController track={id}>
+            {({ removeTrack }) => (
+              <div
+                onClick={removeTrack}
+                style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>
+                &middot;{' '}
+                <a>{state === TrackState.playing ? 'skip' : 'remove'}</a>
+              </div>
+            )}
+          </RemoveTrackController>
+        ) : (
+          false
+        )}
       </div>
     </SearchResultTrack>
   )
