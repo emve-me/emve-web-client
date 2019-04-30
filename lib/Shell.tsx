@@ -6,15 +6,17 @@ import Link from 'next/link'
 type TProps = {
   header?: React.ReactNode
   visibleOnMobile?: boolean
+  logoVisibleOnMobile?: boolean
 }
 
 export default class Shell extends Component<TProps> {
   static defaultProps = {
-    visibleOnMobile: true
+    visibleOnMobile: true,
+    logoVisibleOnMobile: true
   }
 
   render() {
-    const { visibleOnMobile } = this.props
+    const { visibleOnMobile, logoVisibleOnMobile } = this.props
 
     return (
       <>
@@ -42,9 +44,17 @@ export default class Shell extends Component<TProps> {
               flex-direction: column;
             }
 
+            .logo {
+              display: block;
+            }
+
             @media only screen and (max-width: 905px) {
               header {
                 display: ${visibleOnMobile ? 'flex' : 'none'};
+              }
+
+              .logo {
+                display: ${logoVisibleOnMobile ? 'block' : 'none'};
               }
 
               .bodyContainer {
@@ -56,7 +66,9 @@ export default class Shell extends Component<TProps> {
 
         <header>
           <Link href="/">
-            <HeartIcon style={{ cursor: 'pointer' }} size={30} />
+            <div className="logo">
+              <HeartIcon style={{ cursor: 'pointer' }} size={30} />
+            </div>
           </Link>
 
           <div style={{ flex: 1, display: 'flex', justifyContent: 'center' }}>

@@ -98,6 +98,7 @@ export class SearchBox extends Component<TProps, TState> {
                 width: 100%;
                 border: none;
                 box-shadow: none;
+                padding-left: 0px;
               }
             }
           `}

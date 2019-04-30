@@ -25,6 +25,7 @@ export default class RemoteMain extends Component<TProps, TState> {
 
     return (
       <Shell
+        logoVisibleOnMobile={false}
         header={
           <SearchBox
             debounceDelay={100}

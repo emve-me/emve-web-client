@@ -4,6 +4,7 @@ import LoadingIndicator from '../ui/LoadingIndicator'
 import RemoteEmptyState from './RemoteEmptyState'
 import Card from './Card'
 import { UpCommingTrack } from './Track'
+import Link from 'next/link'
 
 type TProps = {
   channel: string
@@ -20,14 +21,6 @@ export default ({ channel }: TProps) => (
 
       return (
         <>
-          {!hasTracks ? (
-            <Card>
-              <RemoteEmptyState />
-            </Card>
-          ) : (
-            false
-          )}
-
           {hasTracks ? (
             <Card>
               <div
@@ -102,10 +95,21 @@ export default ({ channel }: TProps) => (
                 Pairing code: <span>{channel}</span>
               </div>
               <div>
-                <a href="">Invite guests</a>
+                <a href="">Invite guests</a>&nbsp;&middot;&nbsp;
+                <Link href="/">
+                  <a href="">Exit party</a>
+                </Link>
               </div>
             </div>
           </Card>
+
+          {!hasTracks ? (
+            <Card>
+              <RemoteEmptyState />
+            </Card>
+          ) : (
+            false
+          )}
         </>
       )
     }}
