@@ -17,11 +17,7 @@ export default class Index extends Component<props, state> {
           if (!loggedIn) {
             return <LoginSplash />
           } else {
-            return (
-              <Shell>
-                <ModeSelector />
-              </Shell>
-            )
+            return <ModeSelector />
           }
         }}
       </LoggedInUserController>
