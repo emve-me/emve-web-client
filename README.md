@@ -1,7 +1,8 @@
 # TODO
 
-- VALIDATE JWT token
 - pretty errors from gql
+- error bounderies
+- error handling when entering pairing code
 - remove youtube key from client code
 
 # Agenda

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
-
 import { deleteCookie } from 'vanilla-cookies'
 import gql from 'graphql-tag'
 import {
@@ -49,7 +48,8 @@ export default class LoggedInUserController extends Component<TProps> {
         {({ error, loading, data, client }) => {
           if (error) {
             console.error(error)
-            return <div>Error Logging In</div>
+            deleteCookie('GTOKENID')
+            return <div>Error logging in, please refresh</div>
           }
 
           if (loading) {
