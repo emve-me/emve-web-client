@@ -1,13 +1,19 @@
-import React, { Component } from 'react'
+import React, { Component, createRef } from 'react'
 import ChannelConsumer from '../consumers/ChannelController'
 import YouTube from 'react-youtube'
+import gql from 'graphql-tag'
+import LoadingIndicator from '../ui/LoadingIndicator'
+import PlayerEmptyState from './PlayerEmptyState'
+import { withApollo, WithApolloClient } from 'react-apollo'
+import {
+  PlayerControls,
+  PlayerControlsVariables
+} from '../../gql_types/PlayerControls'
 import {
   MarkAsPlayedGQL,
   MarkAsPlayedGQLVariables
 } from '../../gql_types/MarkAsPlayedGQL'
-import gql from 'graphql-tag'
-import LoadingIndicator from '../ui/LoadingIndicator'
-import PlayerEmptyState from './PlayerEmptyState'
+import { PlayerControlAction } from '../../gql_types/globalTypes'
 
 const GQL_MARK_AS_PLAYED = gql`
   mutation MarkAsPlayedGQL($track: ID!, $nextTrack: ID) {
@@ -15,8 +21,64 @@ const GQL_MARK_AS_PLAYED = gql`
   }
 `
 
+const GQL_PLAYER_CONTROLS = gql`
+  subscription PlayerControls($channel: ID!) {
+    playerControl(input: { channel: $channel }) {
+      action
+    }
+  }
+`
+
+type TProps = { channel: string }
+
 // todo move mark as played to channel consumer
-export default class PlayerMain extends Component<{ channel: string }, {}> {
+class PlayerMain extends Component<WithApolloClient<TProps>> {
+  subscription: ZenObservable.Subscription
+
+  skipTrack: () => void
+
+  componentDidMount() {
+    const { client, channel } = this.props
+
+    const subscriptionObservable = client.subscribe<
+      { data: PlayerControls },
+      PlayerControlsVariables
+    >({
+      query: GQL_PLAYER_CONTROLS,
+      variables: { channel }
+    })
+
+    this.subscription = subscriptionObservable.subscribe({
+      next: ({ data }) => {
+        switch (data.playerControl.action) {
+          case PlayerControlAction.SKIP:
+            if (this.skipTrack) {
+              this.skipTrack()
+            }
+            break
+        }
+      },
+      error(err) {
+        console.error(`Finished with error: ${err}`)
+      },
+      complete() {
+        console.info('Finished subscription to', channel)
+      }
+    })
+  }
+
+  componentWillUnmount() {
+    if (this.subscription) {
+      this.subscription.unsubscribe()
+    }
+  }
+
+  _playerTarget
+  onPlayerReady = ({ target }) => {
+    console.log('TARGET', target)
+    this._playerTarget = target
+  }
+
   render() {
     const { channel } = this.props
 
@@ -28,7 +90,6 @@ export default class PlayerMain extends Component<{ channel: string }, {}> {
           replaceNowPlaying,
           loading,
           upComing,
-          skipTrack,
           client
         }) => {
           if (loading) {
@@ -59,6 +120,8 @@ export default class PlayerMain extends Component<{ channel: string }, {}> {
               }
             }
 
+            this.skipTrack = nextTrack
+
             return (
               <>
                 <style jsx global>
@@ -73,6 +136,7 @@ export default class PlayerMain extends Component<{ channel: string }, {}> {
                   `}
                 </style>
                 <YouTube
+                  onReady={this.onPlayerReady}
                   containerClassName="playerContainer"
                   videoId={nowPlaying.videoId}
                   opts={{
@@ -92,3 +156,5 @@ export default class PlayerMain extends Component<{ channel: string }, {}> {
     )
   }
 }
+
+export default withApollo(PlayerMain)

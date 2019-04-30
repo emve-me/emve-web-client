@@ -1,18 +1,23 @@
 # TODO
 
 - VALIDATE JWT token
-- hook up initial state
 - pretty errors from gql
+- player controls
+- link to npm libs in this readme
+- remove youtbe key from client code
 
 # Agenda
 
 - Demo & Background
   - Made emve ~6 years ago
   - Remade it ~4 years ago
-  - Made it again ~2.5 weeks ago
+  - Made it again ~2.5 weeks ago (mainly wanted to play around with GraphQL subscriptions)
 - Dev opps
-  - Onboarding - git pull, docker-compose up and your good to go
-  - Deployment, using GitLab CI / CD and custom tooling
+  - Docker Compose for local development
+  - GitLab CI / CD for deployment to App Engine
+    - Uses custom utilities to aid deployment (link to NPM libraries)
+  - Note on AppEngine
+    - App is cloud agnostic, not using anything like Cloud Firestore, or AppSync that would make it harder port to a different provider
 - Stack
   - Universal
     - Typescript
@@ -34,7 +39,7 @@
       - Empty states
       - Streamline creating a party to one click
       - Remote, dead simple, default to showing your parties status or a very familiar search bar to find a song
-    - Code origination
+    - Code organisation
       - React / Apollo let you use components for everything
         - Positive, use familiar constructs
         - Negative, can lead to unwieldy components
@@ -47,13 +52,15 @@
       - Knex for query building
         - No ORM
         - No GraphQL / DB in one, ex: graph.cool
-      - Migra - diffing for migrations
+      - Migra - diffing for migrations (have not needed to implement)
     - Apollo Server
-  - Dev opps
-    - Docker Compose for local development
-    - GitLab CI / CD for deployment to App Engine
-      - Uses custom utilities to aid deployment (link to NPM libraries)
   - Security
     - Access to channels are inherently insecure to prioritize convenience, the following precautions have been taken to mitigate this:
       - Channel IDs are in a custom base 26 encoded alphabet (the alphabet but scrambled) to avoid users being able to guess channel IDs of an ongoing sessions
       - Channels ID start at 26^4 to minimize guessability
+
+# Wish list
+
+- Live Queries, would cut down on complexity a lot
+- Hooks API for Apollo
+- Typescript friendlier database library with typegen from schema, a few systems like that out there

@@ -2441,6 +2441,10 @@ type PageInfo {
   totalResults: Int
 }
 
+type PlayerControl {
+  action: PlayerControlAction
+}
+
 """
 A playlist resource represents a YouTube playlist. A playlist is a collection of
 videos that can be viewed sequentially and shared with other users. A playlist
@@ -3270,6 +3274,7 @@ type Subscription {
   id: String
   "Identifies what kind of resource this is. Value: the fixed string \"youtube#subscription\"."
   kind: String
+  playerControl(input: PlayerControlInput!): PlayerControl
   """
   The snippet object contains basic details about the subscription, including
   its title and the channel that the user subscribed to.
@@ -4529,6 +4534,14 @@ enum OrderSubscriptionsEnumParam {
   unread
 }
 
+enum PlayerControlAction {
+  EXIT_FULLSCREEN
+  FULLSCREEN
+  PAUSE
+  PLAY
+  SKIP
+}
+
 enum SafeSearchSearchEnumParam {
   #
   #YouTube will filter some content from search results and, at the least, will
@@ -4732,6 +4745,10 @@ input ChannelJoinInput {
 input MarkTrakAsPlayedInput {
   nextTrack: ID
   track: ID!
+}
+
+input PlayerControlInput {
+  channel: ID
 }
 
 input RemoveTrackInput {
