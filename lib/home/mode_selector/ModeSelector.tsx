@@ -83,7 +83,7 @@ export default () => (
         </CreateChannelController>
       </div>
 
-      <MobileFooterNav />
+      <MobileFooterNav style={{ paddingBottom: 24 }} />
     </div>
   </Shell>
 )
