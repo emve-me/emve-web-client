@@ -1,5 +1,5 @@
 deploy:
-  image: "rlancer/gcloud-node:1.0.2"
+  image: 'rlancer/gcloud-node:1.0.2'
   script:
     - gae-ayaml-env
     - npm i
@@ -11,4 +11,3 @@ deploy:
     - theonlyrunnerthatshouldeverbeusedbycollaborizm
   only:
     - prod
-

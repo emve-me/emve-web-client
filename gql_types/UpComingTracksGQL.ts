@@ -28,10 +28,10 @@ export interface UpComingTracksGQL_channel_nowPlaying {
 
 export interface UpComingTracksGQL_channel_owner {
   __typename: 'User'
+  id: string | null
   fullName: string | null
   firstName: string | null
   picture: string | null
-  id: string | null
 }
 
 export interface UpComingTracksGQL_channel_tracks_edges_node_owner {

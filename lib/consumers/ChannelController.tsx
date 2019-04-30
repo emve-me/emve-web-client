@@ -47,10 +47,10 @@ const UPCOMING_QUERY = gql`
         ...TrackOnChannel
       }
       owner {
+        id
         fullName
         firstName
         picture
-        id
       }
       tracks(played: false) {
         edges {
@@ -85,6 +85,7 @@ type TRenderProps = {
 // todo have a type for the cache shape
 type TProps = {
   channel: string
+
   children: ({
     nowPlaying,
     upComing,
