@@ -2877,6 +2877,7 @@ type Query {
     userIp: String
   ): YoutubeResources
   channel(id: ID!): Channel
+  loggedInUser: User
 }
 
 "A resource id is a generic reference that points to another YouTube resource."
@@ -3553,7 +3554,6 @@ type Track {
   state: TrackState
   thumb: String
   title: String
-  userCanRemove: Boolean
   videoId: ID
 }
 

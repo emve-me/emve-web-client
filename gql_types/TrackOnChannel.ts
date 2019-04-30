@@ -10,6 +10,7 @@ import { TrackState } from './globalTypes'
 
 export interface TrackOnChannel_owner {
   __typename: 'User'
+  id: string | null
   fullName: string | null
   firstName: string | null
   picture: string | null
@@ -22,6 +23,5 @@ export interface TrackOnChannel {
   videoId: string | null
   state: TrackState | null
   thumb: string | null
-  userCanRemove: boolean | null
   owner: TrackOnChannel_owner | null
 }

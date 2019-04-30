@@ -18,108 +18,83 @@ const gqlEndpoint = process.browser
 
 const gqlSubscription = config.publicRuntimeConfig.graphQLSubscription
 
-export default withApollo(({ headers, initialState, ctx }) => {
+export default withApollo(
+  ({ headers, initialState, ctx }) => {
+    const httpLink = createHttpLink({
+      uri: gqlEndpoint
+    })
 
+    const getJWTFromCookieString = (cookieString: string) =>
+      getCookie('GTOKENID', cookieString)
 
-  const httpLink = createHttpLink({
-    uri: gqlEndpoint
-  })
+    const getGQLHeaders = (cookieString: string) => {
+      const sessionToken = getJWTFromCookieString(cookieString)
 
+      const headersForRequest: any = {}
 
-  const getJWTFromCookieString = (cookieString: string) => getCookie('GTOKENID', cookieString)
-
-  const getGQLHeaders = (cookieString: string) => {
-
-    const sessionToken = getJWTFromCookieString(cookieString)
-
-    const headersForRequest: any = {}
-
-    if (sessionToken) {
-      headersForRequest.authorization = `Bearer ${sessionToken}`
-    }
-
-    return { headers: headersForRequest }
-  }
-
-  const authLink = setContext((_, ___) => {
-    if (process.browser) {
-      return getGQLHeaders(window.document.cookie)
-    } else {
-      return headers
-        ? typeof headers.cookie === 'string'
-          ? getGQLHeaders(headers.cookie)
-          : {}
-        : {}
-    }
-  })
-
-
-  const getCache = () => {
-    const cache = new InMemoryCache({
-      dataIdFromObject: object => {
-        switch (object.__typename) {
-          case 'SearchResult':
-            return (object as any).id.videoId
-        }
-
-        return object.id
+      if (sessionToken) {
+        headersForRequest.authorization = `Bearer ${sessionToken}`
       }
-    }).restore(initialState || {})
 
+      return { headers: headersForRequest }
+    }
 
-    if (headers && typeof headers.cookie === 'string') {
-      const jwt = getJWTFromCookieString(headers.cookie)
+    const authLink = setContext((_, ___) => {
+      if (process.browser) {
+        return getGQLHeaders(window.document.cookie)
+      } else {
+        return headers
+          ? typeof headers.cookie === 'string'
+            ? getGQLHeaders(headers.cookie)
+            : {}
+          : {}
+      }
+    })
+
+    const authHttpLink = authLink.concat(httpLink)
+
+    const getLink = () =>
+      process.browser
+        ? split(
+            // split based on operation type
+            ({ query }) => {
+              const mainDef = getMainDefinition(query)
+              const { kind, operation } = mainDef as any
+              return (
+                kind === 'OperationDefinition' && operation === 'subscription'
+              )
+            },
+            new WebSocketLink({
+              uri: gqlSubscription,
+              options: {
+                reconnect: true
+              }
+            }),
+            authHttpLink
+          )
+        : authHttpLink
+
+    if (process.browser && process.env.NODE_ENV !== 'production') {
+      const jwt = getJWTFromCookieString(window.document.cookie)
 
       if (jwt) {
-        const decoded = jwtIO.decode(jwt) as TJWT
+        console.log(`"authorization": "Bearer ${jwt}"`)
+      }
+    }
 
-        const loggedInUser = {
-          ...decoded,
-          id: 'LoggedInUser',
-          __typename: 'User'
+    return new ApolloClient({
+      link: getLink(),
+      cache: new InMemoryCache({
+        dataIdFromObject: object => {
+          switch (object.__typename) {
+            case 'SearchResult':
+              return (object as any).id.videoId
+          }
+
+          return object.id
         }
-
-        cache.writeQuery({
-          query: LOGGED_IN_USER,
-          data: { loggedInUser }
-        })
-
-        return cache
-      }
-    }
-    return cache
-  }
-
-  const authHttpLink = authLink.concat(httpLink)
-
-  const getLink = () => process.browser ? split(
-    // split based on operation type
-    ({ query }) => {
-      const mainDef = getMainDefinition(query)
-      const { kind, operation } = mainDef as any
-      return kind === 'OperationDefinition' && operation === 'subscription'
-    },
-    new WebSocketLink({
-      uri: gqlSubscription,
-      options: {
-        reconnect: true
-      }
-    }),
-    authHttpLink
-  ) : authHttpLink
-
-  if (process.browser && process.env.NODE_ENV !== 'production') {
-    const jwt = getJWTFromCookieString(window.document.cookie)
-
-    if (jwt) {
-      console.log(`"authorization": "Bearer ${jwt}"`)
-    }
-
-  }
-
-  return new ApolloClient({
-    link: getLink(),
-    cache:
-      getCache()
-  })
-}, { getDataFromTree: 'ssr' })
+      }).restore(initialState || {})
+    })
+  },
+  { getDataFromTree: 'ssr' }
+)

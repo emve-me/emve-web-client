@@ -10,6 +10,7 @@ import { TrackState } from './globalTypes'
 
 export interface UpComingTracksGQL_channel_nowPlaying_owner {
   __typename: 'User'
+  id: string | null
   fullName: string | null
   firstName: string | null
   picture: string | null
@@ -22,7 +23,6 @@ export interface UpComingTracksGQL_channel_nowPlaying {
   videoId: string | null
   state: TrackState | null
   thumb: string | null
-  userCanRemove: boolean | null
   owner: UpComingTracksGQL_channel_nowPlaying_owner | null
 }
 
@@ -36,6 +36,7 @@ export interface UpComingTracksGQL_channel_owner {
 
 export interface UpComingTracksGQL_channel_tracks_edges_node_owner {
   __typename: 'User'
+  id: string | null
   fullName: string | null
   firstName: string | null
   picture: string | null
@@ -48,7 +49,6 @@ export interface UpComingTracksGQL_channel_tracks_edges_node {
   videoId: string | null
   state: TrackState | null
   thumb: string | null
-  userCanRemove: boolean | null
   owner: UpComingTracksGQL_channel_tracks_edges_node_owner | null
 }
 

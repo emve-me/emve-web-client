@@ -10,6 +10,7 @@ import { TrackState } from './globalTypes'
 
 export interface addVideo_videoPush_owner {
   __typename: 'User'
+  id: string | null
   fullName: string | null
   firstName: string | null
   picture: string | null
@@ -22,7 +23,6 @@ export interface addVideo_videoPush {
   videoId: string | null
   state: TrackState | null
   thumb: string | null
-  userCanRemove: boolean | null
   owner: addVideo_videoPush_owner | null
 }
 
