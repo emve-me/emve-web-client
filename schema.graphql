@@ -2410,7 +2410,7 @@ type MonitorStreamInfo {
 }
 
 type Mutation {
-  authenticate: ID
+  authenticate: User
   channelCreate(input: ChannelCreateInput!): ID
   channelJoin(input: ChannelJoinInput!): Channel
   markTrackAsPlayed(input: MarkTrakAsPlayedInput!): ID

@@ -3,10 +3,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: Authenticate
+// GraphQL fragment: LoggedInUserFields
 // ====================================================
 
-export interface Authenticate_authenticate {
+export interface LoggedInUserFields {
   __typename: 'User'
   fullName: string | null
   firstName: string | null
@@ -14,8 +14,4 @@ export interface Authenticate_authenticate {
   googleId: string | null
   id: string | null
   picture: string | null
-}
-
-export interface Authenticate {
-  authenticate: Authenticate_authenticate | null
 }

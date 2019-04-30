@@ -20,17 +20,24 @@ type TProps = {
   }) => React.ReactNode
 }
 
-const LOGGED_IN_USER = gql`
+export const LOGGED_IN_USER_FRAGMENT = gql`
+  fragment LoggedInUserFields on User {
+    fullName
+    firstName
+    lastName
+    googleId
+    id
+    picture
+  }
+`
+
+export const LOGGED_IN_USER = gql`
   query GetLoggedInUser {
     loggedInUser {
-      fullName
-      firstName
-      lastName
-      googleId
-      id
-      picture
+      ...LoggedInUserFields
     }
   }
+  ${LOGGED_IN_USER_FRAGMENT}
 `
 
 class GetLoggedInUserQuery extends Query<GetLoggedInUser> {}
