@@ -97,7 +97,7 @@ export default ({ channel }: TProps) => (
               <div>
                 <a href="">Invite guests</a>&nbsp;&middot;&nbsp;
                 <Link href="/">
-                  <a href="">Exit party</a>
+                  <a>Leave party</a>
                 </Link>
               </div>
             </div>
