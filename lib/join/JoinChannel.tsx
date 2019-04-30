@@ -1,6 +1,7 @@
 import { Button, TextField } from '@material-ui/core'
 import React, { Component } from 'react'
 import JoinChannelController from './JoinChannelController'
+import MobileFooterNav from '../MobileFooterNav'
 
 // todo handle invalid code error message
 export default class JoinChannel extends Component<
@@ -91,13 +92,14 @@ export default class JoinChannel extends Component<
                 <div
                   className="joinButton"
                   style={{
-                    visibility: pairingCode.length >= 4 ? 'visible' : 'hidden'
+                    display: pairingCode.length >= 4 ? 'block' : 'none'
                   }}
                   onClick={() => joinChannel(pairingCode)}>
                   Join Party!
                 </div>
               </div>
             </div>
+            <MobileFooterNav style={{ paddingTop: 16 }} />
           </div>
         )}
       </JoinChannelController>

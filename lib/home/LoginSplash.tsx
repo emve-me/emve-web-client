@@ -139,7 +139,7 @@ export default class LoginSplash extends Component {
             <div className="spacer" />
 
             <div className="info">
-              <h2 className="mobile">Friends DJ using their phone</h2>
+              <h2 className="mobile">Friends DJ using their phones</h2>
               <div
                 style={{
                   display: 'flex',
