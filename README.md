@@ -65,3 +65,14 @@
 - Live Queries, would cut down on complexity a lot
 - Hooks API for Apollo
 - Typescript friendlier database library with typegen from schema, a few systems like that out there
+
+# Roadmap
+
+- Talk to someone at YouTube to see if this is kosher, maybe for YTRed subscribers
+- Restore lost player sessions
+  - If your player closes and you reender, it should know you have a session going on and ask you to continue it
+- Export a playlist of your party to YouTube / Spotifiy
+- Playback parties
+- Shout box
+- Upvoting
+- Native apps
