@@ -1,9 +1,10 @@
 # TODO
 
 - pretty errors from gql
-- error bounderies
+- error boundaries
 - error handling when entering pairing code
 - remove youtube key from client code
+- add to home screen
 
 # Agenda
 
