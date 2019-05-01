@@ -1,11 +1,15 @@
 import { Component } from 'react'
 import PlayerMain from '../lib/player/PlayerMain'
 import { withRouter, WithRouterProps } from 'next/router'
+import ErrorBoundary from '../lib/ui/ErrorBoundary'
 
-class Player extends Component <WithRouterProps<{ p: string; }>> {
-
+class Player extends Component<WithRouterProps<{ p: string }>> {
   render() {
-    return <PlayerMain channel={this.props.router.query.p}/>
+    return (
+      <ErrorBoundary>
+        <PlayerMain channel={this.props.router.query.p} />
+      </ErrorBoundary>
+    )
   }
 }
 
