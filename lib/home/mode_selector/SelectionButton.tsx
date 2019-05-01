@@ -1,4 +1,5 @@
 import React from 'react'
+import MobileOutlineIcon from '../../icons/MobileOutlineIcon'
 
 type TProps = {
   icon: React.ReactNode
@@ -7,30 +8,40 @@ type TProps = {
   className?: string
 }
 
-export default ({ icon, label, onClick }: TProps) => <div className='root'
-                                                          onClick={onClick}>
-
-  { /*language=CSS*/}
-  <style jsx>{`
+export default ({ icon, label, onClick }: TProps) => (
+  <div className="root" onClick={onClick}>
+    {/*language=CSS*/}
+    <style jsx>{`
       .root {
-          background-color: #FFF;
-          box-shadow: 1px 1px 1px #bbb;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-direction: column;
-          border: solid 3px #999;
-          border-radius: 20px;
-          width: 317px;
-          height: 270px;
-          cursor: pointer;
+        background-color: #fff;
+        box-shadow: 1px 1px 1px #bbb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        border: solid 3px #999;
+        border-radius: 20px;
+        width: 317px;
+        height: 270px;
+        cursor: pointer;
       }
 
       .root:hover {
-          background-color: aliceblue;
+        background-color: #ff2f7f;
       }
-  `}</style>
-  {icon}
-  <div style={{ paddingTop: 16, fontWeight: 'bold' }}>{label}</div>
-</div>
 
+      .root:hover :global(path) {
+        fill: #fff;
+      }
+
+      .root:hover .label {
+        color: #fff;
+      }
+    `}</style>
+    {icon}
+
+    <div className="label" style={{ paddingTop: 16, fontWeight: 'bold' }}>
+      {label}
+    </div>
+  </div>
+)

@@ -1,13 +1,10 @@
 import Link from 'next/link'
 import React from 'react'
 import TV from '../../icons/TVIcon'
-import Mobile from '../../icons/MobileIcon'
 import CreateChannelController from './CreateChannelController'
 import MobileOutlineIcon from '../../icons/MobileOutlineIcon'
 import SelectionButton from './SelectionButton'
 import Shell from '../../Shell'
-import AccountThumb from '../../AccountThumb'
-import LoggedInUserController from '../../consumers/LoggedInUserController'
 import MobileFooterNav from '../../MobileFooterNav'
 
 export default () => (

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Login from '../Login'
 import Shell from '../Shell'
-import MobileIcon from '../icons/MobileIcon'
 import TVIcon from '../icons/TVIcon'
 import MobileOutlineIcon from '../icons/MobileOutlineIcon'
 import HeartIcon from '../icons/HeartIcon'
