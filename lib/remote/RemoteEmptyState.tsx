@@ -1,14 +1,16 @@
 import SearchIcon from '../icons/SearchIcon'
 
-export default () => <div style={{
-  padding: '20px 0',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  flexDirection: 'column'
-}}>
+export default () => (
+  <div
+    style={{
+      padding: '20px 0',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexDirection: 'column'
+    }}>
+    <img src="/static/music_heart.svg" style={{ width: 300 }} />
 
-  <SearchIcon size={200} fill={'#666'}/>
-  <div style={{ fontSize: 30 }}>Nothing Playing</div>
-  <div style={{ paddingTop: 6 }}>Start typing to find a song ...</div>
-</div>
+    <h2 style={{ paddingTop: 20 }}>Search for a song to play ...</h2>
+  </div>
+)
