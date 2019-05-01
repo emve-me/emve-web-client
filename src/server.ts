@@ -8,7 +8,7 @@ const port = process.env.PORT
 const app = next({ dev })
 const handle = app.getRequestHandler()
 
-const protectedRoutes = ['player', 'join', 'remote']
+const protectedRoutes = ['player', 'join']
 
 app.prepare().then(() => {
   const server = express()
