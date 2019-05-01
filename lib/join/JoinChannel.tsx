@@ -41,13 +41,17 @@ export default class JoinChannel extends Component<
               .joinButton {
                 cursor: pointer;
                 flex: 1;
-                padding: 12px;
-                border-radius: 4px;
+                padding: 10px;
+                font-size: 20px;
+                border-radius: 6px;
                 text-align: center;
+
+                border: 3px solid #555;
               }
 
               .joinButton:hover {
-                background-color: aliceblue;
+                background-color: #ff2f7f;
+                color: #fff;
               }
 
               .pairingCodeContainer {
