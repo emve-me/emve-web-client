@@ -138,6 +138,7 @@ class PlayerMain extends Component<WithApolloClient<TProps>> {
                 </style>
 
                 <UpNext
+                  channel={channel}
                   nextTrack={upComing.length > 0 ? upComing[0].node : null}
                 />
                 <YouTube

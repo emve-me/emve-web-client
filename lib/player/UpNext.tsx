@@ -15,9 +15,7 @@ const NextTrackPreview = ({ nextTrack }: { nextTrack?: TrackOnChannel }) => {
           }
         `}
       </style>
-      <div>
-        <img src={nextTrack.thumb} style={{ borderRadius: 6, width: 220 }} />
-      </div>
+      <div style={{ fontWeight: 'bold' }}>UP NEXT</div>
       <div
         style={{
           display: 'flex',
@@ -25,9 +23,10 @@ const NextTrackPreview = ({ nextTrack }: { nextTrack?: TrackOnChannel }) => {
           justifyContent: 'center',
           alignItems: 'center'
         }}>
-        <div style={{ fontSize: 20, textAlign: 'center', padding: '16px 0' }}>
-          {nextTrack.title}
-        </div>
+        <div
+          style={{ fontSize: 20, textAlign: 'center', padding: '16px 0' }}
+          dangerouslySetInnerHTML={{ __html: nextTrack.title }}
+        />
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div style={{ paddingRight: 16 }}>
             <img
@@ -42,10 +41,13 @@ const NextTrackPreview = ({ nextTrack }: { nextTrack?: TrackOnChannel }) => {
   )
 }
 
-export default ({ nextTrack }: { nextTrack?: TrackOnChannel }) => {
-  if (!nextTrack) {
-    return false
-  }
+export default ({
+  nextTrack,
+  channel
+}: {
+  channel: string
+  nextTrack?: TrackOnChannel
+}) => {
   return (
     <div className="root">
       {/*language=CSS*/}
@@ -61,10 +63,17 @@ export default ({ nextTrack }: { nextTrack?: TrackOnChannel }) => {
             border-radius: 12px;
             border: solid 4px #ff2f7f;
             width: 344px;
+            color: #fff;
           }
         `}
       </style>
-      {nextTrack ? <NextTrackPreview nextTrack={nextTrack} /> : false}
+      {nextTrack ? (
+        <NextTrackPreview nextTrack={nextTrack} />
+      ) : (
+        <div style={{ textAlign: 'center', lineHeight: '150%' }}>
+          Visit emve.me and enter pairing code {channel} to play the next song
+        </div>
+      )}
     </div>
   )
 }
