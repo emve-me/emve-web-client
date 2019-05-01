@@ -25,13 +25,25 @@ export function SearchResultTrack({ onClick, title, thumb, children }: TTrack) {
             cursor: ${onClick ? 'pointer' : ''};
           }
 
+          .thumb {
+            width: 140px;
+            border-radius: 6px;
+          }
+
+          .thumbContainer {
+            padding-right: 16px;
+          }
+
           @media only screen and (max-width: 905px) {
+            .thumb {
+              width: 100px;
+            }
           }
         `}
       </style>
 
-      <div style={{ paddingRight: 16 }}>
-        <img style={{ width: 140, borderRadius: 6 }} src={thumb} />
+      <div className="thumbContainer">
+        <img className="thumb" src={thumb} />
       </div>
       <div>
         <div dangerouslySetInnerHTML={{ __html: title }} />

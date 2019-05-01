@@ -1,7 +1,6 @@
 import LoadingIndicator from '../../ui/LoadingIndicator'
 import { SearchResult } from './SearchResult'
 import React from 'react'
-import query from 'apollo-cache-inmemory/lib/fragmentMatcherIntrospectionQuery'
 import gql from 'graphql-tag'
 import { Query } from 'react-apollo'
 import {
@@ -9,7 +8,6 @@ import {
   YouTubeSearch_YoutubeApi_search_list_items,
   YouTubeSearchVariables
 } from '../../../gql_types/YouTubeSearch'
-import { element } from 'prop-types'
 import Card from '../Card'
 import getConfig from 'next/config'
 
