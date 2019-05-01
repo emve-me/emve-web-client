@@ -1,12 +1,10 @@
 # TODO
 
-- optimistic ui / update cache from mutations, relying on subscription data for channel sate now
-- play pause
-- pretty errors from gql
-- error boundaries
-- error handling when entering pairing code
+- Optimistic ui / update cache from mutations, relying on subscription data for channel sate now
+- Play pause / other host controls
+- Global style variables
+- Pretty errors from gql
 - Paging
-- global style variables
 
 # Agenda
 
