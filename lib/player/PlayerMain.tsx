@@ -14,6 +14,7 @@ import {
   MarkAsPlayedGQLVariables
 } from '../../gql_types/MarkAsPlayedGQL'
 import { PlayerControlAction } from '../../gql_types/globalTypes'
+import UpNext from './UpNext'
 
 const GQL_MARK_AS_PLAYED = gql`
   mutation MarkAsPlayedGQL($track: ID!, $nextTrack: ID) {
@@ -74,8 +75,8 @@ class PlayerMain extends Component<WithApolloClient<TProps>> {
   }
 
   _playerTarget
+
   onPlayerReady = ({ target }) => {
-    console.log('TARGET', target)
     this._playerTarget = target
   }
 
@@ -135,6 +136,10 @@ class PlayerMain extends Component<WithApolloClient<TProps>> {
                     }
                   `}
                 </style>
+
+                <UpNext
+                  nextTrack={upComing.length > 0 ? upComing[0].node : null}
+                />
                 <YouTube
                   onReady={this.onPlayerReady}
                   containerClassName="playerContainer"
