@@ -5,6 +5,7 @@
 - error handling when entering pairing code
 - remove youtube key from client code
 - add to home screen
+- Pagging
 
 # Agenda
 
