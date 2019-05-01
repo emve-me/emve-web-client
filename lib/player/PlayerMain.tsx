@@ -15,6 +15,7 @@ import {
 } from '../../gql_types/MarkAsPlayedGQL'
 import { PlayerControlAction } from '../../gql_types/globalTypes'
 import UpNext from './UpNext'
+import HeartIcon from '../icons/HeartIcon'
 
 const GQL_MARK_AS_PLAYED = gql`
   mutation MarkAsPlayedGQL($track: ID!, $nextTrack: ID) {
@@ -136,6 +137,8 @@ class PlayerMain extends Component<WithApolloClient<TProps>> {
                     }
                   `}
                 </style>
+
+                {/*<HeartIcon style={{position:'fixed', top:32,left:32, zIndex:100}}/>*/}
 
                 <UpNext
                   channel={channel}
