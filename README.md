@@ -1,5 +1,6 @@
 # TODO
 
+- optimistic ui / update cache from mutations, relying on subscription data for channel sate now
 - play pause
 - pretty errors from gql
 - error boundaries
@@ -37,9 +38,10 @@
       - Splits API transport into websockets and HTTP requests
       - For subscriptions, did not like their suggested implementation so used lower level workaround
     - UX
+      - Responsive
       - Kept flows a simple as possible
+        - Streamline creating a party to one click
       - Empty states
-      - Streamline creating a party to one click
       - Remote, dead simple, default to showing your parties status or a very familiar search bar to find a song
     - Code organisation
       - React / Apollo let you use components for everything
