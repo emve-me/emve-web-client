@@ -9,7 +9,7 @@
 # Agenda
 
 - Demo & Background
-  - Inspired by the Nexus Q
+  - Inspired by the Nexus Q (predecessor to Chrome Cast )
   - Made emve ~6 years ago
   - Remade it ~4 years ago
   - Made it again ~2.5 weeks ago (mainly wanted to play around with GraphQL subscriptions)
