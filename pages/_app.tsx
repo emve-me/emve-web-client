@@ -64,7 +64,6 @@ class MyApp extends App<PROPS> {
             overflow-y: auto;
             height: 100%;
             background-color: #fafafa;
-            min-width: 400px;
           }
 
           #__next {
