@@ -1,9 +1,9 @@
 # TODO
 
+- play pause
 - pretty errors from gql
 - error boundaries
 - error handling when entering pairing code
-- add to home screen
 - Paging
 - global style variables
 
