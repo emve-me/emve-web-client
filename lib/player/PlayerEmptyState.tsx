@@ -52,7 +52,7 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
             Pairing code
           </h1>
           <h2 style={{ paddingBottom: 16, textAlign: 'center' }}>
-            Join <a href={baseUrl}>emve.me</a> as a Remote and use this code:
+            Join as a Remote using this code:
           </h2>
 
           <div className="channel">{channel}</div>

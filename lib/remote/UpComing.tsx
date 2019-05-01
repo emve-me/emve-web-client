@@ -6,6 +6,7 @@ import Card from './Card'
 import { UpComingTrack } from './Track'
 import Link from 'next/link'
 import LoggedInUserController from '../consumers/LoggedInUserController'
+import HostBox from './HostBox'
 
 type TProps = {
   channel: string
@@ -80,41 +81,7 @@ export default ({ channel }: TProps) => (
                 false
               )}
 
-              <Card
-                style={{
-                  justifyContent: 'center',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center'
-                }}>
-                <div>
-                  <img
-                    style={{
-                      borderRadius: 55,
-                      width: 55,
-                      border: 'solid 2px #ff2f7f'
-                    }}
-                    src={owner.picture}
-                  />
-                </div>
-
-                <div style={{ lineHeight: '175%', textAlign: 'center' }}>
-                  <div
-                    style={{ padding: '0px 0', fontWeight: 400, fontSize: 18 }}>
-                    Welcome to {owner.firstName}'s party!
-                  </div>
-
-                  <div>
-                    Pairing code: <span>{channel}</span>
-                  </div>
-                  <div>
-                    <a href="">Invite guests</a>&nbsp;&middot;&nbsp;
-                    <Link href="/">
-                      <a>Leave party</a>
-                    </Link>
-                  </div>
-                </div>
-              </Card>
+              <HostBox owner={owner} channel={channel} />
 
               {!hasTracks ? (
                 <Card>
