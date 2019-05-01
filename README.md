@@ -3,9 +3,9 @@
 - pretty errors from gql
 - error boundaries
 - error handling when entering pairing code
-- remove youtube key from client code
 - add to home screen
 - Paging
+- global style variables
 
 # Agenda
 
