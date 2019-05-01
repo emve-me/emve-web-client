@@ -52,7 +52,7 @@ export default class RemoteMain extends Component<TProps, TState> {
             @media only screen and (max-width: 905px) {
               .container {
                 width: auto;
-                margin: 16px 4px;
+                margin: 16px 0px;
               }
             }
           `}

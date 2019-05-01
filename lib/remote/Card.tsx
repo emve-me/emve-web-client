@@ -21,7 +21,11 @@ export default ({
         @media only screen and (max-width: 905px) {
           .root {
             margin-bottom: 16px;
-            padding: 8px;
+            padding: 16px;
+            border-top: solid 1px #ccc;
+            border-left: none;
+            border-right: none;
+            border-bottom: solid 1px #ccc;
           }
         }
       `}
