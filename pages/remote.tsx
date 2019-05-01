@@ -5,6 +5,7 @@ import ErrorBoundary from '../lib/ui/ErrorBoundary'
 import LoggedInUserController from '../lib/consumers/LoggedInUserController'
 import Shell from '../lib/Shell'
 import Login from '../lib/Login'
+import LoginAndJoin from '../lib/remote/LoginAndJoin'
 
 class Remote extends Component<WithRouterProps<{ p: string }>> {
   render() {
@@ -13,17 +14,7 @@ class Remote extends Component<WithRouterProps<{ p: string }>> {
       <ErrorBoundary>
         <LoggedInUserController>
           {({ loggedIn, user }) =>
-            loggedIn ? (
-              <RemoteMain channel={channel} />
-            ) : (
-              <Shell>
-                <div>
-                  <h1>You're party awaits!</h1>
-
-                  <Login />
-                </div>
-              </Shell>
-            )
+            loggedIn ? <RemoteMain channel={channel} /> : <LoginAndJoin />
           }
         </LoggedInUserController>
       </ErrorBoundary>
