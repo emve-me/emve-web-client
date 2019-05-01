@@ -11,10 +11,13 @@ import {
 } from '../../../gql_types/YouTubeSearch'
 import { element } from 'prop-types'
 import Card from '../Card'
+import getConfig from 'next/config'
+
+const { youtubeSearchKey } = getConfig().publicRuntimeConfig
 
 const SEARCH_QUERY = gql`
   query YouTubeSearch($q: String) {
-    YoutubeApi(key: "AIzaSyDtlCouvXU0kcAKF-UZWVNe3sQpoxHBsa0") {
+    YoutubeApi(key: "${youtubeSearchKey}") {
       search {
         list(
           q: $q
