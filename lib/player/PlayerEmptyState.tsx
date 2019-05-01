@@ -2,12 +2,13 @@ import React, { Component } from 'react'
 import Shell from '../Shell'
 import getConfig from 'next/config'
 import MobileFooterNav from '../MobileFooterNav'
+import InviteGuests from '../ui/InviteGuests'
+
+const { baseUrl } = getConfig().publicRuntimeConfig
 
 export default class PlayerEmptyState extends Component<{ channel: string }> {
   render() {
     const { channel } = this.props
-
-    const { baseUrl } = getConfig().publicRuntimeConfig
 
     const directJoinLink = `${baseUrl}/remote?p=${channel}`
 
@@ -58,12 +59,7 @@ export default class PlayerEmptyState extends Component<{ channel: string }> {
           <div className="channel">{channel}</div>
           <div style={{ paddingTop: 16 }}>OR</div>
           <div style={{ padding: '16px 0 8px 0' }}>
-            Share this direct join link
-          </div>
-          <div>
-            <a href={directJoinLink} target="_blank">
-              {directJoinLink}
-            </a>
+            <InviteGuests channel={channel} />
           </div>
         </div>
         <MobileFooterNav style={{ paddingTop: 16 }} />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import JoinChannelController from './JoinChannelController'
 import MobileFooterNav from '../MobileFooterNav'
+import Button from '../ui/Button'
 
 // todo handle invalid code error message
 export default class JoinChannel extends Component<
@@ -36,22 +37,6 @@ export default class JoinChannel extends Component<
                 width: 220px;
                 text-align: center;
                 background-color: #fff;
-              }
-
-              .joinButton {
-                cursor: pointer;
-                flex: 1;
-                padding: 10px;
-                font-size: 20px;
-                border-radius: 6px;
-                text-align: center;
-
-                border: 3px solid #555;
-              }
-
-              .joinButton:hover {
-                background-color: #ff2f7f;
-                color: #fff;
               }
 
               .pairingCodeContainer {
@@ -92,14 +77,14 @@ export default class JoinChannel extends Component<
                   justifyContent: 'center',
                   paddingTop: 12
                 }}>
-                <div
-                  className="joinButton"
+                <Button
                   style={{
-                    display: pairingCode.length >= 4 ? 'block' : 'none'
+                    display: pairingCode.length >= 4 ? 'block' : 'none',
+                    flex: 1
                   }}
                   onClick={() => joinChannel(pairingCode)}>
                   Join Party!
-                </div>
+                </Button>
               </div>
             </div>
             <MobileFooterNav style={{ paddingTop: 16 }} />

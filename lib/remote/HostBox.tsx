@@ -3,6 +3,7 @@ import Card from './Card'
 import { UpComingTracksGQL_channel_owner } from '../../gql_types/UpComingTracksGQL'
 import Modal from '../ui/Modal'
 import { Component } from 'react'
+import InviteGuests from '../ui/InviteGuests'
 
 export default class extends Component<
   { channel: string; owner: UpComingTracksGQL_channel_owner },
@@ -12,7 +13,9 @@ export default class extends Component<
 
   render() {
     const { inviteModalOpen } = this.state
+
     const { channel, owner } = this.props
+
     return (
       <Card
         style={{
@@ -44,7 +47,7 @@ export default class extends Component<
             <Modal
               open={inviteModalOpen}
               onClose={() => this.setState({ inviteModalOpen: false })}>
-              Do this to invite guests
+              <InviteGuests channel={channel} />
             </Modal>
             <a onClick={() => this.setState({ inviteModalOpen: true })}>
               Invite guests
