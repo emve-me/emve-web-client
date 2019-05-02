@@ -1,4 +1,5 @@
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
+import { accentColor } from '../style/colors'
 
 const NextTrackPreview = ({ nextTrack }: { nextTrack?: TrackOnChannel }) => {
   return (
@@ -61,7 +62,7 @@ export default ({
             padding: 12px;
             background-color: #000000aa;
             border-radius: 12px;
-            border: solid 4px #ff2f7f;
+            border: solid 4px ${accentColor};
             width: 344px;
             color: #fff;
           }

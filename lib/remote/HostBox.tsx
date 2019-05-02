@@ -4,6 +4,7 @@ import { UpComingTracksGQL_channel_owner } from '../../gql_types/UpComingTracksG
 import Modal from '../ui/Modal'
 import { Component } from 'react'
 import InviteGuests from '../ui/InviteGuests'
+import { accentColor } from '../style/colors'
 
 export default class extends Component<
   { channel: string; owner: UpComingTracksGQL_channel_owner },
@@ -29,7 +30,7 @@ export default class extends Component<
             style={{
               borderRadius: 55,
               width: 55,
-              border: 'solid 2px #ff2f7f'
+              border: `solid 2px ${accentColor}`
             }}
             src={owner.picture}
           />

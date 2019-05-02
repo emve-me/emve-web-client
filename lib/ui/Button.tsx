@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Shell from './Shell'
+import { accentColor } from '../style/colors'
 
 export default class Button extends Component<{
   style?: React.CSSProperties
@@ -22,7 +23,7 @@ export default class Button extends Component<{
           }
 
           .button:hover {
-            background-color: #ff2f7f;
+            background-color: ${accentColor};
             color: #fff;
           }
         `}</style>

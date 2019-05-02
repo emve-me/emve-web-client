@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
+import { appBackgroundColor } from '../lib/style/colors'
 
 export default class Error extends Component<{ statusCode: number }> {
   static getInitialProps({ res, err }) {
@@ -27,7 +28,7 @@ export default class Error extends Component<{ statusCode: number }> {
         <style jsx>
           {`
             body {
-              background-color: #fafafa;
+              background-color: ${appBackgroundColor};
             }
 
             h1 {

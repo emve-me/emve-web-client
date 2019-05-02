@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Link from 'next/link'
+import { appBackgroundColor } from '../style/colors'
 
 export default class ErrorPage extends Component<{ message?: string }> {
   render() {
@@ -11,7 +12,7 @@ export default class ErrorPage extends Component<{ message?: string }> {
         <style jsx>
           {`
             body {
-              background-color: #fafafa;
+              background-color: ${appBackgroundColor};
             }
 
             h1 {

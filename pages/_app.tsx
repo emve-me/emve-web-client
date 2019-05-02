@@ -5,6 +5,7 @@ import Head from 'next/head'
 import { ApolloProvider } from 'react-apollo'
 import withApollo from '../lib/withApollo'
 import { ApolloClient } from 'apollo-client'
+import { accentColor, appBackgroundColor, linkColor } from '../lib/style/colors'
 
 type PROPS = {
   apollo: ApolloClient<any>
@@ -49,8 +50,8 @@ class MyApp extends App<PROPS> {
             href="/static/safari-pinned-tab.svg"
             color="#5bbad5"
           />
-          <meta name="msapplication-TileColor" content="#ff2f7f" />
-          <meta name="theme-color" content="#ff2f7f" />
+          <meta name="msapplication-TileColor" content={accentColor} />
+          <meta name="theme-color" content={accentColor} />
         </Head>
 
         {/*language=CSS*/}
@@ -63,7 +64,7 @@ class MyApp extends App<PROPS> {
             padding: 0;
             overflow-y: auto;
             height: 100%;
-            background-color: #fafafa;
+            background-color: ${appBackgroundColor};
           }
 
           #__next {
@@ -132,7 +133,7 @@ class MyApp extends App<PROPS> {
               sans-serif;
             text-decoration: none;
             outline: none;
-            color: dodgerblue;
+            color: ${linkColor};
             cursor: pointer;
           }
 

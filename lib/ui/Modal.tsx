@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import AppPortal from './AppPortal'
 import ClearIcon from '../icons/ClearIcon'
+import { appBackgroundColor } from '../style/colors'
 
 export default class Modal extends Component<{
   open: boolean
@@ -24,7 +25,7 @@ export default class Modal extends Component<{
             right: 0;
             left: 0;
             bottom: 0;
-            background-color: #fafafa;
+            background-color: ${appBackgroundColor};
             z-index: 10000;
             justify-content: center;
             align-items: center;

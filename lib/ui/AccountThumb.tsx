@@ -1,6 +1,7 @@
 import LoggedInUserController from '../consumers/LoggedInUserController'
 import React from 'react'
 import { deleteCookie } from 'vanilla-cookies'
+import { accentColor } from '../style/colors'
 
 export default ({
   style,
@@ -19,7 +20,7 @@ export default ({
                 onClick={logout}
                 style={{
                   borderRadius: 100,
-                  border: 'solid 2px #ff2f7f',
+                  border: `solid 2px ${accentColor}`,
                   width: thumbSize,
                   cursor: 'pointer'
                 }}
