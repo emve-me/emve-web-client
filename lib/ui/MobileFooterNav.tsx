@@ -1,7 +1,7 @@
 import React from 'react'
 import Shell from './Shell'
 import Link from 'next/link'
-import LoggedInUserController from './consumers/LoggedInUserController'
+import LoggedInUserController from '../consumers/LoggedInUserController'
 
 export default ({ style, a }: { a?; style?: React.CSSProperties }) => {
   return (

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Login from '../lib/Login'
+import Login from '../lib/ui/Login'
 import LoggedInUserController from '../lib/consumers/LoggedInUserController'
-import Shell from '../lib/Shell'
+import Shell from '../lib/ui/Shell'
 import ModeSelector from '../lib/home/mode_selector/ModeSelector'
 import LoginSplash from '../lib/home/LoginSplash'
 

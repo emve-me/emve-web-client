@@ -1,4 +1,4 @@
-import Shell from '../lib/Shell'
+import Shell from '../lib/ui/Shell'
 import JoinChannel from '../lib/join/JoinChannel'
 import ErrorBoundary from '../lib/ui/ErrorBoundary'
 import React from 'react'

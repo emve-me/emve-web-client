@@ -2,7 +2,7 @@ import React, { Component, RefObject } from 'react'
 import SearchResults from './search/SearchResults'
 import UpComing from './UpComing'
 import { SearchBox } from './search/SearchBox'
-import Shell from '../Shell'
+import Shell from '../ui/Shell'
 import LoggedInUserController from '../consumers/LoggedInUserController'
 
 type TProps = {

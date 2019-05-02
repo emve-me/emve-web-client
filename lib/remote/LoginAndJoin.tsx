@@ -1,5 +1,5 @@
-import Shell from '../Shell'
-import Login from '../Login'
+import Shell from '../ui/Shell'
+import Login from '../ui/Login'
 import HeartIcon from '../icons/HeartIcon'
 import React from 'react'
 

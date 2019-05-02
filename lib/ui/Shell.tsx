@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import AccountThumb from './AccountThumb'
-import HeartIcon from './icons/HeartIcon'
+import HeartIcon from '../icons/HeartIcon'
 import Link from 'next/link'
 
 type TProps = {

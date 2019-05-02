@@ -4,8 +4,8 @@ import TV from '../../icons/TVIcon'
 import CreateChannelController from './CreateChannelController'
 import MobileOutlineIcon from '../../icons/MobileOutlineIcon'
 import SelectionButton from './SelectionButton'
-import Shell from '../../Shell'
-import MobileFooterNav from '../../MobileFooterNav'
+import Shell from '../../ui/Shell'
+import MobileFooterNav from '../../ui/MobileFooterNav'
 
 export default () => (
   <Shell visibleOnMobile={false}>

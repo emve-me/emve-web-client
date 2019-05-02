@@ -1,4 +1,4 @@
-import LoggedInUserController from './consumers/LoggedInUserController'
+import LoggedInUserController from '../consumers/LoggedInUserController'
 import React from 'react'
 import { deleteCookie } from 'vanilla-cookies'
 

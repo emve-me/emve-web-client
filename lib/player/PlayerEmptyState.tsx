@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Shell from '../Shell'
+import Shell from '../ui/Shell'
 import getConfig from 'next/config'
-import MobileFooterNav from '../MobileFooterNav'
+import MobileFooterNav from '../ui/MobileFooterNav'
 import InviteGuests from '../ui/InviteGuests'
 
 const { baseUrl } = getConfig().publicRuntimeConfig

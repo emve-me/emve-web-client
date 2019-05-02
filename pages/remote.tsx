@@ -3,8 +3,8 @@ import RemoteMain from '../lib/remote/RemoteMain'
 import { withRouter, WithRouterProps } from 'next/router'
 import ErrorBoundary from '../lib/ui/ErrorBoundary'
 import LoggedInUserController from '../lib/consumers/LoggedInUserController'
-import Shell from '../lib/Shell'
-import Login from '../lib/Login'
+import Shell from '../lib/ui/Shell'
+import Login from '../lib/ui/Login'
 import LoginAndJoin from '../lib/remote/LoginAndJoin'
 
 class Remote extends Component<WithRouterProps<{ p: string }>> {

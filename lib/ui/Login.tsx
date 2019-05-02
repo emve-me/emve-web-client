@@ -7,9 +7,9 @@ import getConfig from 'next/config'
 import {
   LOGGED_IN_USER,
   LOGGED_IN_USER_FRAGMENT
-} from './consumers/LoggedInUserController'
-import { Authenticate } from '../gql_types/Authenticate'
-import { GetLoggedInUser } from '../gql_types/GetLoggedInUser'
+} from '../consumers/LoggedInUserController'
+import { Authenticate } from '../../gql_types/Authenticate'
+import { GetLoggedInUser } from '../../gql_types/GetLoggedInUser'
 
 const { oAuthClientId } = getConfig().publicRuntimeConfig
 

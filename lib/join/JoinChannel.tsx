@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import JoinChannelController from './JoinChannelController'
-import MobileFooterNav from '../MobileFooterNav'
+import MobileFooterNav from '../ui/MobileFooterNav'
 import Button from '../ui/Button'
 
 // todo handle invalid code error message

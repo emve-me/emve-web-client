@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Shell from '../Shell'
+import Shell from './Shell'
 
 export default class Button extends Component<{
   style?: React.CSSProperties
