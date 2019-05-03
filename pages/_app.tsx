@@ -60,6 +60,7 @@ class MyApp extends App<PROPS> {
           />
           <meta property="og:type" content="website" />
           <meta property="og:url" content={baseUrl} />
+          <meta property="og:title" content="emve.me" />
 
           <meta
             property="og:description"
