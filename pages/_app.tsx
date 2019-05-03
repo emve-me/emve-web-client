@@ -11,7 +11,7 @@ type PROPS = {
   apollo: ApolloClient<any>
 }
 
-const { staticPath } = getConfig().publicRuntimeConfig
+const { staticPath, baseUrl } = getConfig().publicRuntimeConfig
 
 class MyApp extends App<PROPS> {
   componentDidMount() {}
@@ -59,10 +59,13 @@ class MyApp extends App<PROPS> {
             content={`${staticPath}/og_heart_logo.png`}
           />
           <meta property="og:type" content="website" />
+          <meta property="og:url" content={baseUrl} />
+
           <meta
             property="og:description"
             content="A social video jukebox, queue your favorite music videos with your friends."
           />
+
           <meta
             name="description"
             content="A social video jukebox, queue your favorite music videos with your friends."
