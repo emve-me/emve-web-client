@@ -157,10 +157,7 @@ export default class LoginSplash extends Component {
             <Login />
           </div>
         </div>
-        <div className="footer">
-          A personal project / experiment by&nbsp;
-          <a href="https://github.com/rlancer">Robert Lancer</a>
-        </div>
+        <div className="footer">&copy; {new Date().getFullYear()} emve.me</div>
       </Shell>
     )
   }
