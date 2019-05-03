@@ -54,10 +54,7 @@ class MyApp extends App<PROPS> {
           />
           <meta name="msapplication-TileColor" content={accentColor} />
           <meta name="theme-color" content={accentColor} />
-          <meta
-            property="og:image"
-            content={`${staticPath}/og_heart_logo.png`}
-          />
+          <meta property="og:image" content={`${staticPath}/ogimage.png`} />
           <meta property="og:type" content="website" />
           <meta property="og:url" content={baseUrl} />
           <meta property="og:title" content="emve.me" />
