@@ -1,15 +1,17 @@
 import React from 'react'
 import App, { Container } from 'next/app'
-
 import Head from 'next/head'
 import { ApolloProvider } from 'react-apollo'
 import withApollo from '../lib/withApollo'
 import { ApolloClient } from 'apollo-client'
 import { accentColor, appBackgroundColor, linkColor } from '../lib/style/colors'
+import getConfig from 'next/config'
 
 type PROPS = {
   apollo: ApolloClient<any>
 }
+
+const { staticPath } = getConfig().publicRuntimeConfig
 
 class MyApp extends App<PROPS> {
   componentDidMount() {}
@@ -52,6 +54,19 @@ class MyApp extends App<PROPS> {
           />
           <meta name="msapplication-TileColor" content={accentColor} />
           <meta name="theme-color" content={accentColor} />
+          <meta
+            property="og:image"
+            content={`${staticPath}/android-chrome-512x512x.png`}
+          />
+          <meta property="og:type" content="website" />
+          <meta
+            property="og:description"
+            content="A social video jukebox, queue your favorite music videos with your friends."
+          />
+          <meta
+            name="description"
+            content="A social video jukebox, queue your favorite music videos with your friends."
+          />
         </Head>
 
         {/*language=CSS*/}

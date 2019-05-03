@@ -14,6 +14,7 @@ module.exports = withTypescript({
     graphQLEndpoint: process.env.GRAPHQL_ENDPOINT_CLIENT,
     graphQLSubscription: process.env.GRAPHQL_SUBSCRIPTION_ENDPOINT,
     baseUrl: process.env.BASE_URL,
+    staticPath: `${process.env.BASE_URL}/static`,
     oAuthClientId: process.env.OAUTH_CLIENT_ID,
     youtubeSearchKey: process.env.YOUTUBE_SEARCH_KEY
   }
