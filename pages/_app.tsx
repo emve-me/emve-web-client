@@ -56,7 +56,7 @@ class MyApp extends App<PROPS> {
           <meta name="theme-color" content={accentColor} />
           <meta
             property="og:image"
-            content={`${staticPath}/android-chrome-512x512.png`}
+            content={`${staticPath}/og_heart_logo.png`}
           />
           <meta property="og:type" content="website" />
           <meta
