@@ -48,6 +48,7 @@ export class SearchBox extends Component<TProps, TState> {
   }
 
   deactivateSearch = () => {
+    console.log('DEACTIVATE SEARCH')
     this.props.onChange('')
     this.setState({ searching: false })
   }
@@ -62,6 +63,19 @@ export class SearchBox extends Component<TProps, TState> {
       debounceDelay
     } = this.props
     const { searching } = this.state
+
+    const onChangeInlined = ({ target: { value } }) => {
+      if (onChangeDebounced) {
+        if (this.debounceHandle) {
+          window.clearTimeout(this.debounceHandle)
+        }
+        this.debounceHandle = window.setTimeout(() => {
+          this.debounceHandle = null
+          onChangeDebounced(value)
+        }, debounceDelay)
+      }
+      onChange(value)
+    }
 
     return (
       <>
@@ -132,21 +146,9 @@ export class SearchBox extends Component<TProps, TState> {
             className="searchField"
             ref={this.inputRef}
             value={value}
-            onBlur={() => window.setTimeout(this.deactivateSearch, 100)}
             autoFocus={true}
             placeholder={placeholder}
-            onChange={({ target: { value } }) => {
-              if (onChangeDebounced) {
-                if (this.debounceHandle) {
-                  window.clearTimeout(this.debounceHandle)
-                }
-                this.debounceHandle = window.setTimeout(() => {
-                  this.debounceHandle = null
-                  onChangeDebounced(value)
-                }, debounceDelay)
-              }
-              onChange(value)
-            }}
+            onChange={onChangeInlined}
             type="text"
           />
         </div>

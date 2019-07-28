@@ -63,9 +63,10 @@ export default class RemoteMain extends Component<TProps, TState> {
           className="container"
           style={{ display: isSearching ? 'flex' : 'none' }}>
           <SearchResults
-            onSelect={item =>
+            onSelect={item => {
+              console.log('ON SELECT TRIGGGERED')
               this.setState({ search: '', debouncedSearch: '' })
-            }
+            }}
             channel={channel}
             search={debouncedSearch.trim()}
           />

@@ -19,6 +19,7 @@ export class SearchResult extends Component<TProps> {
           <>
             <SearchResultTrack
               onClick={() => {
+                console.log('ON CLICK')
                 addVideo()
                 onSelect(item)
               }}
