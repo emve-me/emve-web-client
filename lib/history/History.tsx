@@ -69,8 +69,6 @@ class History extends Component<WithApolloClient<TProps>> {
             return <div>Loading</div>
           }
 
-          console.log('data', data)
-
           return (
             <div>
               {data.channel.tracks.edges.map(

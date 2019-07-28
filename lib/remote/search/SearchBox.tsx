@@ -48,7 +48,6 @@ export class SearchBox extends Component<TProps, TState> {
   }
 
   deactivateSearch = () => {
-    console.log('DEACTIVATE SEARCH')
     this.props.onChange('')
     this.setState({ searching: false })
   }

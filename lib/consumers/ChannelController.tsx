@@ -118,14 +118,10 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
         switch (data.trackUpdated.state) {
           case TrackState.remove:
             {
-              console.log('track REMOVE', data.trackUpdated)
               if (channelState.channel.nowPlaying.id === data.trackUpdated.id) {
                 // detect if its player only // and call a skip function on the player // OR do everything here
-                console.log('REMOVING ? NOW PLAYING')
                 return
               } else {
-                console.log('REMOVING FROM CHANNEL', data.trackUpdated.id)
-
                 channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
                   ({ node }) => node.id !== data.trackUpdated.id
                 )

@@ -35,7 +35,6 @@ export class AddToChannelController extends Component<TProps> {
         {(addVideo, { data, called, loading }) => {
           return this.props.children({
             addVideo: async () => {
-              console.log('ADD VIDEO')
               const addVideoResp = await addVideo({
                 variables: {
                   videoId: item.id.videoId,
@@ -43,7 +42,6 @@ export class AddToChannelController extends Component<TProps> {
                   title: item.snippet.title
                 }
               })
-              console.log('ADD VIDEO RESP', addVideoResp)
             }
           })
         }}
