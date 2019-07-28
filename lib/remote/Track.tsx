@@ -86,7 +86,7 @@ export function UpComingTrack({
           {owner.fullName}
         </div>
 
-        {canRemove ? (
+        {canRemove && (
           <RemoveTrackController track={id}>
             {({ removeTrack }) => (
               <div
@@ -97,8 +97,6 @@ export function UpComingTrack({
               </div>
             )}
           </RemoveTrackController>
-        ) : (
-          false
         )}
       </div>
     </SearchResultTrack>

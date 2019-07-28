@@ -15,3 +15,7 @@ type TJWT = {
   exp
   jti
 }
+
+export interface process {
+  browser: boolean
+}

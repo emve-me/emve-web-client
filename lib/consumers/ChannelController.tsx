@@ -42,7 +42,7 @@ const VIDEOS_PUSHED = gql`
 
 const UPCOMING_QUERY = gql`
   query UpComingTracksGQL($channel: ID!) {
-    channel(id: $channel) {
+    channel(input: { id: $channel }) {
       nowPlaying {
         ...TrackOnChannel
       }

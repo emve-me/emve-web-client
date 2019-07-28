@@ -511,14 +511,6 @@ type ChannelAuditDetails {
   contentIdClaimsGoodStanding: Boolean
   "Whether or not the channel has any copyright strikes."
   copyrightStrikesGoodStanding: Boolean
-  """
-  Describes the general state of the channel. This field will always show if
-  there are any issues whatsoever with the channel. Currently this field
-  represents the result of the logical and operation over the community
-  guidelines good standing, the copyright strikes good standing and the content
-  ID claims good standing, but this may change in the future.
-  """
-  overallGoodStanding: Boolean
 }
 
 "Branding properties of a YouTube channel."
@@ -789,6 +781,16 @@ type ChannelSnippet {
   A map of thumbnail images associated with the channel. For each object in the
   map, the key is the name of the thumbnail image, and the value is an object
   that contains other information about the thumbnail.
+
+  When displaying thumbnails in your application, make sure that your code uses
+  the image URLs exactly as they are returned in API responses. For example,
+  your application should not use the http domain instead of the https domain in
+  a URL returned in an API response.
+
+  Beginning in July 2018, channel thumbnail URLs will only be available in the
+  https domain, which is how the URLs appear in API responses. After that time,
+  you might see broken images in your application if it tries to load YouTube
+  images from the http domain.
   """
   thumbnails: ThumbnailDetails
   "The channel's title."
@@ -2039,6 +2041,8 @@ type LiveChatMessageSnippet {
   publishedAt: String
   "Details about the Super Chat event, this is only set if the type is 'superChatEvent'."
   superChatDetails: LiveChatSuperChatDetails
+  "Details about the Super Sticker event, this is only set if the type is 'superStickerEvent'."
+  superStickerDetails: LiveChatSuperStickerDetails
   "Details about the text message, this is only set if the type is 'textMessageEvent'."
   textMessageDetails: LiveChatTextMessageDetails
   """
@@ -2186,10 +2190,23 @@ type LiveChatSuperChatDetails {
   amountMicros: String
   "The currency in which the purchase was made."
   currency: String
-  "The tier in which the amount belongs to. Lower amounts belong to lower tiers. Starts at 1."
+  "The tier in which the amount belongs. Lower amounts belong to lower tiers. The lowest tier is 1."
   tier: Int
   "The comment added by the user to this Super Chat event."
   userComment: String
+}
+
+type LiveChatSuperStickerDetails {
+  "A rendered string that displays the fund amount and currency to the user."
+  amountDisplayString: String
+  "The amount purchased by the user, in micros (1,750,000 micros = 1.75)."
+  amountMicros: String
+  "The currency in which the purchase was made."
+  currency: String
+  "Information about the Super Sticker."
+  superStickerMetadata: SuperStickerMetadata
+  "The tier in which the amount belongs. Lower amounts belong to lower tiers. The lowest tier is 1."
+  tier: Int
 }
 
 type LiveChatTextMessageDetails {
@@ -2880,7 +2897,7 @@ type Query {
     #Deprecated. Please use quotaUser instead.
     userIp: String
   ): YoutubeResources
-  channel(id: ID!): Channel
+  channel(input: ChannelQuery!): Channel
   loggedInUser: User
 }
 
@@ -3481,6 +3498,8 @@ type SuperChatEventSnippet {
   displayString: String
   "True if this event is a Super Chat for Good purchase."
   isSuperChatForGood: Boolean
+  "True if this event is a Super Sticker event."
+  isSuperStickerEvent: Boolean
   "The tier for the paid message, which is based on the amount of money spent to purchase the message."
   messageType: Int
   """
@@ -3488,6 +3507,8 @@ type SuperChatEventSnippet {
   information about the charity the purchase is donated to.
   """
   nonprofit: Nonprofit
+  "If this event is a Super Sticker event, this field will contain metadata about the Super Sticker."
+  superStickerMetadata: SuperStickerMetadata
   "Details about the supporter."
   supporterDetails: ChannelProfileDetails
 }
@@ -3521,6 +3542,18 @@ type SuperChatEvents_ {
     """
     part: String!
   ): SuperChatEventListResponse
+}
+
+type SuperStickerMetadata {
+  "Internationalized alt text that describes the sticker image and any animation associated with it."
+  altText: String
+  "Specifies the localization language in which the alt text is returned."
+  altTextLanguage: String
+  """
+  Unique identifier of the Super Sticker. This is a shorter form of the alt_text
+  that includes pack name and a recognizable characteristic of the sticker.
+  """
+  stickerId: String
 }
 
 "A thumbnail is an image representing a YouTube resource."
@@ -4632,7 +4665,7 @@ enum VideoDurationSearchEnumParam {
 
 enum VideoEmbeddableSearchEnumParam {
   #Only retrieve embeddable videos.
-
+  TRUE
   #Return all videos, embeddable or not.
   any
 }
@@ -4650,7 +4683,7 @@ enum VideoLicenseSearchEnumParam {
 
 enum VideoSyndicatedSearchEnumParam {
   #Only retrieve syndicated videos.
-
+  TRUE
   #Return all videos, syndicated or not.
   any
 }
@@ -4740,6 +4773,11 @@ input ChannelCreateInput {
 
 input ChannelJoinInput {
   channelId: ID!
+}
+
+input ChannelQuery {
+  id: ID!
+  played: Boolean
 }
 
 input MarkTrakAsPlayedInput {
