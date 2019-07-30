@@ -2430,6 +2430,7 @@ type Mutation {
   authenticate: User
   channelCreate(input: ChannelCreateInput!): ID
   channelJoin(input: ChannelJoinInput!): Channel
+  hostControl(input: HostControlInput!): Boolean
   markTrackAsPlayed(input: MarkTrakAsPlayedInput!): ID
   removeTrack(input: RemoveTrackInput!): ID
   videoPush(input: VideoPushInput!): Track
@@ -2897,7 +2898,7 @@ type Query {
     #Deprecated. Please use quotaUser instead.
     userIp: String
   ): YoutubeResources
-  channel(input: ChannelQuery!): Channel
+  channel(id: ID!): Channel
   loggedInUser: User
 }
 
@@ -4775,9 +4776,9 @@ input ChannelJoinInput {
   channelId: ID!
 }
 
-input ChannelQuery {
-  id: ID!
-  played: Boolean
+input HostControlInput {
+  action: PlayerControlAction
+  channel: ID
 }
 
 input MarkTrakAsPlayedInput {

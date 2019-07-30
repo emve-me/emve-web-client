@@ -25,7 +25,7 @@ export const TRAK_FRAG = gql`
 
 const UPCOMING_QUERY = gql`
   query UpComingTracksGQL($channel: ID!) {
-    channel(input: { id: $channel, played: true }) {
+    channel(id: $channel) {
       nowPlaying {
         ...TrackOnChannel
       }
@@ -35,7 +35,7 @@ const UPCOMING_QUERY = gql`
         firstName
         picture
       }
-      tracks(played: false) {
+      tracks(played: true) {
         edges {
           node {
             ...TrackOnChannel
@@ -72,8 +72,10 @@ class History extends Component<WithApolloClient<TProps>> {
           return (
             <div>
               {data.channel.tracks.edges.map(
-                ({ node: { title, thumb, id } }) => (
-                  <SearchResultTrack key={id} thumb={thumb} title={title} />
+                ({ node: { owner, title, thumb, id } }) => (
+                  <SearchResultTrack key={id} thumb={thumb} title={title}>
+                    <div>{owner.fullName}</div>
+                  </SearchResultTrack>
                 )
               )}
             </div>
