@@ -178,6 +178,8 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
         console.info('Finished subscription to', channel)
       }
     })
+
+    window.onfocus = event => this.render()
   }
 
   replaceNowPlaying = (nowPlaying: TrackOnChannel) => {
