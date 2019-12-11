@@ -9,18 +9,16 @@ type props = {}
 
 type state = {}
 
-export default class Index extends Component<props, state> {
-  render() {
-    return (
-      <LoggedInUserController>
-        {({ user, loggedIn }) => {
-          if (!loggedIn) {
-            return <LoginSplash />
-          } else {
-            return <ModeSelector />
-          }
-        }}
-      </LoggedInUserController>
-    )
-  }
+export default () => {
+  return (
+    <LoggedInUserController>
+      {({ user, loggedIn }) => {
+        if (!loggedIn) {
+          return <LoginSplash />
+        } else {
+          return <ModeSelector />
+        }
+      }}
+    </LoggedInUserController>
+  )
 }

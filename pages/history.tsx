@@ -5,19 +5,17 @@ import LoggedInUserController from '../lib/consumers/LoggedInUserController'
 import LoginAndJoin from '../lib/remote/LoginAndJoin'
 import History from '../lib/history/History'
 
-class HistoryPage extends Component<WithRouterProps<{ p: string }>> {
-  render() {
-    const { p: channel } = this.props.router.query
-    return (
-      <ErrorBoundary>
-        <LoggedInUserController>
-          {({ loggedIn, user }) =>
-            loggedIn ? <History channel={channel} /> : <LoginAndJoin />
-          }
-        </LoggedInUserController>
-      </ErrorBoundary>
-    )
-  }
+const HistoryPage = (props: WithRouterProps<{ p: string }>) => {
+  const { p: channel } = props.router.query
+  return (
+    <ErrorBoundary>
+      <LoggedInUserController>
+        {({ loggedIn, user }) =>
+          loggedIn ? <History channel={channel} /> : <LoginAndJoin />
+        }
+      </LoggedInUserController>
+    </ErrorBoundary>
+  )
 }
 
 export default withRouter(HistoryPage)

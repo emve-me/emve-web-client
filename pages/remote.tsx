@@ -7,19 +7,17 @@ import Shell from '../lib/ui/Shell'
 import Login from '../lib/ui/Login'
 import LoginAndJoin from '../lib/remote/LoginAndJoin'
 
-class Remote extends Component<WithRouterProps<{ p: string }>> {
-  render() {
-    const { p: channel } = this.props.router.query
-    return (
-      <ErrorBoundary>
-        <LoggedInUserController>
-          {({ loggedIn, user }) =>
-            loggedIn ? <RemoteMain channel={channel} /> : <LoginAndJoin />
-          }
-        </LoggedInUserController>
-      </ErrorBoundary>
-    )
-  }
+const Remote = (props: WithRouterProps<{ p: string }>) => {
+  const { p: channel } = props.router.query
+  return (
+    <ErrorBoundary>
+      <LoggedInUserController>
+        {({ loggedIn, user }) =>
+          loggedIn ? <RemoteMain channel={channel} /> : <LoginAndJoin />
+        }
+      </LoggedInUserController>
+    </ErrorBoundary>
+  )
 }
 
 export default withRouter(Remote)
