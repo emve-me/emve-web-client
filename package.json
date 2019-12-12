@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "emve.me, play youtube videos with friends.",
   "scripts": {
-    "dev": "nodemon -e ts,tsx -w src --exec \"ts-node -r dotenv/config  src/server.ts\"",
+    "dev": "nodemon -e ts,tsx -w src --exec \"ts-node -r dotenv/config --project src/tsconfig.json  src/server.ts\"",
     "clean": "rm -rf .next && rm -rf dist",
     "build": "NODE_ENV=production npm run clean && npm run build-client && npm run build-server",
     "build-client": "next build",
