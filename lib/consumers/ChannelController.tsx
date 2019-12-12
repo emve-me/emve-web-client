@@ -64,11 +64,6 @@ const UPCOMING_QUERY = gql`
   ${TRAK_FRAG}
 `
 
-class UpComingTracksQuery extends Query<
-  UpComingTracksGQL,
-  UpComingTracksGQLVariables
-> {}
-
 type TRenderProps = {
   client: ApolloClient<{}>
   updateCache?: (
@@ -93,7 +88,7 @@ type TProps = {
     error,
     updateCache,
     client
-  }: TRenderProps) => React.ReactNode
+  }: TRenderProps) => JSX.Element
 }
 
 // make a track list provider
@@ -112,7 +107,8 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
     })
 
     this.subscription = subscriptionObservable.subscribe({
-      next: ({ data }) => {
+      // REFACTOR NOTE, CHANGED THIS
+      next: ({ data: { data } }) => {
         const channelState = this.readTracksFromCache()
 
         switch (data.trackUpdated.state) {
@@ -225,7 +221,7 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
 
   render() {
     return (
-      <UpComingTracksQuery
+      <Query<UpComingTracksGQL, UpComingTracksGQLVariables>
         query={UPCOMING_QUERY}
         variables={{ channel: this.props.channel }}>
         {({ data, error, loading, client }) => {
@@ -250,7 +246,7 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
             owner: data.channel.owner
           })
         }}
-      </UpComingTracksQuery>
+      </Query>
     )
   }
 }

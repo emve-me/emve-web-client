@@ -47,11 +47,6 @@ const UPCOMING_QUERY = gql`
   ${TRAK_FRAG}
 `
 
-class UpComingTracksQuery extends Query<
-  UpComingTracksGQL,
-  UpComingTracksGQLVariables
-> {}
-
 type TProps = {
   channel: string
 }
@@ -61,7 +56,7 @@ class History extends Component<WithApolloClient<TProps>> {
 
   render() {
     return (
-      <UpComingTracksQuery
+      <Query<UpComingTracksGQL, UpComingTracksGQLVariables>
         query={UPCOMING_QUERY}
         variables={{ channel: this.props.channel }}>
         {({ data, error, loading, client }) => {
@@ -85,7 +80,7 @@ class History extends Component<WithApolloClient<TProps>> {
             return <div>{error}</div>
           }
         }}
-      </UpComingTracksQuery>
+      </Query>
     )
   }
 }

@@ -16,7 +16,7 @@ type TProps = {
     logout?: () => void
     user?: GetLoggedInUser_loggedInUser
     loggedIn: boolean
-  }) => React.ReactNode
+  }) => JSX.Element
 }
 
 export const LOGGED_IN_USER_FRAGMENT = gql`
@@ -39,11 +39,9 @@ export const LOGGED_IN_USER = gql`
   ${LOGGED_IN_USER_FRAGMENT}
 `
 
-class GetLoggedInUserQuery extends Query<GetLoggedInUser> {}
-
 export default ({ children }: TProps) => {
   return (
-    <GetLoggedInUserQuery query={LOGGED_IN_USER}>
+    <Query<GetLoggedInUser> query={LOGGED_IN_USER}>
       {({ error, loading, data, client }) => {
         if (error) {
           console.error(error)
@@ -70,6 +68,6 @@ export default ({ children }: TProps) => {
           logout
         })
       }}
-    </GetLoggedInUserQuery>
+    </Query>
   )
 }

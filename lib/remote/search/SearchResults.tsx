@@ -45,8 +45,6 @@ const SEARCH_QUERY = gql`
   }
 `
 
-class YouTubeSearchQuery extends Query<YouTubeSearch, YouTubeSearchVariables> {}
-
 type TProps = {
   channel: string
   search: string
@@ -55,7 +53,9 @@ type TProps = {
 
 export default ({ channel, search, onSelect }: TProps) =>
   !search ? null : (
-    <YouTubeSearchQuery query={SEARCH_QUERY} variables={{ q: search }}>
+    <Query<YouTubeSearch, YouTubeSearchVariables>
+      query={SEARCH_QUERY}
+      variables={{ q: search }}>
       {({ loading, error, data }) => {
         if (loading) {
           return <LoadingIndicator />
@@ -91,5 +91,5 @@ export default ({ channel, search, onSelect }: TProps) =>
           </Card>
         )
       }}
-    </YouTubeSearchQuery>
+    </Query>
   )

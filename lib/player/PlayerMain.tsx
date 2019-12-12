@@ -51,7 +51,8 @@ class PlayerMain extends Component<WithApolloClient<TProps>> {
     })
 
     this.subscription = subscriptionObservable.subscribe({
-      next: ({ data }) => {
+      // REFACTOR NOTE
+      next: ({ data: { data } }) => {
         switch (data.playerControl.action) {
           case PlayerControlAction.SKIP:
             if (this.skipTrack) {
@@ -166,4 +167,4 @@ class PlayerMain extends Component<WithApolloClient<TProps>> {
   }
 }
 
-export default withApollo(PlayerMain)
+export default withApollo<TProps>(PlayerMain)

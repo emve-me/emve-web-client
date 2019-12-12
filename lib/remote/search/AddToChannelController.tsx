@@ -14,8 +14,6 @@ const ADD_VIDEO = gql`
   ${TRAK_FRAG}
 `
 
-class AddVideoMutation extends Mutation<addVideo, addVideoVariables> {}
-
 type TRenderProps = {
   addVideo: () => Promise<void>
 }
@@ -23,7 +21,7 @@ type TRenderProps = {
 type TProps = {
   item: YouTubeSearch_YoutubeApi_search_list_items
   channel: string
-  children: ({ addVideo }: TRenderProps) => React.ReactNode
+  children: ({ addVideo }: TRenderProps) => JSX.Element
 }
 
 export class AddToChannelController extends Component<TProps> {
@@ -31,7 +29,7 @@ export class AddToChannelController extends Component<TProps> {
     const { item, channel, children } = this.props
 
     return (
-      <AddVideoMutation mutation={ADD_VIDEO}>
+      <Mutation<addVideo, addVideoVariables> mutation={ADD_VIDEO}>
         {(addVideo, { data, called, loading }) => {
           return this.props.children({
             addVideo: async () => {
@@ -45,7 +43,7 @@ export class AddToChannelController extends Component<TProps> {
             }
           })
         }}
-      </AddVideoMutation>
+      </Mutation>
     )
   }
 }

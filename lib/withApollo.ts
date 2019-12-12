@@ -9,8 +9,10 @@ import { split } from 'apollo-link'
 import { getMainDefinition } from 'apollo-utilities'
 import { getCookie } from 'vanilla-cookies'
 
+const isBrowser = typeof window !== 'undefined'
+
 const config = getConfig()
-const gqlEndpoint = process.browser
+const gqlEndpoint = isBrowser
   ? config.publicRuntimeConfig.graphQLEndpoint
   : config.serverRuntimeConfig.graphQLEndpoint
 
@@ -38,7 +40,7 @@ export default withApollo(
     }
 
     const authLink = setContext((_, ___) => {
-      if (process.browser) {
+      if (isBrowser) {
         return getGQLHeaders(window.document.cookie)
       } else {
         return headers
@@ -52,7 +54,7 @@ export default withApollo(
     const authHttpLink = authLink.concat(httpLink)
 
     const getLink = () =>
-      process.browser
+      isBrowser
         ? split(
             // split based on operation type
             ({ query }) => {
@@ -72,7 +74,7 @@ export default withApollo(
           )
         : authHttpLink
 
-    if (process.browser && process.env.NODE_ENV !== 'production') {
+    if (isBrowser && process.env.NODE_ENV !== 'production') {
       const jwt = getJWTFromCookieString(window.document.cookie)
 
       if (jwt) {

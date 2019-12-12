@@ -11,17 +11,17 @@ const REMOVE_TRACK = gql`
 
 type TProps = {
   track: string
-  children: ({ removeTrack }) => React.ReactNode
+  children: ({ removeTrack }) => JSX.Element
 }
-
-class RemoveTrackMutation extends Mutation<RemoveTrack, RemoveTrackVariables> {}
 
 const RemoveTrackController: React.FC<TProps> = ({ track, children }) => {
   return (
-    <RemoveTrackMutation mutation={REMOVE_TRACK} variables={{ track }}>
+    <Mutation<RemoveTrack, RemoveTrackVariables>
+      mutation={REMOVE_TRACK}
+      variables={{ track }}>
       {(removeTrack, { data, loading }) => children({ removeTrack })}
-    </RemoveTrackMutation>
+    </Mutation>
   )
 }
 
-export { RemoveTrackController as default }
+export default RemoveTrackController
