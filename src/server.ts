@@ -15,7 +15,7 @@ app.prepare().then(() => {
 
   protectedRoutes.forEach(route => {
     server.get(`/${route}`, (req, res, next) => {
-      const googleToken = getCookie('GTOKENID', req.headers.cookie)
+      const googleToken = getCookie('GTOKENID', req.headers.cookie || '')
       if (!googleToken) {
         res.redirect('/')
       } else {
@@ -36,10 +36,7 @@ app.prepare().then(() => {
     handle(req, res)
   })
 
-  server.listen(port, (err: Error) => {
-    if (err) {
-      throw err
-    }
+  server.listen(port, () => {
     console.log(`> Ready on ${port}`)
   })
 })

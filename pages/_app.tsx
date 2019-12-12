@@ -22,7 +22,7 @@ class MyApp extends App<PROPS> {
     const textColor = '#222'
 
     return (
-      <Container>
+      <>
         <Head>
           <title>emve.me</title>
           <meta
@@ -32,26 +32,22 @@ class MyApp extends App<PROPS> {
           <link
             rel="apple-touch-icon"
             sizes="180x180"
-            href="/static/apple-touch-icon.png"
+            href="/apple-touch-icon.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="32x32"
-            href="/static/favicon-32x32.png"
+            href="/favicon-32x32.png"
           />
           <link
             rel="icon"
             type="image/png"
             sizes="16x16"
-            href="/static/favicon-16x16.png"
+            href="/favicon-16x16.png"
           />
-          <link rel="manifest" href="/static/manifest.json" />
-          <link
-            rel="mask-icon"
-            href="/static/safari-pinned-tab.svg"
-            color="#5bbad5"
-          />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
           <meta name="msapplication-TileColor" content={accentColor} />
           <meta name="theme-color" content={accentColor} />
           <meta property="og:image" content={`${staticPath}/ogimage.png`} />
@@ -163,7 +159,7 @@ class MyApp extends App<PROPS> {
         <ApolloProvider client={apollo}>
           <Component {...pageProps} />
         </ApolloProvider>
-      </Container>
+      </>
     )
   }
 }

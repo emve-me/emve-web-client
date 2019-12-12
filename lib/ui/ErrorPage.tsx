@@ -48,7 +48,7 @@ export default class ErrorPage extends Component<{ message?: string }> {
         <img
           className="brokeHeart"
           style={{ width: 200 }}
-          src="/static/broken_heart.svg"
+          src="/broken_heart.svg"
         />
 
         <h1>{message || 'An error occurred.'}</h1>

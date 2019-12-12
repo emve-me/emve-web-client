@@ -1,13 +1,11 @@
 import React, { createRef, Component } from 'react'
 import RemoteMain from '../lib/remote/RemoteMain'
-import { withRouter, WithRouterProps } from 'next/router'
+import { withRouter } from 'next/router'
 import ErrorBoundary from '../lib/ui/ErrorBoundary'
 import LoggedInUserController from '../lib/consumers/LoggedInUserController'
-import Shell from '../lib/ui/Shell'
-import Login from '../lib/ui/Login'
 import LoginAndJoin from '../lib/remote/LoginAndJoin'
 
-const Remote = (props: WithRouterProps<{ p: string }>) => {
+const Remote = props => {
   const { p: channel } = props.router.query
   return (
     <ErrorBoundary>

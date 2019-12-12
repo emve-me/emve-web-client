@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { withRouter, WithRouterProps } from 'next/router'
+import { withRouter } from 'next/router'
 import ErrorBoundary from '../lib/ui/ErrorBoundary'
 import LoggedInUserController from '../lib/consumers/LoggedInUserController'
 import LoginAndJoin from '../lib/remote/LoginAndJoin'
 import History from '../lib/history/History'
 
-const HistoryPage = (props: WithRouterProps<{ p: string }>) => {
+const HistoryPage = props => {
   const { p: channel } = props.router.query
+
   return (
     <ErrorBoundary>
       <LoggedInUserController>

@@ -64,7 +64,7 @@ export default class Error extends Component<{ statusCode: number }> {
         <img
           className="brokeHeart"
           style={{ width: 200 }}
-          src="/static/broken_heart.svg"
+          src="/broken_heart.svg"
         />
 
         <h1>{this.message}</h1>

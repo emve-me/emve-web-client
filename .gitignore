@@ -10,3 +10,4 @@
 /dist/
 /.env
 /app.yaml
+/src/node_modules

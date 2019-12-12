@@ -1,5 +1,5 @@
 import Button from './Button'
-import getConfig from 'next-server/config'
+import getConfig from 'next/config'
 import { Component } from 'react'
 import copy from 'copy-to-clipboard'
 
