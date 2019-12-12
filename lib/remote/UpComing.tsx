@@ -4,57 +4,37 @@ import LoadingIndicator from '../ui/LoadingIndicator'
 import RemoteEmptyState from './RemoteEmptyState'
 import Card from './Card'
 import { UpComingTrack } from './Track'
-import Link from 'next/link'
-import LoggedInUserController from '../consumers/LoggedInUserController'
 import HostBox from './HostBox'
+import { useLoggedInUser } from '../consumers/useLoggedInUser'
 
 type TProps = {
   channel: string
 }
 
-export default ({ channel }: TProps) => (
-  <LoggedInUserController>
-    {({ user: loggedInUser }) => (
-      <ChannelController channel={channel}>
-        {({ upComing, nowPlaying, loading, owner }) => {
-          if (loading) {
-            return <LoadingIndicator />
-          }
+export default ({ channel }: TProps) => {
+  const { user: loggedInUser } = useLoggedInUser()
 
-          const hasTracks = nowPlaying || (upComing && upComing.length > 0)
+  return (
+    <ChannelController channel={channel}>
+      {({ upComing, nowPlaying, loading, owner }) => {
+        if (loading) {
+          return <LoadingIndicator />
+        }
 
-          return (
-            <>
-              {hasTracks ? (
-                <Card>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'flex-start'
-                    }}>
-                    {nowPlaying ? (
-                      <>
-                        <div
-                          style={{
-                            padding: '0px 0 16px 0',
-                            fontSize: 16,
-                            color: '#444',
-                            fontWeight: 600
-                          }}>
-                          Now playing
-                        </div>
-                        <UpComingTrack
-                          channelOwner={owner}
-                          track={nowPlaying}
-                          loggedInUser={loggedInUser}
-                        />
-                      </>
-                    ) : (
-                      false
-                    )}
+        const hasTracks = nowPlaying || (upComing && upComing.length > 0)
 
-                    {upComing.length > 0 ? (
+        return (
+          <>
+            {hasTracks ? (
+              <Card>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start'
+                  }}>
+                  {nowPlaying ? (
+                    <>
                       <div
                         style={{
                           padding: '0px 0 16px 0',
@@ -62,38 +42,57 @@ export default ({ channel }: TProps) => (
                           color: '#444',
                           fontWeight: 600
                         }}>
-                        Coming up
+                        Now playing
                       </div>
-                    ) : (
-                      false
-                    )}
-                    {upComing.map(({ node }) => (
                       <UpComingTrack
-                        loggedInUser={loggedInUser}
-                        key={node.id}
-                        track={node}
                         channelOwner={owner}
+                        track={nowPlaying}
+                        loggedInUser={loggedInUser}
                       />
-                    ))}
-                  </div>
-                </Card>
-              ) : (
-                false
-              )}
+                    </>
+                  ) : (
+                    false
+                  )}
 
-              <HostBox owner={owner} channel={channel} />
+                  {upComing.length > 0 ? (
+                    <div
+                      style={{
+                        padding: '0px 0 16px 0',
+                        fontSize: 16,
+                        color: '#444',
+                        fontWeight: 600
+                      }}>
+                      Coming up
+                    </div>
+                  ) : (
+                    false
+                  )}
+                  {upComing.map(({ node }) => (
+                    <UpComingTrack
+                      loggedInUser={loggedInUser}
+                      key={node.id}
+                      track={node}
+                      channelOwner={owner}
+                    />
+                  ))}
+                </div>
+              </Card>
+            ) : (
+              false
+            )}
 
-              {!hasTracks ? (
-                <Card>
-                  <RemoteEmptyState />
-                </Card>
-              ) : (
-                false
-              )}
-            </>
-          )
-        }}
-      </ChannelController>
-    )}
-  </LoggedInUserController>
-)
+            <HostBox owner={owner} channel={channel} />
+
+            {!hasTracks ? (
+              <Card>
+                <RemoteEmptyState />
+              </Card>
+            ) : (
+              false
+            )}
+          </>
+        )
+      }}
+    </ChannelController>
+  )
+}

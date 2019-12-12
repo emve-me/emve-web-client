@@ -1,7 +1,6 @@
-import LoggedInUserController from '../consumers/LoggedInUserController'
 import React from 'react'
-import { deleteCookie } from 'vanilla-cookies'
 import { accentColor } from '../style/colors'
+import { logout, useLoggedInUser } from '../consumers/useLoggedInUser'
 
 export default ({
   style,
@@ -9,29 +8,29 @@ export default ({
 }: {
   thumbSize?: number | string
   style?: React.CSSProperties
-}) => (
-  <div style={style}>
-    <LoggedInUserController>
-      {({ user, loggedIn, logout }) => (
-        <div>
-          {loggedIn ? (
-            <div>
-              <img
-                onClick={logout}
-                style={{
-                  borderRadius: 100,
-                  border: `solid 2px ${accentColor}`,
-                  width: thumbSize,
-                  cursor: 'pointer'
-                }}
-                src={user.picture}
-              />
-            </div>
-          ) : (
-            false
-          )}{' '}
-        </div>
-      )}
-    </LoggedInUserController>
-  </div>
-)
+}) => {
+  const { loggedIn, user } = useLoggedInUser()
+
+  return (
+    <div style={style}>
+      <div>
+        {loggedIn ? (
+          <div>
+            <img
+              onClick={logout}
+              style={{
+                borderRadius: 100,
+                border: `solid 2px ${accentColor}`,
+                width: thumbSize,
+                cursor: 'pointer'
+              }}
+              src={user.picture}
+            />
+          </div>
+        ) : (
+          false
+        )}{' '}
+      </div>
+    </div>
+  )
+}

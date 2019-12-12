@@ -7,18 +7,6 @@ import {
   GetLoggedInUser_loggedInUser
 } from '../../gql_types/GetLoggedInUser'
 
-type TProps = {
-  children: ({
-    user,
-    loggedIn,
-    logout
-  }: {
-    logout?: () => void
-    user?: GetLoggedInUser_loggedInUser
-    loggedIn: boolean
-  }) => JSX.Element
-}
-
 export const LOGGED_IN_USER_FRAGMENT = gql`
   fragment LoggedInUserFields on User {
     fullName
@@ -39,7 +27,19 @@ export const LOGGED_IN_USER = gql`
   ${LOGGED_IN_USER_FRAGMENT}
 `
 
-export default ({ children }: TProps) => {
+type TReturn = {
+  loading: boolean
+  user?: any
+  loggedIn: boolean
+  error?: string
+}
+
+export const logout = () => {
+  deleteCookie('GTOKENID')
+  window.location.href = '/'
+}
+
+export const useLoggedInUser = (): TReturn => {
   const { error, loading, data, client } = useQuery<GetLoggedInUser>(
     LOGGED_IN_USER
   )
@@ -47,25 +47,30 @@ export default ({ children }: TProps) => {
   if (error) {
     console.error(error)
     deleteCookie('GTOKENID')
-    return <div>Error logging in, please refresh</div>
+    return {
+      error: 'Error logging in, please refresh',
+      loading: false,
+      loggedIn: false
+    }
   }
 
   if (loading) {
-    return <div>Loading ...</div>
+    return {
+      loading: true,
+      loggedIn: false
+    }
   }
 
   if (!data.loggedInUser) {
-    return children({ loggedIn: false })
+    return {
+      loading: false,
+      loggedIn: false
+    }
   }
 
-  const logout = () => {
-    deleteCookie('GTOKENID')
-    window.location.href = '/'
-  }
-
-  return children({
+  return {
+    loading: false,
     user: data.loggedInUser,
-    loggedIn: true,
-    logout
-  })
+    loggedIn: true
+  }
 }

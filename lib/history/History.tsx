@@ -52,8 +52,6 @@ type TProps = {
 }
 
 class History extends Component<WithApolloClient<TProps>> {
-  subscription: ZenObservable.Subscription
-
   render() {
     return (
       <Query<UpComingTracksGQL, UpComingTracksGQLVariables>

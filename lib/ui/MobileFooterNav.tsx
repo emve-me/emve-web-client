@@ -1,7 +1,6 @@
 import React from 'react'
-import Shell from './Shell'
 import Link from 'next/link'
-import LoggedInUserController from '../consumers/LoggedInUserController'
+import { logout } from '../consumers/useLoggedInUser'
 
 export default ({ style, a }: { a?; style?: React.CSSProperties }) => {
   return (
@@ -25,9 +24,7 @@ export default ({ style, a }: { a?; style?: React.CSSProperties }) => {
         <a>Home</a>
       </Link>
       &nbsp;&middot;&nbsp;
-      <LoggedInUserController>
-        {({ logout }) => <a onClick={logout}>Logout</a>}
-      </LoggedInUserController>
+      <a onClick={logout}>Logout</a>
     </div>
   )
 }

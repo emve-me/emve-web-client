@@ -4,12 +4,12 @@ import GoogleLogin from 'react-google-login'
 import { setCookie } from 'vanilla-cookies'
 import gql from 'graphql-tag'
 import getConfig from 'next/config'
+import { Authenticate } from '../../gql_types/Authenticate'
+import { GetLoggedInUser } from '../../gql_types/GetLoggedInUser'
 import {
   LOGGED_IN_USER,
   LOGGED_IN_USER_FRAGMENT
-} from '../consumers/LoggedInUserController'
-import { Authenticate } from '../../gql_types/Authenticate'
-import { GetLoggedInUser } from '../../gql_types/GetLoggedInUser'
+} from '../consumers/useLoggedInUser'
 
 const { oAuthClientId } = getConfig().publicRuntimeConfig
 

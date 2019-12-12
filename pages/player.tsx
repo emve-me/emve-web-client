@@ -1,14 +1,16 @@
 import { Component } from 'react'
 import PlayerMain from '../lib/player/PlayerMain'
-import { withRouter } from 'next/router'
+import { useRouter } from 'next/router'
 import ErrorBoundary from '../lib/ui/ErrorBoundary'
 
-const Player = props => {
+const Player = () => {
+  const router = useRouter()
+
   return (
     <ErrorBoundary>
-      <PlayerMain channel={props.router.query.p} />
+      <PlayerMain channel={router.query.p as string} />
     </ErrorBoundary>
   )
 }
 
-export default withRouter(Player)
+export default Player
