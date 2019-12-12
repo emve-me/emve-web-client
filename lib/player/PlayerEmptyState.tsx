@@ -1,16 +1,11 @@
 import React, { Component } from 'react'
 import Shell from '../ui/Shell'
-import getConfig from 'next/config'
 import MobileFooterNav from '../ui/MobileFooterNav'
 import InviteGuests from '../ui/InviteGuests'
-
-const { baseUrl } = getConfig().publicRuntimeConfig
 
 export default class PlayerEmptyState extends Component<{ channel: string }> {
   render() {
     const { channel } = this.props
-
-    const directJoinLink = `${baseUrl}/remote?p=${channel}`
 
     return (
       <Shell visibleOnMobile={false}>
