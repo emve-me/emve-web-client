@@ -41,37 +41,35 @@ export const LOGGED_IN_USER = gql`
 
 class GetLoggedInUserQuery extends Query<GetLoggedInUser> {}
 
-export default class LoggedInUserController extends Component<TProps> {
-  render() {
-    return (
-      <GetLoggedInUserQuery query={LOGGED_IN_USER}>
-        {({ error, loading, data, client }) => {
-          if (error) {
-            console.error(error)
-            deleteCookie('GTOKENID')
-            return <div>Error logging in, please refresh</div>
-          }
+export default ({ children }: TProps) => {
+  return (
+    <GetLoggedInUserQuery query={LOGGED_IN_USER}>
+      {({ error, loading, data, client }) => {
+        if (error) {
+          console.error(error)
+          deleteCookie('GTOKENID')
+          return <div>Error logging in, please refresh</div>
+        }
 
-          if (loading) {
-            return <div>Loading ...</div>
-          }
+        if (loading) {
+          return <div>Loading ...</div>
+        }
 
-          if (!data.loggedInUser) {
-            return this.props.children({ loggedIn: false })
-          }
+        if (!data.loggedInUser) {
+          return children({ loggedIn: false })
+        }
 
-          const logout = () => {
-            deleteCookie('GTOKENID')
-            window.location.href = '/'
-          }
+        const logout = () => {
+          deleteCookie('GTOKENID')
+          window.location.href = '/'
+        }
 
-          return this.props.children({
-            user: data.loggedInUser,
-            loggedIn: true,
-            logout
-          })
-        }}
-      </GetLoggedInUserQuery>
-    )
-  }
+        return children({
+          user: data.loggedInUser,
+          loggedIn: true,
+          logout
+        })
+      }}
+    </GetLoggedInUserQuery>
+  )
 }

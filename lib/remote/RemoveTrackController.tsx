@@ -16,15 +16,12 @@ type TProps = {
 
 class RemoveTrackMutation extends Mutation<RemoveTrack, RemoveTrackVariables> {}
 
-export default class RemoveTrackController extends Component<TProps> {
-  render() {
-    const { track, children } = this.props
-    return (
-      <RemoveTrackMutation mutation={REMOVE_TRACK} variables={{ track }}>
-        {(removeTrack, { data, loading }) => {
-          return children({ removeTrack })
-        }}
-      </RemoveTrackMutation>
-    )
-  }
+const RemoveTrackController: React.FC<TProps> = ({ track, children }) => {
+  return (
+    <RemoveTrackMutation mutation={REMOVE_TRACK} variables={{ track }}>
+      {(removeTrack, { data, loading }) => children({ removeTrack })}
+    </RemoveTrackMutation>
+  )
 }
+
+export { RemoveTrackController as default }

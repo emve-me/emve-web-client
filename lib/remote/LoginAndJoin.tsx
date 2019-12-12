@@ -16,7 +16,6 @@ export default () => (
         <HeartIcon />
       </div>
       <h1 style={{ paddingBottom: 25 }}>You're party awaits!</h1>
-
       <Login />
     </div>
   </Shell>
