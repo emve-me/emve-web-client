@@ -43,7 +43,7 @@ class PlayerMain extends Component<WithApolloClient<TProps>> {
     const { client, channel } = this.props
 
     const subscriptionObservable = client.subscribe<
-      { data: PlayerControls },
+      PlayerControls,
       PlayerControlsVariables
     >({
       query: GQL_PLAYER_CONTROLS,
@@ -52,7 +52,7 @@ class PlayerMain extends Component<WithApolloClient<TProps>> {
 
     this.subscription = subscriptionObservable.subscribe({
       // REFACTOR NOTE
-      next: ({ data: { data } }) => {
+      next: ({ data }) => {
         switch (data.playerControl.action) {
           case PlayerControlAction.SKIP:
             if (this.skipTrack) {

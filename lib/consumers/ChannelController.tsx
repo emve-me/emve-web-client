@@ -1,5 +1,5 @@
-import { Component } from 'react'
-import { Query, withApollo, WithApolloClient } from 'react-apollo'
+import { useEffect } from 'react'
+import { Query, withApollo, useApolloClient } from 'react-apollo'
 import {
   UpComingTracksGQL,
   UpComingTracksGQL_channel_owner,
@@ -11,9 +11,9 @@ import {
   VideoSubscriptionVariables
 } from '../../gql_types/VideoSubscription'
 import gql from 'graphql-tag'
-import { ApolloClient } from 'apollo-client'
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
 import { TrackState } from '../../gql_types/globalTypes'
+import ApolloClient from 'apollo-client'
 
 export const TRAK_FRAG = gql`
   fragment TrackOnChannel on Track {
@@ -65,7 +65,6 @@ const UPCOMING_QUERY = gql`
 `
 
 type TRenderProps = {
-  client: ApolloClient<{}>
   updateCache?: (
     modifier: (data: UpComingTracksGQL) => UpComingTracksGQL
   ) => void
@@ -74,13 +73,13 @@ type TRenderProps = {
   upComing?: Array<UpComingTracksGQL_channel_tracks_edges>
   nowPlaying?: TrackOnChannel
   owner?: UpComingTracksGQL_channel_owner
+  client?: ApolloClient<any>
   replaceNowPlaying?: (nowPlaying: TrackOnChannel) => void
 }
 
 // todo have a type for the cache shape
 type TProps = {
   channel: string
-
   children: ({
     nowPlaying,
     upComing,
@@ -92,12 +91,11 @@ type TProps = {
 }
 
 // make a track list provider
-class ChannelController extends Component<WithApolloClient<TProps>> {
-  subscription: ZenObservable.Subscription
+const ChannelController: React.FC<TProps> = props => {
+  const { channel } = props
 
-  componentDidMount() {
-    const { client, channel } = this.props
-
+  const client = useApolloClient()
+  useEffect(() => {
     const subscriptionObservable = client.subscribe<
       VideoSubscription,
       VideoSubscriptionVariables
@@ -106,12 +104,12 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
       variables: { channel }
     })
 
-    this.subscription = subscriptionObservable.subscribe({
+    const subscription = subscriptionObservable.subscribe({
       // REFACTOR NOTE, CHANGED THIS
       next: ({ data }) => {
         console.log('DATA', data)
 
-        const channelState = this.readTracksFromCache()
+        const channelState = readTracksFromCache()
 
         switch (data.trackUpdated.state) {
           case TrackState.remove:
@@ -167,7 +165,7 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
             break
         }
 
-        this.writeTracksToCache(channelState)
+        writeTracksToCache(channelState)
       },
       error(err) {
         console.error(`Finished with error: ${err}`)
@@ -177,80 +175,76 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
       }
     })
 
-    window.onfocus = event => this.render()
-  }
+    return () => {
+      if (subscription) {
+        subscription.unsubscribe()
+      }
+    }
+    // window.onfocus = event => this.render()
+  })
 
-  replaceNowPlaying = (nowPlaying: TrackOnChannel) => {
-    const channelState = this.readTracksFromCache()
+  const replaceNowPlaying = (nowPlaying: TrackOnChannel) => {
+    const channelState = readTracksFromCache()
     channelState.channel.nowPlaying = nowPlaying
     if (nowPlaying) {
       channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
         ({ node }) => node.id !== nowPlaying.id
       )
     }
-    this.writeTracksToCache(channelState)
+    writeTracksToCache(channelState)
   }
 
-  readTracksFromCache = () => {
-    const { client, channel } = this.props
+  const readTracksFromCache = () => {
     return client.readQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
       query: UPCOMING_QUERY,
       variables: { channel }
     })
   }
 
-  writeTracksToCache = data => {
-    const { client, channel } = this.props
-
+  const writeTracksToCache = data => {
     client.writeQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
       variables: { channel },
       query: UPCOMING_QUERY,
       data
     })
 
-    this.forceUpdate()
+    // this.forceUpdate()
   }
 
-  readModWrite = (modifier: (data: UpComingTracksGQL) => UpComingTracksGQL) => {
-    this.writeTracksToCache(modifier(this.readTracksFromCache()))
+  const readModWrite = (
+    modifier: (data: UpComingTracksGQL) => UpComingTracksGQL
+  ) => {
+    writeTracksToCache(modifier(readTracksFromCache()))
   }
 
-  componentWillUnmount() {
-    if (this.subscription) {
-      this.subscription.unsubscribe()
-    }
-  }
+  return (
+    <Query<UpComingTracksGQL, UpComingTracksGQLVariables>
+      query={UPCOMING_QUERY}
+      variables={{ channel: props.channel }}>
+      {({ data, error, loading, client }) => {
+        if (loading) {
+          return props.children({ loading: true, client })
+        }
 
-  render() {
-    return (
-      <Query<UpComingTracksGQL, UpComingTracksGQLVariables>
-        query={UPCOMING_QUERY}
-        variables={{ channel: this.props.channel }}>
-        {({ data, error, loading, client }) => {
-          if (loading) {
-            return this.props.children({ loading: true, client })
-          }
+        if (error) {
+          return props.children({ loading: false, error, client })
+        }
 
-          if (error) {
-            return this.props.children({ loading: false, error, client })
-          }
+        const { edges } = data.channel.tracks
 
-          const { edges } = data.channel.tracks
-
-          return this.props.children({
-            replaceNowPlaying: this.replaceNowPlaying,
-            nowPlaying: data.channel.nowPlaying,
-            error,
-            upComing: edges,
-            loading: false,
-            updateCache: this.readModWrite,
-            client,
-            owner: data.channel.owner
-          })
-        }}
-      </Query>
-    )
-  }
+        return props.children({
+          replaceNowPlaying: replaceNowPlaying,
+          nowPlaying: data.channel.nowPlaying,
+          error,
+          upComing: edges,
+          loading: false,
+          updateCache: readModWrite,
+          client,
+          owner: data.channel.owner
+        })
+      }}
+    </Query>
+  )
 }
 
 export default withApollo<TProps>(ChannelController)
