@@ -7,7 +7,7 @@ import SelectionButton from './SelectionButton'
 import Shell from '../../ui/Shell'
 import MobileFooterNav from '../../ui/MobileFooterNav'
 
-export default () => (
+const ModeSelector: React.FC = () => (
   <Shell visibleOnMobile={false}>
     <div className="root">
       {/*language=CSS*/}
@@ -81,3 +81,5 @@ export default () => (
     </div>
   </Shell>
 )
+
+export default ModeSelector
