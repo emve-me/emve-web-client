@@ -99,7 +99,7 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
     const { client, channel } = this.props
 
     const subscriptionObservable = client.subscribe<
-      { data: VideoSubscription },
+      VideoSubscription,
       VideoSubscriptionVariables
     >({
       query: VIDEOS_PUSHED,
@@ -108,7 +108,9 @@ class ChannelController extends Component<WithApolloClient<TProps>> {
 
     this.subscription = subscriptionObservable.subscribe({
       // REFACTOR NOTE, CHANGED THIS
-      next: ({ data: { data } }) => {
+      next: ({ data }) => {
+        console.log('DATA', data)
+
         const channelState = this.readTracksFromCache()
 
         switch (data.trackUpdated.state) {
