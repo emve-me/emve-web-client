@@ -1,10 +1,15 @@
 import React from 'react'
-import App, { Container } from 'next/app'
+import App from 'next/app'
 import Head from 'next/head'
 import { ApolloProvider } from 'react-apollo'
 import withApollo from '../lib/withApollo'
 import { ApolloClient } from 'apollo-client'
-import { accentColor, appBackgroundColor, linkColor } from '../lib/style/colors'
+import {
+  accentColor,
+  appBackgroundColor,
+  linkColor,
+  textColor
+} from '../lib/style/colors'
 import getConfig from 'next/config'
 
 type PROPS = {
@@ -14,12 +19,8 @@ type PROPS = {
 const { staticPath, baseUrl } = getConfig().publicRuntimeConfig
 
 class MyApp extends App<PROPS> {
-  componentDidMount() {}
-
   render() {
     const { Component, pageProps, apollo } = this.props
-
-    const textColor = '#222'
 
     return (
       <>

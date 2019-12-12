@@ -1,6 +1,5 @@
 import React from 'react'
-import MobileOutlineIcon from '../../icons/MobileOutlineIcon'
-import { accentColor } from '../../style/colors'
+import { accentColor, textColor } from '../../style/colors'
 
 type TProps = {
   icon: React.ReactNode
@@ -25,6 +24,7 @@ export default ({ icon, label, onClick }: TProps) => (
         width: 317px;
         height: 270px;
         cursor: pointer;
+        color: ${textColor};
       }
 
       .root:hover {

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Query } from 'react-apollo'
+import React from 'react'
+import { Query, useQuery } from 'react-apollo'
 import { deleteCookie } from 'vanilla-cookies'
 import gql from 'graphql-tag'
 import {
@@ -40,34 +40,32 @@ export const LOGGED_IN_USER = gql`
 `
 
 export default ({ children }: TProps) => {
-  return (
-    <Query<GetLoggedInUser> query={LOGGED_IN_USER}>
-      {({ error, loading, data, client }) => {
-        if (error) {
-          console.error(error)
-          deleteCookie('GTOKENID')
-          return <div>Error logging in, please refresh</div>
-        }
-
-        if (loading) {
-          return <div>Loading ...</div>
-        }
-
-        if (!data.loggedInUser) {
-          return children({ loggedIn: false })
-        }
-
-        const logout = () => {
-          deleteCookie('GTOKENID')
-          window.location.href = '/'
-        }
-
-        return children({
-          user: data.loggedInUser,
-          loggedIn: true,
-          logout
-        })
-      }}
-    </Query>
+  const { error, loading, data, client } = useQuery<GetLoggedInUser>(
+    LOGGED_IN_USER
   )
+
+  if (error) {
+    console.error(error)
+    deleteCookie('GTOKENID')
+    return <div>Error logging in, please refresh</div>
+  }
+
+  if (loading) {
+    return <div>Loading ...</div>
+  }
+
+  if (!data.loggedInUser) {
+    return children({ loggedIn: false })
+  }
+
+  const logout = () => {
+    deleteCookie('GTOKENID')
+    window.location.href = '/'
+  }
+
+  return children({
+    user: data.loggedInUser,
+    loggedIn: true,
+    logout
+  })
 }

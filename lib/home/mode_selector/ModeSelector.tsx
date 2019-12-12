@@ -60,10 +60,12 @@ const ModeSelector: React.FC = () => (
       <div className="mode_selector">
         <div className="remote">
           <Link href="/join">
-            <SelectionButton
-              icon={<MobileOutlineIcon size={150} />}
-              label="Remote"
-            />
+            <a>
+              <SelectionButton
+                icon={<MobileOutlineIcon size={150} />}
+                label="Remote"
+              />
+            </a>
           </Link>
         </div>
         <CreateChannelController>
