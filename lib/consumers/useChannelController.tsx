@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Query, withApollo, useApolloClient } from 'react-apollo'
+import { useQuery, useApolloClient } from 'react-apollo'
 import {
   UpComingTracksGQL,
   UpComingTracksGQL_channel_owner,
@@ -78,23 +78,62 @@ type TRenderProps = {
 }
 
 // todo have a type for the cache shape
-type TProps = {
+
+class ControllerMethods {
+  client: ApolloClient<any>
   channel: string
-  children: ({
-    nowPlaying,
-    upComing,
-    loading,
-    error,
-    updateCache,
-    client
-  }: TRenderProps) => JSX.Element
+
+  constructor(client: ApolloClient<any>, channel: string) {
+    this.client = client
+    this.channel = channel
+  }
+
+  replaceNowPlaying = (nowPlaying: TrackOnChannel) => {
+    const channelState = this.readTracksFromCache()
+    channelState.channel.nowPlaying = nowPlaying
+    if (nowPlaying) {
+      channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
+        ({ node }) => node.id !== nowPlaying.id
+      )
+    }
+    this.writeTracksToCache(channelState)
+  }
+
+  readTracksFromCache = () => {
+    console.log('readTracksFromCache CLIENT ', this.client)
+    return this.client.readQuery<UpComingTracksGQL, UpComingTracksGQLVariables>(
+      {
+        query: UPCOMING_QUERY,
+        variables: { channel: this.channel }
+      }
+    )
+  }
+
+  writeTracksToCache = data => {
+    this.client.writeQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
+      variables: { channel: this.channel },
+      query: UPCOMING_QUERY,
+      data
+    })
+
+    // this.forceUpdate()
+  }
+
+  readModWrite = (modifier: (data: UpComingTracksGQL) => UpComingTracksGQL) => {
+    this.writeTracksToCache(modifier(this.readTracksFromCache()))
+  }
 }
 
 // make a track list provider
-const ChannelController: React.FC<TProps> = props => {
-  const { channel } = props
-
+const useChannelController = ({
+  channel
+}: {
+  channel: string
+}): TRenderProps => {
   const client = useApolloClient()
+
+  const cC = new ControllerMethods(client, channel)
+
   useEffect(() => {
     const subscriptionObservable = client.subscribe<
       VideoSubscription,
@@ -107,9 +146,7 @@ const ChannelController: React.FC<TProps> = props => {
     const subscription = subscriptionObservable.subscribe({
       // REFACTOR NOTE, CHANGED THIS
       next: ({ data }) => {
-        console.log('DATA', data)
-
-        const channelState = readTracksFromCache()
+        const channelState = cC.readTracksFromCache()
 
         switch (data.trackUpdated.state) {
           case TrackState.remove:
@@ -165,7 +202,7 @@ const ChannelController: React.FC<TProps> = props => {
             break
         }
 
-        writeTracksToCache(channelState)
+        cC.writeTracksToCache(channelState)
       },
       error(err) {
         console.error(`Finished with error: ${err}`)
@@ -183,68 +220,31 @@ const ChannelController: React.FC<TProps> = props => {
     // window.onfocus = event => this.render()
   })
 
-  const replaceNowPlaying = (nowPlaying: TrackOnChannel) => {
-    const channelState = readTracksFromCache()
-    channelState.channel.nowPlaying = nowPlaying
-    if (nowPlaying) {
-      channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
-        ({ node }) => node.id !== nowPlaying.id
-      )
-    }
-    writeTracksToCache(channelState)
+  const { data, error, loading } = useQuery<
+    UpComingTracksGQL,
+    UpComingTracksGQLVariables
+  >(UPCOMING_QUERY, { variables: { channel } })
+
+  if (loading) {
+    return { loading: true }
   }
 
-  const readTracksFromCache = () => {
-    return client.readQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
-      query: UPCOMING_QUERY,
-      variables: { channel }
-    })
+  if (error) {
+    return { loading: false, error }
   }
 
-  const writeTracksToCache = data => {
-    client.writeQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
-      variables: { channel },
-      query: UPCOMING_QUERY,
-      data
-    })
+  const { edges } = data.channel.tracks
 
-    // this.forceUpdate()
+  return {
+    replaceNowPlaying: cC.replaceNowPlaying,
+    nowPlaying: data.channel.nowPlaying,
+    error,
+    upComing: edges,
+    loading: false,
+    updateCache: cC.readModWrite,
+    client,
+    owner: data.channel.owner
   }
-
-  const readModWrite = (
-    modifier: (data: UpComingTracksGQL) => UpComingTracksGQL
-  ) => {
-    writeTracksToCache(modifier(readTracksFromCache()))
-  }
-
-  return (
-    <Query<UpComingTracksGQL, UpComingTracksGQLVariables>
-      query={UPCOMING_QUERY}
-      variables={{ channel: props.channel }}>
-      {({ data, error, loading, client }) => {
-        if (loading) {
-          return props.children({ loading: true, client })
-        }
-
-        if (error) {
-          return props.children({ loading: false, error, client })
-        }
-
-        const { edges } = data.channel.tracks
-
-        return props.children({
-          replaceNowPlaying: replaceNowPlaying,
-          nowPlaying: data.channel.nowPlaying,
-          error,
-          upComing: edges,
-          loading: false,
-          updateCache: readModWrite,
-          client,
-          owner: data.channel.owner
-        })
-      }}
-    </Query>
-  )
 }
 
-export default withApollo<TProps>(ChannelController)
+export default useChannelController
