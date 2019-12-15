@@ -25,7 +25,7 @@ export default ({ channel }: TProps) => {
 
         return (
           <>
-            {hasTracks ? (
+            {hasTracks && (
               <Card>
                 <div
                   style={{
@@ -33,7 +33,7 @@ export default ({ channel }: TProps) => {
                     flexDirection: 'column',
                     alignItems: 'flex-start'
                   }}>
-                  {nowPlaying ? (
+                  {nowPlaying && (
                     <>
                       <div
                         style={{
@@ -50,11 +50,9 @@ export default ({ channel }: TProps) => {
                         loggedInUser={loggedInUser}
                       />
                     </>
-                  ) : (
-                    false
                   )}
 
-                  {upComing.length > 0 ? (
+                  {upComing.length > 0 && (
                     <div
                       style={{
                         padding: '0px 0 16px 0',
@@ -64,9 +62,8 @@ export default ({ channel }: TProps) => {
                       }}>
                       Coming up
                     </div>
-                  ) : (
-                    false
                   )}
+
                   {upComing.map(({ node }) => (
                     <UpComingTrack
                       loggedInUser={loggedInUser}
@@ -77,18 +74,14 @@ export default ({ channel }: TProps) => {
                   ))}
                 </div>
               </Card>
-            ) : (
-              false
             )}
 
             <HostBox owner={owner} channel={channel} />
 
-            {!hasTracks ? (
+            {!hasTracks && (
               <Card>
                 <RemoteEmptyState />
               </Card>
-            ) : (
-              false
             )}
           </>
         )
