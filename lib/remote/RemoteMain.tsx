@@ -3,6 +3,7 @@ import SearchResults from './search/SearchResults'
 import UpComing from './UpComing'
 import { SearchBox } from './search/SearchBox'
 import Shell from '../ui/Shell'
+import { TEST } from './TESTT'
 
 export default ({ channel }: { channel: string }) => {
   const [search, setSearch] = useState('')
@@ -57,7 +58,7 @@ export default ({ channel }: { channel: string }) => {
           search={debouncedSearch.trim()}
         />
       </div>
-
+      <TEST channel={channel} />
       <div
         className="container"
         style={{ display: !isSearching ? 'flex' : 'none' }}>

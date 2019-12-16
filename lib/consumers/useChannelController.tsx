@@ -35,7 +35,7 @@ export const TRAK_FRAG = gql`
   }
 `
 
-const VIDEOS_PUSHED = gql`
+export const VIDEOS_PUSHED = gql`
   subscription VideoSubscription($channel: ID!) {
     trackUpdated(input: { channel: $channel }) {
       ...TrackOnChannel
@@ -44,7 +44,7 @@ const VIDEOS_PUSHED = gql`
   ${TRAK_FRAG}
 `
 
-const UPCOMING_QUERY = gql`
+export const UPCOMING_QUERY = gql`
   query UpComingTracksGQL($channel: ID!) {
     channel(id: $channel) {
       nowPlaying {
@@ -68,7 +68,7 @@ const UPCOMING_QUERY = gql`
   ${TRAK_FRAG}
 `
 
-const GQL_MARK_AS_PLAYED = gql`
+export const GQL_MARK_AS_PLAYED = gql`
   mutation MarkAsPlayedGQL($track: ID!, $nextTrack: ID) {
     markTrackAsPlayed(input: { track: $track, nextTrack: $nextTrack })
   }
@@ -256,7 +256,10 @@ const useChannelController = ({ channel }: { channel: string }): TReturn => {
   const { data, error, loading } = useQuery<
     UpComingTracksGQL,
     UpComingTracksGQLVariables
-  >(UPCOMING_QUERY, { variables: { channel } })
+  >(UPCOMING_QUERY, {
+    variables: { channel },
+    fetchPolicy: 'cache-and-network'
+  })
 
   console.log({ loading, error })
 
@@ -266,7 +269,7 @@ const useChannelController = ({ channel }: { channel: string }): TReturn => {
 
   const { edges } = data.channel.tracks
 
-  console.log('RETURNING NEW !!', edges.length)
+  console.log('RETURNING NEW !! CN', edges.length)
 
   return {
     replaceNowPlaying: channelController.replaceNowPlaying,

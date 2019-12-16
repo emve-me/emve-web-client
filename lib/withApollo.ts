@@ -85,6 +85,7 @@ export default withApollo(
     return new ApolloClient({
       link: getLink(),
       cache: new InMemoryCache({
+        freezeResults: true,
         dataIdFromObject: object => {
           switch (object.__typename) {
             case 'SearchResult':
@@ -96,5 +97,5 @@ export default withApollo(
       }).restore(initialState || {})
     })
   },
-  { getDataFromTree: 'ssr' }
+  { getDataFromTree: 'always' } // changed to always, not sure its needed
 )
