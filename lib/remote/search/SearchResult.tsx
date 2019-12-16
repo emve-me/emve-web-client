@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { YouTubeSearch_YoutubeApi_search_list_items } from '../../../gql_types/YouTubeSearch'
-import { AddToChannelController } from './AddToChannelController'
+import { useAddToChannelController } from './AddToChannelController'
 import { SearchResultTrack } from '../Track'
 
 type TProps = {
@@ -9,25 +9,17 @@ type TProps = {
   onSelect: (item: YouTubeSearch_YoutubeApi_search_list_items) => void
 }
 
-export class SearchResult extends Component<TProps> {
-  render() {
-    const { item, channel, onSelect } = this.props
+export const SearchResult: React.FC<TProps> = ({ item, channel, onSelect }) => {
+  const addVideo = useAddToChannelController(channel)
 
-    return (
-      <AddToChannelController item={item} channel={channel}>
-        {({ addVideo }) => (
-          <>
-            <SearchResultTrack
-              onClick={() => {
-                addVideo()
-                onSelect(item)
-              }}
-              title={item.snippet.title}
-              thumb={item.snippet.thumbnails.high.url}
-            />
-          </>
-        )}
-      </AddToChannelController>
-    )
-  }
+  return (
+    <SearchResultTrack
+      onClick={() => {
+        addVideo(item)
+        onSelect(item)
+      }}
+      title={item.snippet.title}
+      thumb={item.snippet.thumbnails.high.url}
+    />
+  )
 }

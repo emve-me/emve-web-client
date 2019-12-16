@@ -18,12 +18,6 @@ import UpNext from './UpNext'
 import HeartIcon from '../icons/HeartIcon'
 import useChannelController from '../consumers/useChannelController'
 
-const GQL_MARK_AS_PLAYED = gql`
-  mutation MarkAsPlayedGQL($track: ID!, $nextTrack: ID) {
-    markTrackAsPlayed(input: { track: $track, nextTrack: $nextTrack })
-  }
-`
-
 const GQL_PLAYER_CONTROLS = gql`
   subscription PlayerControls($channel: ID!) {
     playerControl(input: { channel: $channel }) {
@@ -34,8 +28,12 @@ const GQL_PLAYER_CONTROLS = gql`
 
 type TProps = { channel: string }
 
+type VF = () => void
+
 // todo move mark as played to channel consumer
 const PlayerMain: React.FC<TProps> = ({ channel }) => {
+  let _skipTrack: null | VF = null
+
   const client = useApolloClient()
 
   useEffect(() => {
@@ -44,7 +42,9 @@ const PlayerMain: React.FC<TProps> = ({ channel }) => {
       PlayerControlsVariables
     >({
       query: GQL_PLAYER_CONTROLS,
-      variables: { channel }
+      variables: {
+        channel
+      }
     })
 
     const subscription = subscriptionObservable.subscribe({
@@ -52,9 +52,9 @@ const PlayerMain: React.FC<TProps> = ({ channel }) => {
       next: ({ data }) => {
         switch (data.playerControl.action) {
           case PlayerControlAction.SKIP:
-            // if (this.skipTrack) {
-            // this.skipTrack()
-            // }
+            if (_skipTrack) {
+              _skipTrack()
+            }
             break
         }
       },
@@ -71,7 +71,7 @@ const PlayerMain: React.FC<TProps> = ({ channel }) => {
         subscription.unsubscribe()
       }
     }
-  })
+  }, [])
 
   // _playerTarget
   //
@@ -79,10 +79,12 @@ const PlayerMain: React.FC<TProps> = ({ channel }) => {
   //   this._playerTarget = target
   // }
 
+  _skipTrack = null
+
   const {
     error,
     nowPlaying,
-    replaceNowPlaying,
+    nextTrack,
     loading,
     upComing
   } = useChannelController({ channel })
@@ -93,66 +95,45 @@ const PlayerMain: React.FC<TProps> = ({ channel }) => {
 
   if (upComing.length === 0 && !nowPlaying) {
     return <PlayerEmptyState channel={channel} />
-  } else {
-    const nextTrack = async () => {
-      if (upComing.length > 0) {
-        replaceNowPlaying(upComing[0].node)
-
-        client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
-          mutation: GQL_MARK_AS_PLAYED,
-          variables: {
-            track: nowPlaying.id,
-            nextTrack: upComing[0].node.id
-          }
-        })
-      } else {
-        replaceNowPlaying(null)
-
-        client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
-          mutation: GQL_MARK_AS_PLAYED,
-          variables: { track: nowPlaying.id }
-        })
-      }
-    }
-
-    // this.skipTrack = nextTrack
-
-    return (
-      <>
-        <style jsx global>
-          {`
-            .playerContainer {
-              position: fixed;
-              top: 0;
-              bottom: 0;
-              right: 0;
-              left: 0;
-            }
-          `}
-        </style>
-
-        {/*<HeartIcon style={{position:'fixed', top:32,left:32, zIndex:100}}/>*/}
-
-        <UpNext
-          channel={channel}
-          nextTrack={upComing.length > 0 ? upComing[0].node : null}
-        />
-        <YouTube
-          // onReady={this.onPlayerReady}
-          containerClassName="playerContainer"
-          videoId={nowPlaying.videoId}
-          opts={{
-            height: '100%',
-            width: '100%',
-            playerVars: {
-              autoplay: 1
-            }
-          }}
-          onEnd={nextTrack}
-        />
-      </>
-    )
   }
+
+  _skipTrack = nextTrack
+
+  return (
+    <>
+      <style jsx global>
+        {`
+          .playerContainer {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+          }
+        `}
+      </style>
+
+      {/*<HeartIcon style={{position:'fixed', top:32,left:32, zIndex:100}}/>*/}
+
+      <UpNext
+        channel={channel}
+        nextTrack={upComing.length > 0 ? upComing[0].node : null}
+      />
+      <YouTube
+        // onReady={this.onPlayerReady}
+        containerClassName="playerContainer"
+        videoId={nowPlaying.videoId}
+        opts={{
+          height: '100%',
+          width: '100%',
+          playerVars: {
+            autoplay: 1
+          }
+        }}
+        onEnd={nextTrack}
+      />
+    </>
+  )
 }
 
 export default PlayerMain

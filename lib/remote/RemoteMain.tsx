@@ -8,7 +8,7 @@ export default ({ channel }: { channel: string }) => {
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
 
-  const isSearching = search.trim()
+  const isSearching = !!search.trim()
 
   return (
     <Shell

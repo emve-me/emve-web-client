@@ -14,6 +14,10 @@ import gql from 'graphql-tag'
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
 import { TrackState } from '../../gql_types/globalTypes'
 import ApolloClient from 'apollo-client'
+import {
+  MarkAsPlayedGQL,
+  MarkAsPlayedGQLVariables
+} from '../../gql_types/MarkAsPlayedGQL'
 
 export const TRAK_FRAG = gql`
   fragment TrackOnChannel on Track {
@@ -64,16 +68,22 @@ const UPCOMING_QUERY = gql`
   ${TRAK_FRAG}
 `
 
-type TRenderProps = {
+const GQL_MARK_AS_PLAYED = gql`
+  mutation MarkAsPlayedGQL($track: ID!, $nextTrack: ID) {
+    markTrackAsPlayed(input: { track: $track, nextTrack: $nextTrack })
+  }
+`
+
+type TReturn = {
   updateCache?: (
     modifier: (data: UpComingTracksGQL) => UpComingTracksGQL
   ) => void
-  error?
+  error?: any
   loading: boolean
   upComing?: Array<UpComingTracksGQL_channel_tracks_edges>
   nowPlaying?: TrackOnChannel
+  nextTrack?: () => void
   owner?: UpComingTracksGQL_channel_owner
-  client?: ApolloClient<any>
   replaceNowPlaying?: (nowPlaying: TrackOnChannel) => void
 }
 
@@ -109,14 +119,42 @@ class ControllerMethods {
     )
   }
 
-  writeTracksToCache = data => {
+  writeTracksToCache = (data: any) => {
+    console.log('WRITE TRACK - S')
+
     this.client.writeQuery<UpComingTracksGQL, UpComingTracksGQLVariables>({
       variables: { channel: this.channel },
       query: UPCOMING_QUERY,
-      data
+      data: JSON.parse(JSON.stringify(data))
     })
 
+    console.log('WRITE TRACK - E JSon', this.channel)
+
     // this.forceUpdate()
+  }
+
+  nextTrack = async (
+    upComing: UpComingTracksGQL_channel_tracks_edges[],
+    nowPlayingId: string
+  ) => {
+    if (upComing.length > 0) {
+      this.replaceNowPlaying(upComing[0].node)
+
+      this.client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
+        mutation: GQL_MARK_AS_PLAYED,
+        variables: {
+          track: nowPlayingId,
+          nextTrack: upComing[0].node.id
+        }
+      })
+    } else {
+      this.replaceNowPlaying(null)
+
+      this.client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
+        mutation: GQL_MARK_AS_PLAYED,
+        variables: { track: nowPlayingId }
+      })
+    }
   }
 
   readModWrite = (modifier: (data: UpComingTracksGQL) => UpComingTracksGQL) => {
@@ -125,124 +163,120 @@ class ControllerMethods {
 }
 
 // make a track list provider
-const useChannelController = ({
-  channel
-}: {
-  channel: string
-}): TRenderProps => {
+const useChannelController = ({ channel }: { channel: string }): TReturn => {
   const client = useApolloClient()
+  const channelController = new ControllerMethods(client, channel)
 
-  const cC = new ControllerMethods(client, channel)
-
-  useEffect(() => {
-    const subscriptionObservable = client.subscribe<
-      VideoSubscription,
-      VideoSubscriptionVariables
-    >({
-      query: VIDEOS_PUSHED,
-      variables: { channel }
-    })
-
-    const subscription = subscriptionObservable.subscribe({
-      // REFACTOR NOTE, CHANGED THIS
-      next: ({ data }) => {
-        const channelState = cC.readTracksFromCache()
-
-        switch (data.trackUpdated.state) {
-          case TrackState.remove:
-            {
-              if (channelState.channel.nowPlaying.id === data.trackUpdated.id) {
-                // detect if its player only // and call a skip function on the player // OR do everything here
-                return
-              } else {
-                channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
-                  ({ node }) => node.id !== data.trackUpdated.id
-                )
-              }
-            }
-            break
-          case TrackState.playing:
-            {
-              channelState.channel.nowPlaying = data.trackUpdated
-              channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
-                ({ node }) => node.id !== data.trackUpdated.id
-              )
-            }
-            break
-          case TrackState.played:
-            {
-              channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
-                ({ node }) => node.id !== data.trackUpdated.id
-              )
-              if (
-                channelState.channel.nowPlaying &&
-                channelState.channel.nowPlaying.id === data.trackUpdated.id
-              ) {
-                channelState.channel.nowPlaying = null
-              }
-            }
-            break
-          case TrackState.upcoming:
-            {
-              const toPush: UpComingTracksGQL_channel_tracks_edges = {
-                __typename: 'TracksEdge',
-                node: data.trackUpdated
-              }
-
-              const exists = channelState.channel.tracks.edges.find(
-                ({ node }) => node.id === toPush.node.id
-              )
-
-              if (!exists) {
-                channelState.channel.tracks.edges.push(toPush)
-              } else {
-                return
-              }
-            }
-            break
-        }
-
-        cC.writeTracksToCache(channelState)
-      },
-      error(err) {
-        console.error(`Finished with error: ${err}`)
-      },
-      complete() {
-        console.info('Finished subscription to', channel)
-      }
-    })
-
-    return () => {
-      if (subscription) {
-        subscription.unsubscribe()
-      }
-    }
-    // window.onfocus = event => this.render()
-  })
+  // useEffect(() => {
+  //   const subscriptionObservable = client.subscribe<
+  //     VideoSubscription,
+  //     VideoSubscriptionVariables
+  //   >({
+  //     query: VIDEOS_PUSHED,
+  //     variables: { channel }
+  //   })
+  //
+  //   const subscription = subscriptionObservable.subscribe({
+  //     // REFACTOR NOTE, CHANGED THIS
+  //     next: ({ data }) => {
+  //       const channelState = channelController.readTracksFromCache()
+  //
+  //       switch (data.trackUpdated.state) {
+  //         case TrackState.remove:
+  //           {
+  //             if (channelState.channel.nowPlaying.id === data.trackUpdated.id) {
+  //               // detect if its player only // and call a skip function on the player // OR do everything here
+  //               return
+  //             } else {
+  //               channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
+  //                 ({ node }) => node.id !== data.trackUpdated.id
+  //               )
+  //             }
+  //           }
+  //           break
+  //         case TrackState.playing:
+  //           {
+  //             channelState.channel.nowPlaying = data.trackUpdated
+  //             channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
+  //               ({ node }) => node.id !== data.trackUpdated.id
+  //             )
+  //           }
+  //           break
+  //         case TrackState.played:
+  //           {
+  //             channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
+  //               ({ node }) => node.id !== data.trackUpdated.id
+  //             )
+  //             if (
+  //               channelState.channel.nowPlaying &&
+  //               channelState.channel.nowPlaying.id === data.trackUpdated.id
+  //             ) {
+  //               channelState.channel.nowPlaying = null
+  //             }
+  //           }
+  //           break
+  //         case TrackState.upcoming:
+  //           {
+  //             const toPush: UpComingTracksGQL_channel_tracks_edges = {
+  //               __typename: 'TracksEdge',
+  //               node: data.trackUpdated
+  //             }
+  //
+  //             const exists = channelState.channel.tracks.edges.find(
+  //               ({ node }) => node.id === toPush.node.id
+  //             )
+  //
+  //             if (!exists) {
+  //               channelState.channel.tracks.edges.push(toPush)
+  //             } else {
+  //               return
+  //             }
+  //           }
+  //           break
+  //       }
+  //
+  //       channelController.writeTracksToCache(channelState)
+  //     },
+  //     error(err) {
+  //       console.error(`Finished with error: ${err}`)
+  //     },
+  //     complete() {
+  //       console.info('Finished subscription to', channel)
+  //     }
+  //   })
+  //
+  //   return () => {
+  //     if (subscription) {
+  //       subscription.unsubscribe()
+  //     }
+  //   }
+  //   // todo; test this case out when a users phone is not active  window.onfocus = event => this.render()
+  // }, [])
 
   const { data, error, loading } = useQuery<
     UpComingTracksGQL,
     UpComingTracksGQLVariables
   >(UPCOMING_QUERY, { variables: { channel } })
 
-  if (loading) {
-    return { loading: true }
-  }
+  console.log({ loading, error })
 
-  if (error) {
-    return { loading: false, error }
-  }
+  if (loading) return { loading: true }
+
+  if (error) return { loading: false, error }
 
   const { edges } = data.channel.tracks
 
+  console.log('RETURNING NEW !!', edges.length)
+
   return {
-    replaceNowPlaying: cC.replaceNowPlaying,
+    replaceNowPlaying: channelController.replaceNowPlaying,
     nowPlaying: data.channel.nowPlaying,
     error,
     upComing: edges,
     loading: false,
-    updateCache: cC.readModWrite,
-    client,
+    updateCache: channelController.readModWrite,
+    nextTrack: () =>
+      channelController.nextTrack(edges, data.channel.nowPlaying.id),
     owner: data.channel.owner
   }
 }

@@ -11,7 +11,7 @@ const REMOVE_TRACK = gql`
 
 type TProps = {
   track: string
-  children: ({ removeTrack }) => JSX.Element
+  children: ({ removeTrack }: { removeTrack: any }) => JSX.Element
 }
 
 const RemoveTrackController: React.FC<TProps> = ({ track, children }) => {

@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { logout } from '../consumers/useLoggedInUser'
 
-export default ({ style, a }: { a?; style?: React.CSSProperties }) => {
+export default ({ style }: { style?: React.CSSProperties }) => {
   return (
     <div className="root" style={style}>
       {/*language=CSS*/}
