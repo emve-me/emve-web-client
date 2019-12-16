@@ -1,7 +1,7 @@
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
 import React from 'react'
 import { TrackState } from '../../gql_types/globalTypes'
-import RemoveTrackController from './RemoveTrackController'
+import useRemoveTrack from './useRemoveTrack'
 import { UpComingTracksGQL_channel_owner } from '../../gql_types/UpComingTracksGQL'
 import { GetLoggedInUser_loggedInUser } from '../../gql_types/GetLoggedInUser'
 
@@ -63,16 +63,7 @@ export function UpComingTrack({
   loggedInUser: GetLoggedInUser_loggedInUser
 }) {
   const { thumb, title, owner, state, id } = track
-
-  const canRemove = (() => {
-    if (loggedInUser.id === channelOwner.id) return true
-
-    if (state !== TrackState.playing) {
-      return loggedInUser.id === owner.id
-    }
-
-    return false
-  })()
+  const [canRemove, removeTrack] = useRemoveTrack(track)
 
   return (
     <SearchResultTrack title={title} thumb={thumb}>
@@ -87,16 +78,11 @@ export function UpComingTrack({
         </div>
 
         {canRemove && (
-          <RemoveTrackController track={id}>
-            {({ removeTrack }) => (
-              <div
-                onClick={removeTrack}
-                style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>
-                &middot;{' '}
-                <a>{state === TrackState.playing ? 'skip' : 'remove'}</a>
-              </div>
-            )}
-          </RemoveTrackController>
+          <div
+            onClick={removeTrack!}
+            style={{ color: '#666', paddingLeft: 6, fontSize: 15 }}>
+            &middot; <a>{state === TrackState.playing ? 'skip' : 'remove'}</a>
+          </div>
         )}
       </div>
     </SearchResultTrack>

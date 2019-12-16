@@ -83,6 +83,7 @@ export default withApollo(
     }
 
     return new ApolloClient({
+      assumeImmutableResults: true,
       link: getLink(),
       cache: new InMemoryCache({
         freezeResults: true,
