@@ -3,7 +3,7 @@ import gql from 'graphql-tag'
 import { Mutation, useMutation } from 'react-apollo'
 import { addVideo, addVideoVariables } from '../../../gql_types/addVideo'
 import { YouTubeSearch_YoutubeApi_search_list_items } from '../../../gql_types/YouTubeSearch'
-import { TRAK_FRAG, UPCOMING_QUERY } from '../../consumers/useChannelController'
+import { TRAK_FRAG, UPCOMING_QUERY } from '../../consumers/useChannel'
 import { ExecutionResult } from 'apollo-link'
 
 const ADD_VIDEO = gql`

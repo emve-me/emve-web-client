@@ -101,6 +101,8 @@ class ControllerMethods {
   replaceNowPlaying = (nowPlaying: TrackOnChannel) => {
     const channelState = this.readTracksFromCache()
 
+    console.log('REPLACE NOW PLAYING', nowPlaying)
+
     channelState.channel.nowPlaying = nowPlaying
     if (nowPlaying) {
       channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
@@ -162,7 +164,7 @@ class ControllerMethods {
 }
 
 // make a track list provider
-const useChannelController = ({ channel }: { channel: string }): TReturn => {
+const useChannel = ({ channel }: { channel: string }): TReturn => {
   const client = useApolloClient()
   const channelController = new ControllerMethods(client, channel)
 
@@ -278,4 +280,4 @@ const useChannelController = ({ channel }: { channel: string }): TReturn => {
   }
 }
 
-export default useChannelController
+export default useChannel

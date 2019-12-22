@@ -1,4 +1,4 @@
-import useChannelController from '../consumers/useChannelController'
+import useChannel from '../consumers/useChannel'
 import React from 'react'
 import LoadingIndicator from '../ui/LoadingIndicator'
 import RemoteEmptyState from './RemoteEmptyState'
@@ -14,13 +14,11 @@ type TProps = {
 export default ({ channel }: TProps) => {
   const { user: loggedInUser } = useLoggedInUser()
 
-  const { upComing, nowPlaying, loading, owner } = useChannelController({
+  const { upComing, nowPlaying, loading, owner } = useChannel({
     channel
   })
 
-  if (loading) {
-    return <LoadingIndicator />
-  }
+  if (loading) return <LoadingIndicator />
 
   const hasTracks = nowPlaying || (upComing && upComing.length > 0)
 

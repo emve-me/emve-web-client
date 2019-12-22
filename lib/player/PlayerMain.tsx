@@ -1,5 +1,5 @@
 import React, { Component, createRef, useEffect } from 'react'
-import ChannelConsumer from '../consumers/useChannelController'
+import ChannelConsumer from '../consumers/useChannel'
 import YouTube from 'react-youtube'
 import gql from 'graphql-tag'
 import LoadingIndicator from '../ui/LoadingIndicator'
@@ -16,7 +16,7 @@ import {
 import { PlayerControlAction } from '../../gql_types/globalTypes'
 import UpNext from './UpNext'
 import HeartIcon from '../icons/HeartIcon'
-import useChannelController from '../consumers/useChannelController'
+import useChannel from '../consumers/useChannel'
 
 const GQL_PLAYER_CONTROLS = gql`
   subscription PlayerControls($channel: ID!) {
@@ -26,13 +26,11 @@ const GQL_PLAYER_CONTROLS = gql`
   }
 `
 
-type TProps = { channel: string }
-
-type VF = () => void
+type TSkipTrack = () => void
 
 // todo move mark as played to channel consumer
-const PlayerMain: React.FC<TProps> = ({ channel }) => {
-  let _skipTrack: null | VF = null
+const PlayerMain: React.FC<{ channel: string }> = ({ channel }) => {
+  let _skipTrack: null | TSkipTrack = null
 
   const client = useApolloClient()
 
@@ -48,10 +46,10 @@ const PlayerMain: React.FC<TProps> = ({ channel }) => {
     })
 
     const subscription = subscriptionObservable.subscribe({
-      // REFACTOR NOTE
       next: ({ data }) => {
         switch (data.playerControl.action) {
           case PlayerControlAction.SKIP:
+            console.log('called SKUP', _skipTrack)
             if (_skipTrack) {
               _skipTrack()
             }
@@ -73,6 +71,10 @@ const PlayerMain: React.FC<TProps> = ({ channel }) => {
     }
   }, [])
 
+  const { nowPlaying, nextTrack, loading, upComing } = useChannel({
+    channel
+  })
+
   // _playerTarget
   //
   // onPlayerReady = ({ target }) => {
@@ -80,14 +82,6 @@ const PlayerMain: React.FC<TProps> = ({ channel }) => {
   // }
 
   _skipTrack = null
-
-  const {
-    error,
-    nowPlaying,
-    nextTrack,
-    loading,
-    upComing
-  } = useChannelController({ channel })
 
   if (loading) {
     return <LoadingIndicator />
@@ -98,6 +92,11 @@ const PlayerMain: React.FC<TProps> = ({ channel }) => {
   }
 
   _skipTrack = nextTrack
+
+  console.log({ nowPlaying })
+  if (!nowPlaying) {
+    return <div>NO NOW PLAYING</div>
+  }
 
   return (
     <>

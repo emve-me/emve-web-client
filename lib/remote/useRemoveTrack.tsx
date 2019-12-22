@@ -1,5 +1,4 @@
 import { useMutation } from 'react-apollo'
-import { Component } from 'react'
 import gql from 'graphql-tag'
 import { RemoveTrack, RemoveTrackVariables } from '../../gql_types/RemoveTrack'
 import { TrackState } from '../../gql_types/globalTypes'
@@ -32,7 +31,12 @@ const useRemoveTrack = (
     RemoveTrackVariables
   >(REMOVE_TRACK, { variables: { track: track.id } })
 
-  return [canRemove, canRemove ? () => removeTrack() : undefined]
+  const rrr = () => {
+    console.log('CALLING REMOEV!!!')
+    removeTrack()
+  }
+
+  return [canRemove, canRemove ? rrr : undefined]
 }
 
 export default useRemoveTrack
