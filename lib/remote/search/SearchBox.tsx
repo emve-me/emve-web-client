@@ -63,7 +63,7 @@ export class SearchBox extends Component<TProps, TState> {
     } = this.props
     const { searching } = this.state
 
-    const onChangeInlined = ({ target: { value } }) => {
+    const onChangeInlined = ({ target: { value } }: any) => {
       if (onChangeDebounced) {
         if (this.debounceHandle) {
           window.clearTimeout(this.debounceHandle)

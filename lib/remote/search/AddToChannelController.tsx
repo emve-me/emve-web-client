@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import gql from 'graphql-tag'
-import { Mutation } from 'react-apollo'
+import { Mutation, useMutation } from 'react-apollo'
 import { addVideo, addVideoVariables } from '../../../gql_types/addVideo'
 import { YouTubeSearch_YoutubeApi_search_list_items } from '../../../gql_types/YouTubeSearch'
-import { TRAK_FRAG } from '../../consumers/ChannelController'
+import { TRAK_FRAG, UPCOMING_QUERY } from '../../consumers/useChannel'
+import { ExecutionResult } from 'apollo-link'
 
 const ADD_VIDEO = gql`
   mutation addVideo($videoId: ID!, $channel: ID!, $title: String) {
@@ -14,36 +15,23 @@ const ADD_VIDEO = gql`
   ${TRAK_FRAG}
 `
 
-type TRenderProps = {
-  addVideo: () => Promise<void>
-}
-
-type TProps = {
+type TReturn = (
   item: YouTubeSearch_YoutubeApi_search_list_items
-  channel: string
-  children: ({ addVideo }: TRenderProps) => JSX.Element
-}
+) => Promise<ExecutionResult<addVideo>>
 
-export class AddToChannelController extends Component<TProps> {
-  render() {
-    const { item, channel, children } = this.props
+export const useAddToChannelController = (channel: string): TReturn => {
+  const [addVideo, { data, called, loading, client }] = useMutation<
+    addVideo,
+    addVideoVariables
+  >(ADD_VIDEO)
 
-    return (
-      <Mutation<addVideo, addVideoVariables> mutation={ADD_VIDEO}>
-        {(addVideo, { data, called, loading }) => {
-          return this.props.children({
-            addVideo: async () => {
-              const addVideoResp = await addVideo({
-                variables: {
-                  videoId: item.id.videoId,
-                  channel,
-                  title: item.snippet.title
-                }
-              })
-            }
-          })
-        }}
-      </Mutation>
-    )
+  return (item: YouTubeSearch_YoutubeApi_search_list_items) => {
+    return addVideo({
+      variables: {
+        videoId: item.id.videoId,
+        channel,
+        title: item.snippet.title
+      }
+    })
   }
 }

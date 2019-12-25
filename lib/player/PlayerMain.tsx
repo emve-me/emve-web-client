@@ -1,170 +1,68 @@
-import React, { Component, createRef } from 'react'
-import ChannelConsumer from '../consumers/ChannelController'
+import React from 'react'
 import YouTube from 'react-youtube'
-import gql from 'graphql-tag'
 import LoadingIndicator from '../ui/LoadingIndicator'
-import PlayerEmptyState from './PlayerEmptyState'
-import { withApollo, WithApolloClient } from 'react-apollo'
-import {
-  PlayerControls,
-  PlayerControlsVariables
-} from '../../gql_types/PlayerControls'
-import {
-  MarkAsPlayedGQL,
-  MarkAsPlayedGQLVariables
-} from '../../gql_types/MarkAsPlayedGQL'
-import { PlayerControlAction } from '../../gql_types/globalTypes'
+import { PlayerEmptyState } from './PlayerEmptyState'
+import { useApolloClient, withApollo, WithApolloClient } from 'react-apollo'
 import UpNext from './UpNext'
-import HeartIcon from '../icons/HeartIcon'
+import useChannel from '../consumers/useChannel'
 
-const GQL_MARK_AS_PLAYED = gql`
-  mutation MarkAsPlayedGQL($track: ID!, $nextTrack: ID) {
-    markTrackAsPlayed(input: { track: $track, nextTrack: $nextTrack })
-  }
-`
-
-const GQL_PLAYER_CONTROLS = gql`
-  subscription PlayerControls($channel: ID!) {
-    playerControl(input: { channel: $channel }) {
-      action
-    }
-  }
-`
-
-type TProps = { channel: string }
+type TSkipTrack = () => void
 
 // todo move mark as played to channel consumer
-class PlayerMain extends Component<WithApolloClient<TProps>> {
-  subscription: ZenObservable.Subscription
+const PlayerMain: React.FC<{ channel: string }> = ({ channel }) => {
+  let _skipTrack: null | TSkipTrack = null
 
-  skipTrack: () => void
+  const client = useApolloClient()
 
-  componentDidMount() {
-    const { client, channel } = this.props
+  const { nowPlaying, nextTrack, loading, upComing } = useChannel({
+    channel,
+    onPlayer: true
+  })
 
-    const subscriptionObservable = client.subscribe<
-      PlayerControls,
-      PlayerControlsVariables
-    >({
-      query: GQL_PLAYER_CONTROLS,
-      variables: { channel }
-    })
-
-    this.subscription = subscriptionObservable.subscribe({
-      // REFACTOR NOTE
-      next: ({ data }) => {
-        switch (data.playerControl.action) {
-          case PlayerControlAction.SKIP:
-            if (this.skipTrack) {
-              this.skipTrack()
-            }
-            break
-        }
-      },
-      error(err) {
-        console.error(`Finished with error: ${err}`)
-      },
-      complete() {
-        console.info('Finished subscription to', channel)
-      }
-    })
+  if (loading) {
+    return <LoadingIndicator />
   }
 
-  componentWillUnmount() {
-    if (this.subscription) {
-      this.subscription.unsubscribe()
-    }
+  if (upComing.length === 0 && !nowPlaying) {
+    return <PlayerEmptyState nothingPlaying={false} channel={channel} />
   }
 
-  _playerTarget
-
-  onPlayerReady = ({ target }) => {
-    this._playerTarget = target
-  }
-
-  render() {
-    const { channel } = this.props
-
-    return (
-      <ChannelConsumer channel={channel}>
-        {({
-          error,
-          nowPlaying,
-          replaceNowPlaying,
-          loading,
-          upComing,
-          client
-        }) => {
-          if (loading) {
-            return <LoadingIndicator />
+  return (
+    <>
+      <style jsx global>
+        {`
+          .playerContainer {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
           }
+        `}
+      </style>
 
-          if (upComing.length === 0 && !nowPlaying) {
-            return <PlayerEmptyState channel={channel} />
-          } else {
-            const nextTrack = async () => {
-              if (upComing.length > 0) {
-                replaceNowPlaying(upComing[0].node)
+      {/*Show the logo in the top left?*/}
+      {/*<HeartIcon style={{position:'fixed', top:32,left:32, zIndex:100}}/>*/}
 
-                client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
-                  mutation: GQL_MARK_AS_PLAYED,
-                  variables: {
-                    track: nowPlaying.id,
-                    nextTrack: upComing[0].node.id
-                  }
-                })
-              } else {
-                replaceNowPlaying(null)
-
-                client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
-                  mutation: GQL_MARK_AS_PLAYED,
-                  variables: { track: nowPlaying.id }
-                })
-              }
-            }
-
-            this.skipTrack = nextTrack
-
-            return (
-              <>
-                <style jsx global>
-                  {`
-                    .playerContainer {
-                      position: fixed;
-                      top: 0;
-                      bottom: 0;
-                      right: 0;
-                      left: 0;
-                    }
-                  `}
-                </style>
-
-                {/*<HeartIcon style={{position:'fixed', top:32,left:32, zIndex:100}}/>*/}
-
-                <UpNext
-                  channel={channel}
-                  nextTrack={upComing.length > 0 ? upComing[0].node : null}
-                />
-                <YouTube
-                  onReady={this.onPlayerReady}
-                  containerClassName="playerContainer"
-                  videoId={nowPlaying.videoId}
-                  opts={{
-                    height: '100%',
-                    width: '100%',
-                    playerVars: {
-                      autoplay: 1
-                    }
-                  }}
-                  onEnd={nextTrack}
-                />
-              </>
-            )
+      <UpNext
+        channel={channel}
+        nextTrack={upComing.length > 0 ? upComing[0].node : null}
+      />
+      <YouTube
+        // onReady={this.onPlayerReady}
+        containerClassName="playerContainer"
+        videoId={nowPlaying.videoId}
+        opts={{
+          height: '100%',
+          width: '100%',
+          playerVars: {
+            autoplay: 1
           }
         }}
-      </ChannelConsumer>
-    )
-  }
+        onEnd={nextTrack}
+      />
+    </>
+  )
 }
 
-export default withApollo<TProps>(PlayerMain)
+export default PlayerMain

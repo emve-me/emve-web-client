@@ -21,7 +21,7 @@ export default class HeartIconSpinner extends Component<{}, { ids: number }> {
           onRest={() => this.setState(({ ids }) => ({ ids: ids + 1 }))}
           from={{ deg: 0 }}
           to={{ deg: 360 }}>
-          {props => (
+          {(props: { deg: number }) => (
             <HeartIcon
               size={65}
               style={{ opacity: 0.9, transform: `rotate(${props.deg}deg)` }}

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { appBackgroundColor } from '../lib/style/colors'
 
 export default class Error extends Component<{ statusCode: number }> {
-  static getInitialProps({ res, err }) {
+  static getInitialProps({ res, err }: { res: any; err: any }) {
     const statusCode = res ? res.statusCode : err ? err.statusCode : null
     return { statusCode }
   }
