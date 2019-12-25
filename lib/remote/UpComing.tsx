@@ -15,7 +15,8 @@ export default ({ channel }: TProps) => {
   const { user: loggedInUser } = useLoggedInUser()
 
   const { upComing, nowPlaying, loading, owner } = useChannel({
-    channel
+    channel,
+    onPlayer: false
   })
 
   if (loading) return <LoadingIndicator />

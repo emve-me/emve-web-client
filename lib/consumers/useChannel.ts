@@ -12,12 +12,17 @@ import {
 } from '../../gql_types/VideoSubscription'
 import gql from 'graphql-tag'
 import { TrackOnChannel } from '../../gql_types/TrackOnChannel'
-import { TrackState } from '../../gql_types/globalTypes'
+import { PlayerControlAction, TrackState } from '../../gql_types/globalTypes'
 import ApolloClient from 'apollo-client'
 import {
   MarkAsPlayedGQL,
   MarkAsPlayedGQLVariables
 } from '../../gql_types/MarkAsPlayedGQL'
+import {
+  PlayerControls,
+  PlayerControlsVariables
+} from '../../gql_types/PlayerControls'
+import { ZenObservable } from 'zen-observable-ts/lib/types'
 
 export const TRAK_FRAG = gql`
   fragment TrackOnChannel on Track {
@@ -87,6 +92,14 @@ type TReturn = {
   replaceNowPlaying?: (nowPlaying: TrackOnChannel) => void
 }
 
+const GQL_PLAYER_CONTROLS = gql`
+  subscription PlayerControls($channel: ID!) {
+    playerControl(input: { channel: $channel }) {
+      action
+    }
+  }
+`
+
 // todo have a type for the cache shape
 
 class ControllerMethods {
@@ -134,41 +147,78 @@ class ControllerMethods {
     })
   }
 
-  nextTrack = async (
-    upComing: UpComingTracksGQL_channel_tracks_edges[],
-    nowPlayingId: string
-  ) => {
-    if (upComing.length > 0) {
-      this.replaceNowPlaying(upComing[0].node)
+  nextTrack = async () => {
+    const upComing = this.readTracksFromCache(false)
 
-      this.client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
+    console.log('NEXT TRACK upComing', upComing)
+    if (upComing.channel.tracks.edges.length > 0) {
+      const NEXT_TRACKKKKK = await this.client.mutate<
+        MarkAsPlayedGQL,
+        MarkAsPlayedGQLVariables
+      >({
         mutation: GQL_MARK_AS_PLAYED,
         variables: {
-          track: nowPlayingId,
-          nextTrack: upComing[0].node.id
+          track: upComing.channel.nowPlaying.id,
+          nextTrack: upComing.channel.tracks.edges[0].node.id
         }
       })
+
+      console.log('MUTATION RESP', NEXT_TRACKKKKK)
+      this.replaceNowPlaying(upComing.channel.tracks.edges[0].node)
     } else {
       this.replaceNowPlaying(null)
 
       this.client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
         mutation: GQL_MARK_AS_PLAYED,
-        variables: { track: nowPlayingId }
+        variables: { track: upComing.channel.nowPlaying.id }
       })
     }
-  }
-
-  readModWrite = (modifier: (data: UpComingTracksGQL) => UpComingTracksGQL) => {
-    this.writeTracksToCache(modifier(this.readTracksFromCache()))
   }
 }
 
 // make a track list provider
-const useChannel = ({ channel }: { channel: string }): TReturn => {
+const useChannel = ({
+  channel,
+  onPlayer
+}: {
+  channel: string
+  onPlayer: boolean
+}): TReturn => {
   const client = useApolloClient()
   const channelController = new ControllerMethods(client, channel)
 
   useEffect(() => {
+    // only the player needs to subscribe to these events
+    let playerSubscription: ZenObservable.Subscription
+
+    if (onPlayer) {
+      const playerControlsSubscriptionObservable = client.subscribe<
+        PlayerControls,
+        PlayerControlsVariables
+      >({
+        query: GQL_PLAYER_CONTROLS,
+        variables: {
+          channel
+        }
+      })
+
+      playerSubscription = playerControlsSubscriptionObservable.subscribe({
+        next: ({ data }) => {
+          switch (data.playerControl.action) {
+            case PlayerControlAction.SKIP:
+              console.log('PLAYER GOT REQUEST TO SKIP A TRACK')
+              channelController.nextTrack()
+              break
+          }
+        },
+        error(err) {
+          console.error(`Finished with error: ${err}`)
+        },
+        complete() {
+          console.info('Finished subscription to', channel)
+        }
+      })
+    }
     const subscriptionObservable = client.subscribe<
       VideoSubscription,
       VideoSubscriptionVariables
@@ -247,9 +297,9 @@ const useChannel = ({ channel }: { channel: string }): TReturn => {
     })
 
     return () => {
-      if (subscription) {
-        subscription.unsubscribe()
-      }
+      if (subscription) subscription.unsubscribe()
+
+      if (playerSubscription) playerSubscription.unsubscribe()
     }
     // todo; test this case out when a users phone is not active  window.onfocus = event => this.render()
   }, [])
@@ -273,9 +323,7 @@ const useChannel = ({ channel }: { channel: string }): TReturn => {
     error,
     upComing: edges,
     loading: false,
-    updateCache: channelController.readModWrite,
-    nextTrack: () =>
-      channelController.nextTrack(edges, data.channel.nowPlaying.id),
+    nextTrack: channelController.nextTrack,
     owner: data.channel.owner
   }
 }
