@@ -5,8 +5,7 @@ import InviteGuests from '../ui/InviteGuests'
 
 export const PlayerEmptyState: React.FC<{
   channel: string
-  nothingPlaying: boolean
-}> = ({ channel, nothingPlaying }) => {
+}> = ({ channel }) => {
   return (
     <Shell visibleOnMobile={false}>
       {/*language=CSS*/}
@@ -54,7 +53,6 @@ export const PlayerEmptyState: React.FC<{
         <div style={{ padding: '16px 0 8px 0' }}>
           <InviteGuests channel={channel} />
         </div>
-        {nothingPlaying && <div>Nothing playing!</div>}
       </div>
       <MobileFooterNav style={{ paddingTop: 16 }} />
     </Shell>

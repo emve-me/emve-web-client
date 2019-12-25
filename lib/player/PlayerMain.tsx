@@ -5,6 +5,7 @@ import { PlayerEmptyState } from './PlayerEmptyState'
 import { useApolloClient, withApollo, WithApolloClient } from 'react-apollo'
 import UpNext from './UpNext'
 import useChannel from '../consumers/useChannel'
+import HeartIcon from '../icons/HeartIcon'
 
 type TSkipTrack = () => void
 
@@ -23,8 +24,8 @@ const PlayerMain: React.FC<{ channel: string }> = ({ channel }) => {
     return <LoadingIndicator />
   }
 
-  if (upComing.length === 0 && !nowPlaying) {
-    return <PlayerEmptyState nothingPlaying={false} channel={channel} />
+  if (!nowPlaying) {
+    return <PlayerEmptyState channel={channel} />
   }
 
   return (
@@ -42,7 +43,9 @@ const PlayerMain: React.FC<{ channel: string }> = ({ channel }) => {
       </style>
 
       {/*Show the logo in the top left?*/}
-      {/*<HeartIcon style={{position:'fixed', top:32,left:32, zIndex:100}}/>*/}
+      <HeartIcon
+        style={{ position: 'fixed', top: 32, left: 32, zIndex: 100 }}
+      />
 
       <UpNext
         channel={channel}

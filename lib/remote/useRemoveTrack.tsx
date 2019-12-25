@@ -31,12 +31,7 @@ const useRemoveTrack = (
     RemoveTrackVariables
   >(REMOVE_TRACK, { variables: { track: track.id } })
 
-  const rrr = () => {
-    console.log('CALLING REMOEV!!!')
-    removeTrack()
-  }
-
-  return [canRemove, canRemove ? rrr : undefined]
+  return [canRemove, canRemove ? removeTrack : undefined]
 }
 
 export default useRemoveTrack

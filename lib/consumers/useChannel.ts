@@ -114,8 +114,6 @@ class ControllerMethods {
   replaceNowPlaying = (nowPlaying: TrackOnChannel) => {
     const channelState = this.readTracksFromCache()
 
-    console.log('REPLACE NOW PLAYING', nowPlaying)
-
     channelState.channel.nowPlaying = nowPlaying
     if (nowPlaying) {
       channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
@@ -150,21 +148,16 @@ class ControllerMethods {
   nextTrack = async () => {
     const upComing = this.readTracksFromCache(false)
 
-    console.log('NEXT TRACK upComing', upComing)
     if (upComing.channel.tracks.edges.length > 0) {
-      const NEXT_TRACKKKKK = await this.client.mutate<
-        MarkAsPlayedGQL,
-        MarkAsPlayedGQLVariables
-      >({
+      this.replaceNowPlaying(upComing.channel.tracks.edges[0].node)
+
+      this.client.mutate<MarkAsPlayedGQL, MarkAsPlayedGQLVariables>({
         mutation: GQL_MARK_AS_PLAYED,
         variables: {
           track: upComing.channel.nowPlaying.id,
           nextTrack: upComing.channel.tracks.edges[0].node.id
         }
       })
-
-      console.log('MUTATION RESP', NEXT_TRACKKKKK)
-      this.replaceNowPlaying(upComing.channel.tracks.edges[0].node)
     } else {
       this.replaceNowPlaying(null)
 
@@ -206,7 +199,6 @@ const useChannel = ({
         next: ({ data }) => {
           switch (data.playerControl.action) {
             case PlayerControlAction.SKIP:
-              console.log('PLAYER GOT REQUEST TO SKIP A TRACK')
               channelController.nextTrack()
               break
           }
