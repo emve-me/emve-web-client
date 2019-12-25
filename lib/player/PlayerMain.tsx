@@ -2,31 +2,20 @@ import React from 'react'
 import YouTube from 'react-youtube'
 import LoadingIndicator from '../ui/LoadingIndicator'
 import { PlayerEmptyState } from './PlayerEmptyState'
-import { useApolloClient, withApollo, WithApolloClient } from 'react-apollo'
 import UpNext from './UpNext'
 import useChannel from '../consumers/useChannel'
 import HeartIcon from '../icons/HeartIcon'
 
-type TSkipTrack = () => void
-
 // todo move mark as played to channel consumer
 const PlayerMain: React.FC<{ channel: string }> = ({ channel }) => {
-  let _skipTrack: null | TSkipTrack = null
-
-  const client = useApolloClient()
-
   const { nowPlaying, nextTrack, loading, upComing } = useChannel({
     channel,
     onPlayer: true
   })
 
-  if (loading) {
-    return <LoadingIndicator />
-  }
+  if (loading) return <LoadingIndicator />
 
-  if (!nowPlaying) {
-    return <PlayerEmptyState channel={channel} />
-  }
+  if (!nowPlaying) return <PlayerEmptyState channel={channel} />
 
   return (
     <>
@@ -42,7 +31,6 @@ const PlayerMain: React.FC<{ channel: string }> = ({ channel }) => {
         `}
       </style>
 
-      {/*Show the logo in the top left?*/}
       <HeartIcon
         style={{ position: 'fixed', top: 32, left: 32, zIndex: 100 }}
       />

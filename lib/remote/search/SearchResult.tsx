@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { YouTubeSearch_YoutubeApi_search_list_items } from '../../../gql_types/YouTubeSearch'
-import { useAddToChannelController } from './AddToChannelController'
+import { useAddToChannel } from './useAddToChannel'
 import { SearchResultTrack } from '../Track'
 
 type TProps = {
@@ -10,7 +10,7 @@ type TProps = {
 }
 
 export const SearchResult: React.FC<TProps> = ({ item, channel, onSelect }) => {
-  const addVideo = useAddToChannelController(channel)
+  const addVideo = useAddToChannel(channel)
 
   return (
     <SearchResultTrack

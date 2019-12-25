@@ -27,6 +27,8 @@ export function SearchResultTrack({ onClick, title, thumb, children }: TTrack) {
 
           .thumb {
             width: 140px;
+            height: 105px;
+            background-color: #eee;
             border-radius: 6px;
           }
 

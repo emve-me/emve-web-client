@@ -19,7 +19,7 @@ type TReturn = (
   item: YouTubeSearch_YoutubeApi_search_list_items
 ) => Promise<ExecutionResult<addVideo>>
 
-export const useAddToChannelController = (channel: string): TReturn => {
+export const useAddToChannel = (channel: string): TReturn => {
   const [addVideo, { data, called, loading, client }] = useMutation<
     addVideo,
     addVideoVariables
