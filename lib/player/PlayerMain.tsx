@@ -1,6 +1,5 @@
-import React, { Component, createRef, useEffect } from 'react'
+import React from 'react'
 import YouTube from 'react-youtube'
-import gql from 'graphql-tag'
 import LoadingIndicator from '../ui/LoadingIndicator'
 import { PlayerEmptyState } from './PlayerEmptyState'
 import { useApolloClient, withApollo, WithApolloClient } from 'react-apollo'
@@ -26,8 +25,6 @@ const PlayerMain: React.FC<{ channel: string }> = ({ channel }) => {
 
   if (upComing.length === 0 && !nowPlaying) {
     return <PlayerEmptyState nothingPlaying={false} channel={channel} />
-  } else if (!nowPlaying) {
-    return <PlayerEmptyState nothingPlaying={true} channel={channel} />
   }
 
   return (
