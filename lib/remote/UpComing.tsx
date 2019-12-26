@@ -13,7 +13,6 @@ type TProps = {
 
 export default ({ channel }: TProps) => {
   const { user: loggedInUser } = useLoggedInUser()
-
   const { upComing, nowPlaying, loading, owner } = useChannel({
     channel,
     onPlayer: false

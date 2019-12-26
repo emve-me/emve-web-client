@@ -64,7 +64,6 @@
 # Wish list
 
 - Live Queries, would cut down on complexity a lot
-- Hooks API for Apollo
 - Typescript friendlier database library with typegen from schema, a few systems like that out there
 
 # Roadmap

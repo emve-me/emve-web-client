@@ -39,6 +39,7 @@ export function SearchResultTrack({ onClick, title, thumb, children }: TTrack) {
           @media only screen and (max-width: 905px) {
             .thumb {
               width: 100px;
+              height: 75px;
             }
           }
         `}
