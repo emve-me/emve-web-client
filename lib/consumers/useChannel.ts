@@ -228,7 +228,7 @@ const useChannel = ({
           case TrackState.remove:
             {
               if (channelState.channel.nowPlaying.id === data.trackUpdated.id) {
-                // detect if its player only // and call a skip function on the player // OR do everything here
+                channelController.nextTrack()
                 return
               } else {
                 channelState.channel.tracks.edges = channelState.channel.tracks.edges.filter(
